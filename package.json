@@ -5,6 +5,7 @@
   "author": "Diagonal Systems Inc. <hello@diagonal.sh>",
   "scripts": {
     "start": "npm run serve",
+    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
     "serve": "vue-cli-service serve --host 0.0.0.0",
     "build": "vue-cli-service build",
     "lint": "standard --fix",
@@ -20,6 +21,9 @@
     "buefy": "^0.6.7",
     "bulma-extensions": "^3.0.0",
     "es6-promisify": "^6.0.0",
+    "koa": "^2.6.2",
+    "koa-send": "^5.0.0",
+    "koa-static": "^5.0.0",
     "moment": "^2.22.2",
     "register-service-worker": "^1.0.0",
     "request": "^2.88.0",
