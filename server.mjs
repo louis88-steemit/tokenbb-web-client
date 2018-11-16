@@ -11,15 +11,15 @@ app.use(async (ctx, next) => {
     return ctx.redirect(ctx.request.href.replace('http://', 'https://'));
   }
   return await next();
-})
+});
 
 /* serve production build files */
-app.use(serve('build'));
+app.use(serve('dist'));
 
 /* serve index.html for all 404 routes */
 app.use(async (ctx) => {
-  await send(ctx, 'build/index.html');
-})
+  await send(ctx, 'dist/index.html');
+});
 
 async function server() {
   /* Finally, start the server */
