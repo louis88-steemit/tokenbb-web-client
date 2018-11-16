@@ -6,7 +6,7 @@ export const CLIENT_URL = process.env.NODE_ENV === 'production'
 
 export const API_URL = process.env.NODE_ENV === 'production'
   ? CLIENT_URL + '/api/v1'
-  : 'http://localhost:9090/api/v1'
+  : 'http://localhost:3030/v1/forum/monsters'
 
 export const CONNECT_API_URL = 'https://steemconnect.com'
 

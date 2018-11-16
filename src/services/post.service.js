@@ -21,7 +21,7 @@ function listTopics (category) {
     // var filtered = filterInvalidPosts(validTopicPosts, topicPosts)
 
     // return filtered
-    return validTopicPosts
+    return validTopicPosts.data
       .map(valid => {
         var post = topicPosts.find(post => {
           return post.author === valid.author && post.permlink === valid.permlink

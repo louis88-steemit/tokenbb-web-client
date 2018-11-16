@@ -60,7 +60,7 @@ export default {
 
       apiService.listCategories()
         .then(categories => {
-          commit('updateCategoryList', categories)
+          commit('updateCategoryList', categories.data)
           commit('setFetching', false)
         })
         .catch(err => {

@@ -100,7 +100,7 @@ function removeCategory (name) {
 function listValidTopics (category) {
   var url = API_URL + '/topics'
 
-  if (category) url = url + `?category=${category}`
+  if (category) url = API_URL + `${category}/topics`
 
   var opts = {
     method: 'GET',
