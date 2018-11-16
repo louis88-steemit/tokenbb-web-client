@@ -1,0 +1,73 @@
+{
+  "name": "@tokenbb/client",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Diagonal Systems Inc. <hello@diagonal.sh>",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "vue-cli-service serve --host 0.0.0.0",
+    "build": "vue-cli-service build",
+    "lint": "standard --fix",
+    "test": "npm run lint",
+    "deploy": "bash scripts/deploy.sh lab",
+    "postinstall": "cp ./_secure-random.patch.js ./node_modules/secure-random/lib/secure-random.js"
+  },
+  "browser": {
+    "request": "xhr"
+  },
+  "dependencies": {
+    "@steemit/steem-js": "^0.7.2",
+    "buefy": "^0.6.7",
+    "bulma-extensions": "^3.0.0",
+    "es6-promisify": "^6.0.0",
+    "moment": "^2.22.2",
+    "register-service-worker": "^1.0.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "sc2-sdk": "^1.1.0",
+    "steem-networks": "^1.0.2",
+    "steemconnect": "^2.0.1",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue-sanitize": "^0.2.0",
+    "vue2-editor": "^2.6.6",
+    "vuex": "^3.0.1",
+    "xhr": "^2.5.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.0.3",
+    "@vue/cli-plugin-eslint": "^3.0.3",
+    "@vue/cli-plugin-pwa": "^3.0.3",
+    "@vue/cli-service": "^3.0.3",
+    "@vue/eslint-config-standard": "^3.0.3",
+    "dotenv": "^6.1.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "standard": "^12.0.1",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/standard"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}

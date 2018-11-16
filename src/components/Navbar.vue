@@ -1,0 +1,89 @@
+<template>
+  <nav  id="nav" class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <div class="navbar-item">
+          <router-link 
+            :to="{ path: '/' }" 
+            exact-active-class="noop" 
+            class="navbar-item">
+            <h1 class="is-primary">
+              <img src="https://s3.amazonaws.com/steemmonsters/website/sm_logo_beta.png"/>
+            </h1>
+          </router-link>
+        </div>
+        <div class="navbar-item">
+          <router-link 
+            v-if="isAdmin" 
+            to="/settings" 
+            class="navbar-item is-primary">
+            Settings
+          </router-link>
+        </div>
+
+        <a role="button" class="navbar-burger" :class="{ 'is-active': menuActive }" aria-label="menu" aria-expanded="false" @click="toggleMenu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="navbar-menu" :class="{ 'is-active': menuActive }">
+        <div class="navbar-start">
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item is-expanded tr">
+              <p v-if="auth.accessToken" class="tr">
+                <Avatar :author="auth.username" size="small"></Avatar>
+                {{ auth.username }} (<a @click="logout">logout</a>)
+              </p>
+
+              <p v-if="!auth.accessToken" class="tr is-right">
+                <a class="button is-primary has-text-white" :href="loginURL">
+                  Connect
+                </a>
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script>
+import steem from '../services/steem.service'
+import { mapState } from 'vuex'
+
+import Avatar from '@/components/Avatar.vue'
+
+export default {
+  name: 'Navbar',
+  components: {
+    Avatar
+  },
+  data () {
+    return {
+      loginURL: steem.connect.getLoginURL(),
+      menuActive: false
+    }
+  },
+  computed: {
+    isAdmin () {
+      return this.$store.state.auth.roles.includes('admin')
+    },
+    ...mapState(['auth'])
+  },
+  methods: {
+    toggleMenu () {
+      this.menuActive = !this.menuActive
+    },
+    logout () {
+      this.$store.commit('auth/logout')
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+</style>
