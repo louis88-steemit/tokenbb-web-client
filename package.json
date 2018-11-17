@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run serve",
     "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
-    "serve": "vue-cli-service serve --host 0.0.0.0",
+    "serve": "vue-cli-service serve --host 0.0.0.0 --port 3000",
     "build": "vue-cli-service build",
     "lint": "standard --fix",
     "test": "npm run lint",
@@ -18,12 +18,15 @@
   },
   "dependencies": {
     "@steemit/steem-js": "^0.7.2",
+    "@vue/cli-service": "^3.0.3",
     "buefy": "^0.6.7",
     "bulma-extensions": "^3.0.0",
     "es6-promisify": "^6.0.0",
+    "jwt-decode": "^2.2.0",
     "koa": "^2.6.2",
     "koa-send": "^5.0.0",
     "koa-static": "^5.0.0",
+    "mini-toastr": "^0.8.1",
     "moment": "^2.22.2",
     "register-service-worker": "^1.0.0",
     "request": "^2.88.0",
@@ -32,12 +35,12 @@
     "steem-networks": "^1.0.2",
     "steemconnect": "^2.0.1",
     "vue": "^2.5.17",
+    "vue-notifications": "^0.9.0",
     "vue-router": "^3.0.1",
     "vue-sanitize": "^0.2.0",
     "vue2-editor": "^2.6.6",
     "vuex": "^3.0.1",
-    "xhr": "^2.5.0",
-    "@vue/cli-service": "^3.0.3"
+    "xhr": "^2.5.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",

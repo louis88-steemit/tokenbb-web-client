@@ -1,50 +1,93 @@
-import steem from '@/services/steem.service'
-import api from '@/services/api.service'
-import router from '@/router'
-import { ACCESS_TOKEN_KEY, USERNAME_KEY } from '@/constants'
+import jwtdecode from 'jwt-decode'
 
 export default {
   namespaced: true,
   state: {
-    accessToken: '',
     username: '',
-    roles: []
+    user: '',
+    accounts: [],
+    level: '',
+    current: 'anon'
   },
   mutations: {
-    setRoles (state, roles = []) {
-      state.roles = roles
+    init (state, store) {
+      window.BTSSO.init({
+        product: 'tokenbb'
+      })
+      window.BTSSO.on('user', (user) => {
+        store.commit('auth/setUser', user)
+      })
+      window.BTSSO.on('username', (username) => {
+        store.commit('auth/setUsername', username)
+      })
+      window.BTSSO.on('level', (level) => {
+        store.commit('auth/setLevel', level)
+      })
+      window.BTSSO.on('accounts', (accounts) => {
+        store.commit('auth/setAccounts', accounts)
+      })
+      window.BTSSO.on('error', (e) => {
+        console.error(e)
+      })
+      window.BTSSO.on('needsSetup', function () {
+        window.BTSSO.setup()
+      })
+    },
+    addSteemAccount () {
+      window.BTSSO.addSteemAccount()
     },
     logout (state) {
-      window.sessionStorage.removeItem(ACCESS_TOKEN_KEY)
-      window.sessionStorage.removeItem(USERNAME_KEY)
-
-      state.accessToken = ''
       state.username = ''
-      state.roles = []
+      window.BTSSO.logout()
     },
-    storeSession () {
-      window.sessionStorage.setItem(ACCESS_TOKEN_KEY, router.currentRoute.query.access_token)
-      window.sessionStorage.setItem(USERNAME_KEY, router.currentRoute.query.username)
-
-      router.replace('/')
+    toggleAccountModal () {
+      window.BTSSO.modal()
     },
-    loadSession (state) {
-      var accessToken = window.sessionStorage.getItem(ACCESS_TOKEN_KEY)
-      var username = window.sessionStorage.getItem(USERNAME_KEY)
-
-      if (accessToken && username) {
-        steem.connect.setAccessToken(accessToken)
-
-        state.accessToken = accessToken
-        state.username = username
+    getAccountManageLink () {
+      return window.BTSSO.getAccountManageLink()
+    },
+    setUser (state, user) {
+      state.user = user
+      if (!user) {
+        state.accounts = []
+        state.current = 'anon'
       }
-    }
+    },
+    setUsername (state, username) {
+      state.username = username
+    },
+    setLevel (state, level) {
+      state.level = level
+    },
+    setAccounts (state, accounts) {
+      state.accounts = accounts
+      const current = accounts[0].account || 'steem'
+      console.log(`Using first account ${current}`)
+      state.current = current
+    },
+  },
+  computed: {
+    decoded () {
+      try {
+        return jwtdecode(this.user)
+      } catch (e) {
+        return null
+      }
+    },
+    loading () {
+      return this.user === false
+    },
+    authenticated () {
+      return !!this.user
+    },
   },
   actions: {
-    async listRoles ({ commit }) {
-      var roles = await api.listRoles()
-
-      commit('setRoles', roles)
+  },
+  notifications: {
+    showLoginError: { // You can have any name you want instead of 'showLoginError'
+      title: 'Login Failed',
+      message: 'Failed to authenticate',
+      type: 'error' // You also can use 'VueNotifications.types.error' instead of 'error'
     }
   }
 }

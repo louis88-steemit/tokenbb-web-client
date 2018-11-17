@@ -26,10 +26,10 @@ export default {
   },
   mounted () {
     this.$nextTick(function () {
-      if (this.$route.query.access_token) this.storeSession()
+
+      this.$store.commit('auth/init', this.$store)
 
       var promises = [
-        this.loadSession(),
         this.fetchTopics(),
         this.fetchCategories()
       ]
@@ -40,15 +40,6 @@ export default {
     })
   },
   methods: {
-    storeSession () {
-      this.$store.commit('auth/storeSession')
-    },
-    loadSession () {
-      this.$store.commit('auth/loadSession')
-      if (this.$store.state.auth.accessToken) {
-        return this.$store.dispatch('auth/listRoles')
-      }
-    },
     fetchTopics () {
       return this.$store.dispatch('topics/fetchAll')
     },

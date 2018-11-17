@@ -3,9 +3,9 @@
     <div class="container">
       <div class="navbar-brand">
         <div class="navbar-item">
-          <router-link 
-            :to="{ path: '/' }" 
-            exact-active-class="noop" 
+          <router-link
+            :to="{ path: '/' }"
+            exact-active-class="noop"
             class="navbar-item">
             <h1 class="is-primary">
               <img src="https://s3.amazonaws.com/steemmonsters/website/sm_logo_beta.png"/>
@@ -13,9 +13,9 @@
           </router-link>
         </div>
         <div class="navbar-item">
-          <router-link 
-            v-if="isAdmin" 
-            to="/settings" 
+          <router-link
+            v-if="isAdmin"
+            to="/settings"
             class="navbar-item is-primary">
             Settings
           </router-link>
@@ -34,13 +34,13 @@
 
         <div class="navbar-end">
           <div class="navbar-item is-expanded tr">
-              <p v-if="auth.accessToken" class="tr">
-                <Avatar :author="auth.username" size="small"></Avatar>
-                {{ auth.username }} (<a @click="logout">logout</a>)
+              <p v-if="auth.username" class="tr">
+                <Avatar :author="auth.current" size="small"></Avatar>
+                {{ auth.current }} (<a @click="logout">logout</a>)
               </p>
 
-              <p v-if="!auth.accessToken" class="tr is-right">
-                <a class="button is-primary has-text-white" :href="loginURL">
+              <p v-if="!auth.username" class="tr is-right">
+                <a class="button is-primary has-text-white" @click="login">
                   Connect
                 </a>
               </p>
@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     isAdmin () {
-      return this.$store.state.auth.roles.includes('admin')
+      return this.$store.state.auth.level.includes('admin')
     },
     ...mapState(['auth'])
   },
@@ -80,6 +80,9 @@ export default {
     },
     logout () {
       this.$store.commit('auth/logout')
+    },
+    login () {
+      this.$store.commit('auth/toggleAccountModal')
     }
   }
 }
