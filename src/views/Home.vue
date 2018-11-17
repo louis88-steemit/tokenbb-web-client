@@ -12,9 +12,9 @@
 
       <div class="level-right">
         <div class="level-item">
-          <router-link 
-            v-if="loggedIn" 
-            to="/new" 
+          <router-link
+            v-if="loggedIn"
+            to="/new"
             class="button is-primary has-icon">
             New Topic
           </router-link>
@@ -22,9 +22,9 @@
       </div>
     </nav>
 
-    <b-table 
-      :loading="fetching" 
-      :data="topicList" 
+    <b-table
+      :loading="fetching"
+      :data="topicList"
       :row-class="getRowClass"
       :mobile-cards="false"
       striped>
@@ -32,10 +32,10 @@
       <template slot-scope="props">
         <b-table-column field="icon" width="0px" >
           <div class=" has-text-center" style="width: 100%">
-          <b-icon 
-            v-if="props.row.pinned" 
-            icon="pin" 
-            size="is-small">  
+          <b-icon
+            v-if="props.row.pinned"
+            icon="pin"
+            size="is-small">
           </b-icon>
           </div>
         </b-table-column>
@@ -104,7 +104,7 @@ export default {
       'categoriesById'
     ]),
     loggedIn () {
-      return this.$store.state.auth.accessToken
+      return this.$store.state.auth.username
     },
     topicList () {
       if (!this.selectedCategoryId) {

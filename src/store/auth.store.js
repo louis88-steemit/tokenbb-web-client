@@ -60,8 +60,8 @@ export default {
       state.level = level
     },
     setAccounts (state, accounts) {
-      state.accounts = accounts
-      const current = accounts[0].account || 'steem'
+      state.accounts = accounts.map(account => account.account)
+      const current = state.accounts[0] || 'anon'
       console.log(`Using first account ${current}`)
       state.current = current
     },

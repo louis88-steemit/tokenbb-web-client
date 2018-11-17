@@ -22,8 +22,8 @@
         </div>
       </header>
 
-      <article 
-        v-if="!editing" 
+      <article
+        v-if="!editing"
         class="content has-text-left"
         v-html="$sanitize(data.body)">
       </article>
@@ -40,15 +40,15 @@
 
         <b-field>
           <p class="control">
-            <a class="button is-primary" 
-              :class="{ 'is-loading': this.fetching }" 
+            <a class="button is-primary"
+              :class="{ 'is-loading': this.fetching }"
               @click="onSave">
               Save
             </a>
           </p>
 
           <p class="control">
-            <a class="button" 
+            <a class="button"
               :disabled="this.fetching"
               @click="onCancel">
               Cancel
@@ -76,9 +76,9 @@
                 </b-icon>
                 <span>Edit</span>
               </a>
-              <Upvote 
+              <Upvote
                 :votes="data.active_votes"
-                :author="data.author" 
+                :author="data.author"
                 :permlink="data.permlink">
               </Upvote>
             </p>
@@ -119,7 +119,7 @@ export default {
   },
   computed: {
     editable () {
-      return this.data.author === this.$store.state.auth.username
+      return this.$store.state.auth.accounts.includes(this.data.author)
     }
   },
   mounted () {

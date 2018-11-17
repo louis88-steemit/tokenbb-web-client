@@ -1,7 +1,7 @@
 <template>
   <div v-if="isAdmin()">
-    <b-select 
-      placeholder="Moderator actions" 
+    <b-select
+      placeholder="Moderator actions"
       v-model="selected"
       @input="onSelect"
       size="is-small"
@@ -11,7 +11,7 @@
       </option>
     </b-select>
   </div>
-  
+
 </template>
 
 <script>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     isAdmin () {
-      return this.$store.state.auth.roles.includes('admin')
+      return this.$store.state.auth.level.includes('admin')
     },
     onSelect (item) {
       item.callback()
@@ -129,7 +129,7 @@ export default {
     this.selected = this.options[0]
 
     if (!this.isReply) {
-      var action = this.post.pinned 
+      var action = this.post.pinned
         ? this.actions.unpin
         : this.actions.pin
 

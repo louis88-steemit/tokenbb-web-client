@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="!loggedIn && !hidden">
-      <a class="button is-primary is-outlined" :href="loginURL">
+      <a class="button is-primary is-outlined" @click="login">
         {{ text || 'Login to reply' }}
       </a>
     </div>
@@ -24,7 +24,12 @@ export default {
   },
   computed: {
     loggedIn () {
-      return this.$store.state.auth.accessToken
+      return this.$store.state.auth.username
+    }
+  },
+  methods: {
+    login () {
+      this.$store.commit('auth/toggleAccountModal')
     }
   }
 }
