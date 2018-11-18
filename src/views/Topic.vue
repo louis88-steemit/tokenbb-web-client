@@ -12,7 +12,7 @@
 
         <CategoryTag :categoryId="topic.metadata.tokenbb.category">
         </CategoryTag>
-      
+
       </header>
 
       <br>
@@ -20,14 +20,14 @@
       <main ref="posts">
         <Post :data="topic"></Post>
 
-        <Post v-for="reply in topic.replies" 
+        <Post v-for="reply in topic.replies"
           :data="reply"
-          :isReply="true">  
+          :isReply="true">
         </Post>
       </main>
 
       <ShowIfLoggedIn>
-        <ReplyForm 
+        <ReplyForm
           :fetching="$store.state.replies.fetching"
           :text="replyText"
           @input="onReplyInput"
@@ -39,9 +39,9 @@
   </div>
 </template>
 
-<style> 
+<style>
 .spacer {
-  height: 300px; 
+  height: 300px;
 }
 </style>
 
@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     ...mapState('categories', [
-      'categoriesById'
+      'categoriesBySlug'
     ])
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
       })
     },
     categoryFromId (id) {
-      return (this.categoriesById[id] || { name: '' }).name
+      return ( this.categoriesBySlug[id] || { name: '' }).name
     }
   }
 }

@@ -16,7 +16,7 @@
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
-                :selectedId="selectedCategoryId"
+                :selectedSlug="selectedCategorySlug"
                 :labelForAll="'Uncategorized'">
               </CategoryDropdown>
             </b-field>
@@ -63,14 +63,14 @@ export default {
   data () {
     return {
       fetching: false,
-      selectedCategoryId: null,
+      selectedCategorySlug: null,
       title: '',
       content: ''
     }
   },
   methods: {
     onSubmit () {
-      if (!this.selectedCategoryId) {
+      if (!this.selectedCategorySlug) {
         return this.$toast.open({
           type: 'is-danger',
           message: 'Please select a category'
@@ -79,7 +79,7 @@ export default {
 
       var payload = {
         title: this.title,
-        category: this.selectedCategoryId,
+        category: this.selectedCategorySlug,
         content: this.content
       }
 
@@ -102,8 +102,8 @@ export default {
           this.fetching = false
         })
     },
-    onSelectCategory (categoryId) {
-      this.selectedCategoryId = categoryId
+    onSelectCategory (categorySlug) {
+      this.selectedCategorySlug = categorySlug
     },
     handleTextChange (text) {
       this.content = text

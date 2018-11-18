@@ -58,25 +58,11 @@ function postToTopic (post) {
 }
 
 async function getTopic (author, permlink) {
-  var promises = [
-    api.getValidTopic(author, permlink),
-    steem.getTopic(author, permlink)
-  ]
+  throw Error('Implement this with api call to db and redirect')
 
-  var [ valid, topic ] = await Promise.all(promises)
-
-  if (!valid) return null
-
-  var replies = valid.replies.map(valid => {
-    var post = topic.replies.find(post => {
-      return post.author === valid.author && post.permlink === valid.permlink
-    })
-
-    return Object.assign(post, valid)
-  })
-
-  replies = exposePostsMetadata(replies)
-
+  const valid = await api.getValidTopic(author, permlink)
+  const replies = exposePostsMetadata(valid)
+  let topic = {}
   topic.categoryId = valid.categoryId
   topic.pinned = valid.pinned
   topic.replies = replies
@@ -95,16 +81,7 @@ function deleteTopic (topic) {
 }
 
 function createTopic (author, category, title, content) {
-  var message = {
-    permlink: permlinkFrom(title),
-    author,
-    category,
-    title,
-    content
-  }
-
-  return steem.broadcastTopic(message)
-    .then(topic => api.publishTopic(topic).then(() => topic))
+  return api.publishTopic(category, author, title, content)
 }
 
 function createReply (parent, author, content) {
@@ -128,18 +105,6 @@ function permlinkFrom (text) {
 
 function removeSpecialChars (str) {
   return str.replace(/[^\w\s]/gi, '')
-}
-
-function filterInvalidPosts (validPosts, posts) {
-  var permlinks = validPosts.map(vt => vt.permlink)
-  var authors = validPosts.map(vt => vt.author)
-
-  return posts.filter(topic => {
-    return (
-      permlinks.includes(topic.permlink) &&
-      authors.includes(topic.author)
-    )
-  })
 }
 
 function exposePostsMetadata (posts) {

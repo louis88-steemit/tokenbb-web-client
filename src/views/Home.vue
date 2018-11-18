@@ -101,7 +101,7 @@ export default {
       'list'
     ]),
     ...mapState('categories', [
-      'categoriesById'
+      'categoriesBySlug'
     ]),
     loggedIn () {
       return this.$store.state.auth.username

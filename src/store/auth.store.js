@@ -1,4 +1,5 @@
 import jwtdecode from 'jwt-decode'
+import steem from '@/services/steem.service'
 
 export default {
   namespaced: true,
@@ -51,6 +52,8 @@ export default {
       if (!user) {
         state.accounts = []
         state.current = 'anon'
+      } else {
+        steem.token = user
       }
     },
     setUsername (state, username) {

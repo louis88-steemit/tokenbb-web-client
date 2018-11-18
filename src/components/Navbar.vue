@@ -52,7 +52,6 @@
 </template>
 
 <script>
-import steem from '../services/steem.service'
 import { mapState } from 'vuex'
 
 import Avatar from '@/components/Avatar.vue'
@@ -64,7 +63,6 @@ export default {
   },
   data () {
     return {
-      loginURL: steem.connect.getLoginURL(),
       menuActive: false
     }
   },

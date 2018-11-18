@@ -1,27 +1,8 @@
-import steem from '@steemit/steem-js'
-import { promisify } from 'es6-promisify'
-import networks from 'steem-networks'
-import steemconnect from 'steemconnect'
-import { CLIENT_URL, STACK_NAME, CONNECT_API_URL } from '@/constants'
-
-var getContentAsync = promisify(steem.api.getContent)
-var getContentRepliesAsync = (author, permlink) => steem.api.callAsync('get_content_replies', [ author, permlink ])
+import api from '@/services/api.service'
 
 class SteemService {
   constructor () {
-    this.stackName = STACK_NAME
-    this.network = networks['main']
-
-    this.parentPost = {
-      author: 'tkbb.' + this.stackName,
-      permlink: 'tokenbb-' + this.stackName + '-topics'
-    }
-
-    steem.api.setOptions({ url: this.network.rpc })
-    steem.config.set('address_prefix', this.network.prefix)
-    steem.config.set('chain_id', this.network.chainId)
-
-    this.connect = this._createConnectAPI()
+    this.token = null
   }
 
   getTopic (author, permlink) {
@@ -40,9 +21,7 @@ class SteemService {
   }
 
   listAllTopics () {
-    var { author, permlink } = this.parentPost
-
-    return getContentRepliesAsync(author, permlink)
+    return api.listValidTopics()
   }
 
   listReplies (author, permlink) {
@@ -61,41 +40,6 @@ class SteemService {
     ]
 
     return this._broadcast(args)
-  }
-
-  broadcastTopic (topic) {
-    var operations = [
-      ['comment', {
-        parent_author: this.parentPost.author,
-        parent_permlink: this.parentPost.permlink,
-        author: topic.author,
-        permlink: topic.permlink,
-        title: topic.title,
-        body: topic.content,
-        json_metadata: JSON.stringify(this._createPostMetadata(topic))
-      }],
-      ['comment_options', {
-        'author': topic.author,
-        'permlink': topic.permlink,
-        'allow_votes': true,
-        'allow_curation_rewards': true,
-        'max_accepted_payout': '1000000.000 SBD',
-        'percent_steem_dollars': 5000, // 50%
-        'extensions': [
-          [0, {
-            'beneficiaries': [{
-              'account': 'tokenbb',
-              'weight': 1000 // (10%)
-            }]
-          }]
-        ]
-      }]
-    ]
-
-    var fn = promisify(this.connect.broadcast).bind(this.connect)
-
-    return fn(operations)
-      .then(() => this.getTopic(topic.author, topic.permlink))
   }
 
   broadcastReply (parent, reply) {
@@ -165,18 +109,7 @@ class SteemService {
     })
   }
 
-  _createConnectAPI () {
-    var api = steemconnect.Initialize({
-      app: 'tkbc.' + this.stackName,
-      callbackURL: CLIENT_URL,
-      accessToken: 'access_token',
-      scope: [ 'comment', 'vote', 'comment_options' ]
-    })
 
-    api.setBaseURL(CONNECT_API_URL)
-
-    return api
-  }
 }
 
 export default new SteemService()

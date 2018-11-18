@@ -22,7 +22,7 @@ const ALL = { name: 'All Categories' }
 
 export default {
   props: [
-    'selectedId',
+    'selectedSlug',
     'labelForAll'
   ],
   data () {
@@ -32,25 +32,25 @@ export default {
     }
   },
   watch: {
-    selectedId (value) {
-      this.selected = this.categoriesById[this.selectedId] 
+    selectedSlug ( value) {
+      this.selected = this.categoriesBySlug[value]
     }
   },
   computed: {
     allCategories () {
-      return this.labelForAll 
-        ? Object.assign(this.all, { name: this.labelForAll }) 
+      return this.labelForAll
+        ? Object.assign(this.all, { name: this.labelForAll })
         : this.all
     },
     ...mapState('categories', [
       'fetching',
       'categoryList',
-      'categoriesById'
+      'categoriesBySlug'
     ])
   },
   methods: {
     onChange (value) {
-      this.$emit('change', value.id || null)
+      this.$emit('change', value.slug || null)
     }
   }
 }
