@@ -18,35 +18,35 @@ export default {
 }
 
 function unpin (topic) {
-  var opts = {
+  const opts = {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/topics/' + topic.id + '/pinned'
-  }
+    url: API_URL + '/topics/' + topic.id + '/pinned',
+  };
 
   return requestAsync(opts)
 }
 
 function pin (topic) {
   console.log(topic)
-  var opts = {
+  const opts = {
     method: 'PUT',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/topics/' + topic.id + '/pinned'
-  }
+    url: API_URL + '/topics/' + topic.id + '/pinned',
+  };
 
   return requestAsync(opts)
 }
 
 function listRoles () {
-  var opts = {
+  const opts = {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/roles'
-  }
+    url: API_URL + '/roles',
+  };
 
   return requestAsync(opts)
 }
@@ -73,52 +73,52 @@ function listCategories () {
 }
 
 function addCategory (name) {
-  var opts = {
+  const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories/' + name
-  }
+    url: API_URL + '/categories/' + name,
+  };
 
   return requestAsync(opts)
 }
 
 function removeCategory (name) {
-  var opts = {
+  const opts = {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories/' + name
-  }
+    url: API_URL + '/categories/' + name,
+  };
 
   return requestAsync(opts)
 }
 
 function listValidTopics (category) {
-  var url = API_URL + '/topics'
+  let url = API_URL + '/topics';
 
   if (category) url = API_URL + `${category}/topics`
 
-  var opts = {
+  const opts = {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url
-  }
+    url,
+  };
 
   return requestAsync(opts)
 }
 
 function listValidReplies (post) {
   var { author, permlink } = post
-  var url = API_URL + `/replies?author=${author}&permlink=${permlink}`
+  const url = API_URL + `/replies?author=${author}&permlink=${permlink}`;
 
-  var opts = {
+  const opts = {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url
-  }
+    url,
+  };
 
   return requestAsync(opts)
 }
@@ -140,7 +140,7 @@ function publishTopic (category, author, title, body) {
 function publishReply (parent, message) {
   var { author, permlink } = message
 
-  var opts = {
+  const opts = {
     method: 'POST',
     url: API_URL + `/replies`,
     json: true,
@@ -148,20 +148,20 @@ function publishReply (parent, message) {
     body: {
       parent,
       author,
-      permlink
-    }
-  }
+      permlink,
+    },
+  };
 
   return requestAsync(opts)
 }
 
 function getValidTopic (author, permlink) {
-  var opts = {
+  const opts = {
     method: 'GET',
     url: API_URL + `/topics/${author}/${permlink}`,
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-  }
+  };
 
   return requestAsync(opts)
     .catch(err => {

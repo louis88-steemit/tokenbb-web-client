@@ -16,7 +16,7 @@
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
-                :selectedSlug="selectedCategorySlug"
+                :selectedId="selectedCategoryId"
                 :labelForAll="'Uncategorized'">
               </CategoryDropdown>
             </b-field>
@@ -53,6 +53,7 @@ form {
 <script>
 import TextEditor from '@/components/TextEditor.vue'
 import CategoryDropdown from '@/components/CategoryDropdown.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'new-topic',
@@ -63,14 +64,19 @@ export default {
   data () {
     return {
       fetching: false,
-      selectedCategorySlug: null,
+      selectedCategoryId: null,
       title: '',
       content: ''
     }
   },
+  computed: {
+    ...mapState('categories', [
+      'categoriesById'
+    ])
+  },
   methods: {
     onSubmit () {
-      if (!this.selectedCategorySlug) {
+      if (!this.selectedCategoryId) {
         return this.$toast.open({
           type: 'is-danger',
           message: 'Please select a category'
@@ -79,7 +85,7 @@ export default {
 
       var payload = {
         title: this.title,
-        category: this.selectedCategorySlug,
+        category: this.categoriesById[this.selectedCategoryId].slug,
         content: this.content
       }
 
@@ -87,7 +93,7 @@ export default {
 
       this.$store.dispatch('topics/createTopic', payload)
         .then(topic => {
-          this.$router.push(`/topics/${topic.author}/${topic.permlink}`)
+          this.$router.push(`/`)
           this.$toast.open({
             message: 'Your topic has been posted.',
             type: 'is-primary'
@@ -102,8 +108,8 @@ export default {
           this.fetching = false
         })
     },
-    onSelectCategory (categorySlug) {
-      this.selectedCategorySlug = categorySlug
+    onSelectCategory (selectedId) {
+      this.selectedCategoryId = selectedId
     },
     handleTextChange (text) {
       this.content = text

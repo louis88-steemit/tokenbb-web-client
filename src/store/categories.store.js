@@ -5,7 +5,7 @@ export default {
   state: {
     fetching: true,
     categoryList: [],
-    categoriesBySlug: {}
+    categoriesById: {}
   },
   mutations: {
     setFetching (state, fetching) {
@@ -15,14 +15,14 @@ export default {
       state.categoryList.push(category)
     },
     remove (state, category) {
-      var index = state.categoryList.findIndex(c => c.slug === category.slug)
-      delete state.categoriesBySlug[category.slug]
+      const index = state.categoryList.findIndex( c => c._id === category._id );
+      delete state.categoriesById[category._id]
       state.categoryList.splice(index, 1)
     },
     updateCategoryList (state, categories) {
       state.categoryList = categories
       categories.forEach(category => {
-        state.categoriesBySlug[category.slug] = category
+        state.categoriesById[category._id] = category
       })
     }
   },

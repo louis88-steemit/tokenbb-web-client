@@ -36,13 +36,14 @@ export default {
   },
   actions: {
     createTopic ({ commit }, { title, category, content }) {
-      var author = this.state.auth.username
+      var author = this.state.auth.current
 
       return postService.createTopic(author, category, title, content)
         .then(topic => {
-          commit('addTopic', topic)
+          console.log(topic)
+          commit('addTopic', topic.data)
 
-          return topic
+          return topic.data
         })
     },
     fetchAll ({ commit }) {

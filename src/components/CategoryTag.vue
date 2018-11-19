@@ -10,15 +10,15 @@
 import { mapState, mapGetters } from 'vuex'
 export default {
   props: {
-    categorySlug: String
+    categoryId: String
   },
   computed: {
     ...mapState({
-      categoriesBySlug: state => state.categories.categoriesBySlug
+      categoriesById: state => state.categories.categoriesById
     }),
     category () {
-      const bySlug = this.categoriesBySlug || {}
-      const category = bySlug[this.categorySlug]
+      const byId = this.categoriesById || {}
+      const category = byId[this.categoryId]
       const name = category ? category.name : 'oops'
 
       return name

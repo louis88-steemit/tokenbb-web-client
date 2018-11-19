@@ -10,7 +10,7 @@
           {{ topic.title }}
         </h2>
 
-        <CategoryTag :categoryId="topic.metadata.tokenbb.category">
+        <CategoryTag :categoryId="topic.category">
         </CategoryTag>
 
       </header>
