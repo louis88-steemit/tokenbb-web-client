@@ -45,7 +45,7 @@
           </router-link>
         </b-table-column>
         <b-table-column field="author" label="Author">
-          <Avatar :author="props.row.author" size="medium"></Avatar>
+          <Avatar :author="props.row.author.user" size="medium"></Avatar>
         </b-table-column>
         <b-table-column field="categoryId" label="Category">
           <CategoryTag :categoryId="props.row.categoryId">
@@ -144,7 +144,7 @@ export default {
       })
     },
     topicRoute (topic) {
-      return `/topics/${topic.author}/${topic.permlink}`
+      return `/topics/${topic.author.user}/${topic.permlink}`
     }
   }
 }

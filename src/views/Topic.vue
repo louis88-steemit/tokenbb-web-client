@@ -10,7 +10,7 @@
           {{ topic.title }}
         </h2>
 
-        <CategoryTag :categoryId="topic.category">
+        <CategoryTag :categoryId="topic.categoryId">
         </CategoryTag>
 
       </header>

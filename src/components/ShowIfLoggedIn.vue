@@ -10,17 +10,11 @@
 </template>
 
 <script>
-import steem from '@/services/steem.service'
 
 export default {
   props: {
     text: String,
     hidden: Boolean
-  },
-  data () {
-    return {
-      loginURL: steem.connect.getLoginURL()
-    }
   },
   computed: {
     loggedIn () {

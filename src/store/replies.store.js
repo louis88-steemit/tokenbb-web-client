@@ -14,7 +14,7 @@ export default {
     submitReply ({ commit }, { parent, content }) {
       commit('setFetching', true)
 
-      var author = this.state.auth.username
+      var author = this.state.auth.current
 
       return postService.createReply(parent, author, content)
         .then(reply => {

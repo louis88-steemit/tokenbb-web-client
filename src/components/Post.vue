@@ -1,14 +1,14 @@
 <template>
   <div class="post columns is-mobile">
     <div class="column is-narrow">
-      <Avatar :author="data.author" size="large"></Avatar>
+      <Avatar :author="data.author.user" size="large"></Avatar>
     </div>
 
     <div class="column is-8 post-body">
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <strong>{{ data.author }}</strong>
+            <strong>{{ data.author.user }}</strong>
             <br>
           </div>
         </div>
@@ -66,7 +66,7 @@
           </div>
           <div class="level-item">
             <p class="buttons">
-
+              <!--
               <a v-if="editable && !editing"
                 @click="onStartEditing"
                 class="button is-small has-icon">
@@ -76,11 +76,13 @@
                 </b-icon>
                 <span>Edit</span>
               </a>
+
               <Upvote
-                :votes="data.active_votes"
+                :votes="[]"
                 :author="data.author"
                 :permlink="data.permlink">
               </Upvote>
+              -->
             </p>
           </div>
         </div>

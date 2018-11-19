@@ -1,6 +1,5 @@
 import steem from '@/services/steem.service'
 import api from '@/services/api.service'
-import Moment from 'moment'
 
 export default {
   listTopics,
@@ -17,24 +16,24 @@ async function listTopics (category) {
 }
 
 function postToTopic (post) {
-  console.log(post)
-
   return {
     id: post.id,
     pinned: post.pinned,
     hidden: post.hidden,
     categoryId: post.category,
-    author: post.author.user,
+    author: post.author,
     permlink: post.steem.permlink,
     title: post.title,
-    body: post.body
+    body: post.body,
+    steem: post.steem,
+    replies: post.replies
   }
 }
 
 async function getTopic (author, permlink) {
   // throw Error('Implement this with api call to db and redirect')
   const topic = await api.getValidTopic(author, permlink)
-  return topic
+  return postToTopic(topic.data)
 }
 
 function editPost (post, content) {
@@ -50,7 +49,7 @@ function createTopic (author, category, title, content) {
 }
 
 function createReply (parent, author, content) {
-  var title = `re: ${parent.title} ${Date.now()}`
+  var title = `re: ${parent.title}}`
   var message = {
     author,
     title,
@@ -58,8 +57,7 @@ function createReply (parent, author, content) {
     content
   }
 
-  return steem.broadcastReply(parent, message)
-    .then(reply => api.publishReply(parent, message).then(() => reply))
+  return api.publishReply(parent, message).then((result) => result.data)
 }
 
 // -----------------------------------------------------------------------------

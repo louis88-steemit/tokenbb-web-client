@@ -7,22 +7,21 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-export default {
+  import { mapState } from 'vuex';
+
+  export default {
   props: {
-    categoryId: String
+    categoryId: String,
   },
   computed: {
     ...mapState({
-      categoriesById: state => state.categories.categoriesById
+      category (state) {
+        const byId = state.categories.categoriesById || {}
+        const category = byId[this.categoryId]
+        return category ? category.name : 'oops'
+      }
     }),
-    category () {
-      const byId = this.categoriesById || {}
-      const category = byId[this.categoryId]
-      const name = category ? category.name : 'oops'
 
-      return name
-    }
   },
   methods: {
     categoryRoute (id) {
