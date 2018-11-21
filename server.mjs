@@ -14,7 +14,9 @@ app.use(async (ctx, next) => {
 });
 
 /* serve production build files */
-app.use(serve('dist'));
+app.use(serve('dist', {
+  maxage: 0,
+}));
 
 /* serve index.html for all 404 routes */
 app.use(async (ctx) => {
