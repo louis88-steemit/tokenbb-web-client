@@ -128,8 +128,9 @@ export default {
     next()
   },
   mounted () {
-    this.$store.dispatch('topics/fetchAll')
-    this.selectedCategoryId = this.$router.currentRoute.query.category || null
+    this.$store.dispatch('categories/fetchAll')
+      .then(()=>this.$store.dispatch('topics/fetchAll'))
+      .then(()=>this.selectedCategoryId = this.$router.currentRoute.query.category || null)
   },
   data () {
     return {

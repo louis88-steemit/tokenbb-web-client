@@ -29,23 +29,10 @@ export default {
 
       this.$store.commit('auth/init', this.$store)
 
-      var promises = [
-        this.fetchTopics(),
-        this.fetchCategories()
-      ]
-
-      Promise.all(promises).then(() => {
-        this.loaded = true
-      })
+      this.$store.dispatch('categories/fetchAll')
+        .then(() => this.$store.dispatch('topics/fetchAll'))
+        .then(() => this.loaded = true)
     })
-  },
-  methods: {
-    fetchTopics () {
-      return this.$store.dispatch('topics/fetchAll')
-    },
-    fetchCategories () {
-      return this.$store.dispatch('categories/fetchAll')
-    }
   }
 }
 </script>
