@@ -89,8 +89,10 @@ export default {
 
       this.$store.dispatch('replies/submitReply', payload)
         .then(reply => {
-          this.topic.replies.push(reply)
-          this.replyText = ''
+          if(reply) {
+            this.topic.replies.push( reply )
+            this.replyText = ''
+          }
         })
     },
     fetchTopic () {
