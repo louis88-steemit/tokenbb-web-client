@@ -140,8 +140,6 @@ function publishTopic (category, author, title, body) {
 function publishReply (parent, message) {
   var { author, permlink, content } = message
 
-  console.log(parent)
-
   const opts = {
     method: 'POST',
     url: API_URL + `/topics/${parent.steem.author}/${parent.steem.permlink}/reply`,
