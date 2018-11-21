@@ -15,11 +15,11 @@ if (process.env.NODE_ENV === 'production') {
     },
     updatefound (registration) {
       console.log('New content is downloading.')
-      registration.update()
-      registration.unregister()
     },
     updated (registration) {
       console.log('New content is available; please refresh.')
+      registration.update()
+      registration.unregister()
       ServiceWorkerGlobalScope.skipWaiting()
       Clients.claim()
     },
