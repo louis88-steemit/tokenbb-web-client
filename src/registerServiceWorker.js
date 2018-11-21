@@ -18,8 +18,7 @@ export function registerSW( reloadCallback ) {
       },
       updated( registration ) {
         console.log( 'New content is available; please refresh.' )
-        console.log( registration.waiting, registration.active, registration )
-        registration.waiting.skipWaiting().then(reloadCallback);
+        reloadCallback();
       },
       offline() {
         console.log( 'No internet connection found. App is running in offline mode.' )
