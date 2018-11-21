@@ -16,9 +16,12 @@ if (process.env.NODE_ENV === 'production') {
     updatefound (registration) {
       console.log('New content is downloading.')
       registration.update()
+      registration.unregister()
     },
     updated (registration) {
       console.log('New content is available; please refresh.')
+      ServiceWorkerGlobalScope.skipWaiting()
+      Clients.claim()
     },
     offline () {
       console.log('No internet connection found. App is running in offline mode.')
