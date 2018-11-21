@@ -26,7 +26,9 @@ function postToTopic (post) {
     title: post.title,
     body: post.body,
     steem: post.steem,
-    replies: post.replies
+    replies: post.replies,
+    numberOfReplies: post.meta.replies,
+    lastReply: post.meta.last_reply
   }
 }
 
