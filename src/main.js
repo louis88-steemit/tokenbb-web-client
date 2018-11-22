@@ -10,9 +10,9 @@ import VueNotifications from 'vue-notifications'
 import miniToastr from 'mini-toastr'
 
 import sanitize from './plugins/sanitize.js'
-import {registerSW } from './registerServiceWorker'
+import { registerSW } from './registerServiceWorker'
 
-registerSW(window.location.reload)
+registerSW()
 
 Vue.config.productionTip = false
 

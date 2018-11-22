@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker'
-export function registerSW( reloadCallback ) {
+export function registerSW() {
   if (process.env.NODE_ENV === 'production') {
     register( `${process.env.BASE_URL}service-worker.js`, {
       ready() {
@@ -18,7 +18,6 @@ export function registerSW( reloadCallback ) {
       },
       updated( registration ) {
         console.log( 'New content is available; please refresh.' )
-        reloadCallback();
       },
       offline() {
         console.log( 'No internet connection found. App is running in offline mode.' )
