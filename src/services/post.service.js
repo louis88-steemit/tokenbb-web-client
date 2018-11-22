@@ -28,6 +28,7 @@ function postToTopic (post) {
     steem: post.steem,
     replies: post.replies,
     numberOfReplies: post.meta.replies,
+    numberOfViews: post.meta.views,
     lastReply: post.meta.last_reply
   }
 }

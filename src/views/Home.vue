@@ -54,6 +54,9 @@
         <b-table-column field="numberOfReplies" label="Replies">
           {{ props.row.numberOfReplies }}
         </b-table-column>
+        <b-table-column field="numberOfViews" label="Views">
+          {{ props.row.numberOfViews }}
+        </b-table-column>
         <b-table-column field="numberOfReplies" label="Last Reply">
           <template v-if="props.row.numberOfReplies > 0">
             <Avatar :author="props.row.lastReply.author" size="medium"></Avatar>
