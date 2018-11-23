@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container fill">
     <h2 class="title is-4">Settings</h2>
 
     <h3 class="title is-5">Categories</h3>

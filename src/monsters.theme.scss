@@ -92,6 +92,12 @@ $text-strong: white;
   background-image: $background-image;
 }
 
+.container.fill {
+  background-color: $background;
+  border-radius: 25px;
+  padding: 20px;
+}
+
 #nav {
   background-color: #002a30;
   background: linear-gradient(to bottom, #002a30 0%, #004851 93%, #007888 100%);
@@ -140,6 +146,11 @@ a.dropdown-item:hover,
 }
 
 .quillWrapper {
+  background-color: $background;
+  color: white;
+}
+
+.ql-toolbar {
   background-color: white;
   color: black;
 }

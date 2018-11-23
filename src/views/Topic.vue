@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container fill">
     <div v-if="fetching" class="spacer">
       <b-loading :is-full-page="false" :active="fetching"></b-loading>
     </div>
