@@ -29,6 +29,7 @@ $background: #002A30;
 $family-primary: 'OpenSans', sans-serif;
 $light-blue: #00454E;
 
+$background-image: url('https://s3.amazonaws.com/steemmonsters/website/buy-cards-bg.jpg');
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
@@ -87,6 +88,10 @@ $text-strong: white;
   max-height: 2.5rem;
 }
 
+#app {
+  background-image: $background-image;
+}
+
 #nav {
   background-color: #002a30;
   background: linear-gradient(to bottom, #002a30 0%, #004851 93%, #007888 100%);
@@ -109,7 +114,7 @@ $text-strong: white;
 
 button.button, a.button {
   border-radius: 0px;
-  font-family: ruba, sans-serif; 
+  font-family: ruba, sans-serif;
 }
 
 .b-table .table {
@@ -126,7 +131,7 @@ button.button, a.button {
   color: #FCC366;
 }
 
-a.dropdown-item:hover, 
+a.dropdown-item:hover,
 .dropdown .dropdown-menu .has-link a:hover {
   background-color: #eee;
   &.is-active {
