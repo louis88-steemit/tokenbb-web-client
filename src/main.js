@@ -12,6 +12,7 @@ import miniToastr from 'mini-toastr'
 import sanitize from './plugins/sanitize.js'
 import { registerSW } from './registerServiceWorker'
 
+
 registerSW()
 
 Vue.config.productionTip = false
@@ -42,7 +43,13 @@ Vue.use(VueNotifications, options)
 
 Vue.filter('formatDate', function (value) {
   if (value) {
-    return moment(String(value)).format('MMM Do YYYY')
+    return moment.utc(String(value)).format('MMM Do YYYY')
+  }
+})
+
+Vue.filter('fromNow', function (value) {
+  if (value) {
+    return moment.utc(String(value)).fromNow()
   }
 })
 

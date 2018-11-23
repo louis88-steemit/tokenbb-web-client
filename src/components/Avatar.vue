@@ -1,12 +1,12 @@
 <template>
-  <b-tooltip 
-    :label="'@' + author" 
-    size="is-small" 
+  <b-tooltip
+    :label="'@' + author"
+    size="is-small"
     type="is-black">
     <figure class="image avatar" :class="classes">
-      <img 
+      <img
         class="is-rounded"
-        :title="author" 
+        :title="author"
         :src="avatarURL(author)">
     </figure>
   </b-tooltip>

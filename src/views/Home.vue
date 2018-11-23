@@ -59,8 +59,12 @@
         </b-table-column>
         <b-table-column field="numberOfReplies" label="Last Reply">
           <template v-if="props.row.numberOfReplies > 0">
+            {{ props.row.lastReply.time | fromNow }}
+          </template>
+        </b-table-column>
+        <b-table-column field="numberOfReplies" label="User">
+          <template v-if="props.row.numberOfReplies > 0">
             <Avatar :author="props.row.lastReply.author" size="medium"></Avatar>
-            {{ props.row.lastReply.preview }}
           </template>
         </b-table-column>
       </template>
