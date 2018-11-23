@@ -5,6 +5,7 @@ import requestAsync from 'request-promise'
 export default {
   unpin,
   pin,
+  hide,
   listRoles,
   // deleteTopic,
   listCategories,
@@ -22,19 +23,29 @@ function unpin (topic) {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/topics/' + topic.id + '/pinned',
+    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
   };
 
   return requestAsync(opts)
 }
 
 function pin (topic) {
-  console.log(topic)
   const opts = {
     method: 'PUT',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/topics/' + topic.id + '/pinned',
+    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
+  };
+
+  return requestAsync(opts)
+}
+
+function hide (topic) {
+  const opts = {
+    method: 'DELETE',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/hide`,
   };
 
   return requestAsync(opts)
@@ -45,7 +56,7 @@ function listRoles () {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/roles',
+    url: API_URL + '/',
   };
 
   return requestAsync(opts)

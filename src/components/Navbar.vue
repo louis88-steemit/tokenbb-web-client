@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     isAdmin () {
-      return this.$store.state.auth.level.includes('admin')
+      return this.$store.state.auth.admin
     },
     ...mapState(['auth'])
   },

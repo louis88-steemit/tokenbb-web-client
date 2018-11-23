@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     isAdmin () {
-      return this.$store.state.auth.level.includes('admin')
+      return this.$store.state.auth.admin
     },
     onSelect (item) {
       item.callback()
@@ -48,12 +48,14 @@ export default {
             this.$store.commit('topics/pin', this.post)
 
             this.$toast.open({
-              message: 'The topic is been pinned.',
+              message: 'The topic has been pinned.',
               type: 'is-primary'
             })
+            router.push({name: 'home'})
           } catch (err) {
+            const result = err.error.message;
             this.$toast.open({
-              message: 'Failed to pin the topic',
+              message: `Failed to pin the topic: ${result}`,
               type: 'is-danger'
             })
           }
@@ -70,19 +72,19 @@ export default {
           this.loading = true
 
           try {
-            console.log(this.post)
             await api.unpin(this.post)
 
             this.$store.commit('topics/unpin', this.post)
 
             this.$toast.open({
-              message: 'The topic is been unpinned.',
+              message: 'The topic has been unpinned.',
               type: 'is-primary'
             })
+            router.push({name: 'home'})
           } catch (err) {
-            console.error(err)
+            const result = err.error.message;
             this.$toast.open({
-              message: 'Failed to unpin the topic',
+              message: `Failed to unpin the topic: ${result}`,
               type: 'is-danger'
             })
           }
@@ -90,7 +92,34 @@ export default {
           this.loading = false
         }
       })
-    }
+    },
+    hideTopic () {
+      this.$dialog.confirm({
+        message: 'This will hide the post from users. ' +
+                 'Are you sure you want to do this?',
+        onConfirm: async () => {
+          this.loading = true
+
+          try {
+            await api.hide(this.post)
+
+            this.$toast.open({
+              message: 'The post has been hidden.',
+              type: 'is-primary'
+            })
+            router.push({name: 'home'})
+          } catch (err) {
+            const result = err.error.message;
+            this.$toast.open({
+              message: `Failed to hide the post: ${result}`,
+              type: 'is-danger'
+            })
+          }
+
+          this.loading = false
+        }
+      })
+    },
   },
   data () {
     return {
@@ -102,13 +131,7 @@ export default {
         },
         {
           name: 'Hide this post',
-          callback: () => {
-            this.$dialog.confirm({
-              message: 'This will hide the post from users. ' +
-                'Are you sure you want to do this?',
-              onConfirm: () => this.$toast.open('User confirmed')
-            })
-          }
+          callback: this.hideTopic
         }
       ],
       selected: null,

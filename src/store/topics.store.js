@@ -16,6 +16,7 @@ export default {
       pinned.pinned = true
 
       this.commit('topics/reorder')
+      this.dispatch('topics/fetchAll')
     },
     unpin (state, topic) {
       var pinned = state.topicList.find(t => t.id === topic.id)
@@ -23,6 +24,7 @@ export default {
       pinned.pinned = false
 
       this.commit('topics/reorder')
+      this.dispatch('topics/fetchAll')
     },
     setFetching (state, fetching) {
       state.fetching = fetching
