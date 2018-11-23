@@ -83,12 +83,17 @@ function listCategories () {
   })
 }
 
-function addCategory (name) {
+function addCategory (name, title, description) {
   const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories/' + name,
+    url: API_URL + '/categories/',
+    body: {
+      name,
+      title,
+      description
+    }
   };
 
   return requestAsync(opts)

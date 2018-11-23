@@ -14,7 +14,7 @@
         </div>
         <div class="navbar-item">
           <router-link
-            v-if="isAdmin"
+            v-if="this.$store.state.auth.admin"
             to="/settings"
             class="navbar-item is-primary">
             Settings
@@ -67,9 +67,6 @@ export default {
     }
   },
   computed: {
-    isAdmin () {
-      return this.$store.state.auth.admin
-    },
     ...mapState(['auth'])
   },
   methods: {

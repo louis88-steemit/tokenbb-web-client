@@ -27,10 +27,10 @@ export default {
     }
   },
   actions: {
-    add ({ commit }, name) {
+    add ({ commit }, name, title, description) {
       commit('setFetching', true)
 
-      apiService.addCategory(name)
+      apiService.addCategory(name, title, description)
         .then(category => {
           commit('add', category)
           commit('setFetching', false)
