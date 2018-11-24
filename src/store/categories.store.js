@@ -27,7 +27,7 @@ export default {
     }
   },
   actions: {
-    add ({ commit }, name, title, description) {
+    add ({ commit }, { name, title, description }) {
       commit('setFetching', true)
 
       apiService.addCategory(name, title, description)
