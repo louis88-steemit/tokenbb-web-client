@@ -14,6 +14,26 @@ import { registerSW } from './registerServiceWorker'
 
 registerSW()
 
+const contextMap = {
+  default: {theme: 'theme-default', forum: 'support'},
+  monsters: {theme: 'theme-monsters', forum: 'monsters'},
+  localhost: {theme: 'theme-monsters', forum: 'monsters'},
+};
+let context = contextMap.default;
+const subs = (new URL(window.location)).hostname.split('.');
+if(contextMap.hasOwnProperty(subs[0])){
+  context = contextMap[subs[0]];
+}else {
+  if(subs.length >= 2){
+    if(subs[1] === 'tokenbb'){
+      context.forum = subs[0];
+    }
+  }
+}
+console.log(`Loading TokenBB on ${context.forum} with ${context.theme}`)
+document.documentElement.className = `${context.theme}`;
+global.forumname = context.forum;
+
 Vue.config.productionTip = false
 
 Vue.use(Buefy)

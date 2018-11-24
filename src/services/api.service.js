@@ -1,5 +1,4 @@
 import steem from '@/services/steem.service'
-import { API_URL } from '@/constants'
 import requestAsync from 'request-promise'
 
 export default {
@@ -18,12 +17,16 @@ export default {
   getValidTopic
 }
 
+function apiURL() {
+  return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`
+}
+
 function unpin (topic) {
   const opts = {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
+    url: apiURL() + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
   };
 
   return requestAsync(opts)
@@ -34,7 +37,7 @@ function pin (topic) {
     method: 'PUT',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
+    url: apiURL() + `/topics/${topic.steem.author}/${topic.steem.permlink}/pin`,
   };
 
   return requestAsync(opts)
@@ -45,7 +48,7 @@ function hide (topic) {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + `/topics/${topic.steem.author}/${topic.steem.permlink}/hide`,
+    url: apiURL() + `/topics/${topic.steem.author}/${topic.steem.permlink}/hide`,
   };
 
   return requestAsync(opts)
@@ -56,7 +59,7 @@ function listRoles () {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/',
+    url: apiURL() + '/',
   };
 
   return requestAsync(opts)
@@ -67,7 +70,7 @@ function listRoles () {
 //     method: 'DELETE',
 //     json: true,
 //     headers: { authorization: steem.token },
-//     url: API_URL + '/api//topics',
+//     url: apiURL() + '/api//topics',
 //     body: topic
 //   }
 
@@ -79,7 +82,7 @@ function listCategories () {
     method: 'GET',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories'
+    url: apiURL() + '/categories'
   })
 }
 
@@ -88,7 +91,7 @@ function addCategory (name, title, description) {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories/',
+    url: apiURL() + '/categories/',
     body: {
       name,
       title,
@@ -104,16 +107,16 @@ function removeCategory (name) {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: API_URL + '/categories/' + name,
+    url: apiURL() + '/categories/' + name,
   };
 
   return requestAsync(opts)
 }
 
 function listValidTopics (category) {
-  let url = API_URL + '/topics';
+  let url = apiURL() + '/topics';
 
-  if (category) url = API_URL + `${category}/topics`
+  if (category) url = apiURL() + `${category}/topics`
 
   const opts = {
     method: 'GET',
@@ -127,7 +130,7 @@ function listValidTopics (category) {
 
 function listValidReplies (post) {
   var { author, permlink } = post
-  const url = API_URL + `/replies?author=${author}&permlink=${permlink}`;
+  const url = apiURL() + `/replies?author=${author}&permlink=${permlink}`;
 
   const opts = {
     method: 'GET',
@@ -142,7 +145,7 @@ function listValidReplies (post) {
 function publishTopic (category, author, title, body) {
   return requestAsync({
     method: 'POST',
-    url: `${API_URL}/${category}/topics`,
+    url: `${apiURL()}/${category}/topics`,
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     body: {
@@ -158,7 +161,7 @@ function publishReply (parent, message) {
 
   const opts = {
     method: 'POST',
-    url: API_URL + `/topics/${parent.steem.author}/${parent.steem.permlink}/reply`,
+    url: apiURL() + `/topics/${parent.steem.author}/${parent.steem.permlink}/reply`,
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     body: {
@@ -174,7 +177,7 @@ function publishReply (parent, message) {
 function getValidTopic (author, permlink) {
   const opts = {
     method: 'GET',
-    url: API_URL + `/topics/${author}/${permlink}`,
+    url: apiURL() + `/topics/${author}/${permlink}`,
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
   };

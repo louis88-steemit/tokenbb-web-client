@@ -15,11 +15,7 @@
 <script>
 import Navbar from './components/Navbar.vue'
 
-const themeMap = {
-  default: 'theme-default',
-  monsters: 'theme-monsters',
-  localhost: 'theme-monsters',
-};
+
 
 export default {
   components: {
@@ -33,13 +29,6 @@ export default {
   },
   mounted () {
     this.$nextTick(function () {
-
-      const theme = (new URL(window.location)).hostname.split('.')[0];
-      if(themeMap.hasOwnProperty(theme)){
-        this.theme = themeMap[theme];
-      }
-      console.log(this.theme)
-      document.documentElement.className = `${this.theme}`;
 
       this.$store.commit('auth/init', this.$store)
 
