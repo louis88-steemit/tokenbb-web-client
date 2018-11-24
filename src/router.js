@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Settings from './views/Settings.vue'
+import NewForum from './views/NewForum.vue'
+import NewTopic from './views/NewTopic.vue'
+import Topic from './views/Topic.vue'
 import NotFound from './views/NotFound.vue'
 
 Vue.use(Router)
@@ -17,21 +21,26 @@ var router = new Router({
     {
       path: '/settings',
       name: 'settings',
-      component: () => import('./views/Settings.vue')
+      component: Settings
+    },
+    {
+      path: '/create-forum',
+      name: 'create-forum',
+      component: NewForum
     },
     {
       path: '/new',
       name: 'new-topic',
-      component: () => import('./views/NewTopic.vue')
+      component: NewTopic
     },
     {
       path: '/topics/:author/:permlink',
       name: 'topic',
-      component: () => import('./views/Topic.vue')
+      component: Topic
     },
     {
       path: '/404',
-      name: '404',
+      name: 'not-found',
       component: NotFound
     },
     {

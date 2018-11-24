@@ -8,6 +8,7 @@ export default {
   listRoles,
   // deleteTopic,
   listCategories,
+  createForum,
   addCategory,
   removeCategory,
   listValidTopics,
@@ -84,6 +85,20 @@ function listCategories () {
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories'
   })
+}
+
+function createForum (name) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${process.env.VUE_APP_API_HOST}/v1/forum/`,
+    body: {
+      name,
+    }
+  };
+
+  return requestAsync(opts)
 }
 
 function addCategory (name, title, description) {
