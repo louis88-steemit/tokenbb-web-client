@@ -26,6 +26,8 @@
         </Post>
       </main>
 
+      <br>
+
       <ShowIfLoggedIn>
         <ReplyForm
           :fetching="$store.state.replies.fetching"
@@ -38,12 +40,6 @@
 
   </div>
 </template>
-
-<style>
-.spacer {
-  height: 300px;
-}
-</style>
 
 <script>
 import { mapState } from 'vuex'

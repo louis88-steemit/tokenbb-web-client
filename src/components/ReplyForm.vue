@@ -1,7 +1,7 @@
 <template>
-  <form @submit.prevent="$emit('submit')">
+  <form @submit.prevent="$emit('submit')" class="new-reply">
     <b-field>
-      <TextEditor 
+      <TextEditor
         :fetching="fetching"
         @input="handleTextChange">
       </TextEditor>
@@ -18,11 +18,6 @@
     </b-field>
   </form>
 </template>
-
-<style lang="scss" scoped>
-form { width: 640px; }
-textarea { width: 450px; }
-</style>
 
 <script>
 import TextEditor from '@/components/TextEditor.vue'

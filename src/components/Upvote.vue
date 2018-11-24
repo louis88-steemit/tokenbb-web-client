@@ -1,12 +1,12 @@
 <template>
-  <ShowIfLoggedIn :hidden="true">
+  <ShowIfLoggedIn :hidden="true" class="upvote">
     <b-dropdown position="is-top-right" hoverable>
       <div class="field has-addons" slot="trigger">
         <p class="control">
           <a class="button is-small is-static">{{ votes.length }}</a>
         </p>
         <p class="control">
-          <a class="button is-primary is-small" 
+          <a class="button is-primary is-small"
             :class="{ 'is-loading': this.fetching }"
             @click="handleClick">
             <span>Upvote</span>
@@ -26,31 +26,19 @@
               <input class="slider is-primary is-circle"
                 ref="slider"
                 @input="handleChange"
-                step="1" 
-                min="0" 
+                step="1"
+                min="0"
                 max="100"
                 :value="percent"
                 type="range">
             </div>
           </div>
         </div>
-        
+
       </b-dropdown-item>
     </b-dropdown>
   </ShowIfLoggedIn>
 </template>
-
-<style lang="scss" scoped>
-.vertical {
-  display: flex;
-  align-items: center; 
-  min-width: 3rem;
-}
-.popover {
-  width: 12rem;
-}
-</style>
-
 
 <script>
 import steem from '@/services/steem.service.js'

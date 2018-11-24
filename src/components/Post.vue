@@ -92,18 +92,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import '@/variables.scss';
-
-.post {
-  margin-bottom: 2rem;
-}
-
-.post-body {
-  border-bottom: 1px solid $post-border-color;
-}
-</style>
-
 <script>
 import Avatar from '@/components/Avatar.vue'
 import Upvote from '@/components/Upvote.vue'

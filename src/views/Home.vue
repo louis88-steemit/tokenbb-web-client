@@ -73,27 +73,6 @@
   </div>
 </template>
 
-<style lang="scss">
-@import '@/variables.scss';
-
-.b-table tr.pinned {
-  color: $pinned-color;
-  background-color: $pinned-background-color;
-  a {
-    color: $pinned-color;
-  }
-  a:hover {
-    color: $pinned-color;
-  }
-}
-tr.pinned td > span > a {
-  font-weight: bold;
-}
-tr.pinned td > span > a > span.tag {
-  font-weight: normal;
-}
-</style>
-
 <script>
 import CategoryTag from '@/components/CategoryTag.vue'
 import { mapState } from 'vuex'

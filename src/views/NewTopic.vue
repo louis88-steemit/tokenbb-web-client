@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container fill">
     <h2 class="title is-2">Create a New Topic</h2>
 
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" class="new-topic">
       <div class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
@@ -43,12 +43,6 @@
     </form>
   </div>
 </template>
-
-<style scoped>
-form {
-  width: 500px;
-}
-</style>
 
 <script>
 import TextEditor from '@/components/TextEditor.vue'

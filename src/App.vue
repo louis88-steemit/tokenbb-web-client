@@ -8,8 +8,8 @@
 </template>
 
 <style lang="scss">
-@import "./theme.scss";
-@import "./monsters.theme.scss";
+@import "./themes/default.scss";
+@import "./themes/monsters.scss";
 </style>
 
 <script>
