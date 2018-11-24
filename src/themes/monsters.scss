@@ -79,6 +79,8 @@
   $strong-color: white;
   $text-strong: white;
 
+  $logo: url("https://s3.amazonaws.com/steemmonsters/website/sm_logo_beta.png");
+
   // Import Bulma and Buefy styles
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
@@ -87,6 +89,10 @@
   .navbar-brand img {
     height: 100%;
     max-height: 2.5rem;
+  }
+
+  .logo {
+    content:$logo;
   }
 
   background-image: $background-image;

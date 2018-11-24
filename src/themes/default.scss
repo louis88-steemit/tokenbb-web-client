@@ -2,10 +2,12 @@
   // Import Bulma's core
   @import "~bulma/sass/utilities/_all";
 
+  @import "./global/variables.scss";
+
   // Set your colors
-  $primary: #8c67ef;
+  $primary: #0008ef;
   $primary-invert: findColorInvert($primary);
-  $twitter: #4099FF;
+  $twitter: #6562ff;
   $twitter-invert: findColorInvert($twitter);
 
   @import "./global/variables.scss";
@@ -24,10 +26,14 @@
           "twitter": ($twitter, $twitter-invert)
   );
 
+  $background: rgb(7, 47, 0);
+
   // Links
   $link: $primary;
   $link-invert: $primary-invert;
   $link-focus-border: $primary;
+
+  $logo: url("https://tokenbb.bt-stage.com/favicon.ico");
 
   // Import Bulma and Buefy styles
   @import "~bulma";
@@ -40,15 +46,36 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .logo {
+    content:$logo;
+  }
+
   #nav {
-    padding: 30px;
+    background-color: #002a30;
+    background: linear-gradient(to bottom, #080530 0%, #392651 93%, #888587 100%);
+    color: #bbb;
+    font-family: ruba, sans-serif;
+
+    // padding: 30px;
     a {
       font-weight: bold;
-      color: #2c3e50;
+      color: #bbb;
       &.router-link-exact-active {
-        color: #42b983;
+        color: $primary;
       }
     }
+  }
+
+  .container.fill {
+    background-color: $background;
+    background: linear-gradient(to bottom, #080530 0%, #392651 53%, #888587 100%);
+    border-radius: 25px;
+    padding: 20px;
+  }
+
+  .quillWrapper {
+    background-color: $background;
+    color: white;
   }
 
   .b-table tr.pinned {

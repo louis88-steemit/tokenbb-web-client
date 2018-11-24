@@ -15,9 +15,9 @@ import { registerSW } from './registerServiceWorker'
 registerSW()
 
 const contextMap = {
-  default: {theme: 'theme-default', forum: 'support'},
-  monsters: {theme: 'theme-monsters', forum: 'monsters'},
-  localhost: {theme: 'theme-monsters', forum: 'monsters'},
+  default: {theme: 'theme-default', forum: 'support', icon: 'favicon.ico'},
+  monsters: {theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png'},
+  // localhost: {theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png'},
 };
 let context = contextMap.default;
 const subs = (new URL(window.location)).hostname.split('.');
@@ -33,6 +33,14 @@ if(contextMap.hasOwnProperty(subs[0])){
 console.log(`Loading TokenBB on ${context.forum} with ${context.theme}`)
 document.documentElement.className = `${context.theme}`;
 global.forumname = context.forum;
+
+(function() {
+  var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = `${process.env.VUE_APP_BASE_URL}/${context.icon}`;
+  document.getElementsByTagName('head')[0].appendChild(link);
+})();
 
 Vue.config.productionTip = false
 

@@ -8,7 +8,7 @@
             exact-active-class="noop"
             class="navbar-item">
             <h1 class="is-primary">
-              <img src="https://s3.amazonaws.com/steemmonsters/website/sm_logo_beta.png"/>
+              <img class="logo"/>
             </h1>
           </router-link>
         </div>
