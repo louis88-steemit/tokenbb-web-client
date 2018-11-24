@@ -12,7 +12,6 @@ import miniToastr from 'mini-toastr'
 import sanitize from './plugins/sanitize.js'
 import { registerSW } from './registerServiceWorker'
 
-
 registerSW()
 
 Vue.config.productionTip = false
