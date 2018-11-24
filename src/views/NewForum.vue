@@ -51,9 +51,9 @@ export default {
 
       this.fetching = true
 
-      api.createForum(this.name, this.slug)
+      api.createForum(this.name)
         .then((forum) => {
-          window.location = forum.data.slug + '.' + (new URL(process.env.VUE_APP_BASE_URL)).hostname;
+          window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}`;
         })
         .catch(err => {
           console.error(err)
