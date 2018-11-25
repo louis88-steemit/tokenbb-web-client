@@ -79,8 +79,8 @@
               -->
               <Upvote
                 :votes="[]"
-                :author="data.author.user"
-                :permlink="data.permlink">
+                :author="data.steem.author"
+                :permlink="data.steem.permlink">
               </Upvote>
             </p>
           </div>
