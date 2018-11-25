@@ -67,6 +67,13 @@
             <Avatar :author="props.row.lastReply.author" size="medium"></Avatar>
           </template>
         </b-table-column>
+        <b-table-column field="numberOfVotes" label="Votes">
+          <Upvote
+                  :votes="[]"
+                  :author="props.row.steem.author"
+                  :permlink="props.row.steem.permlink">
+          </Upvote>
+        </b-table-column>
       </template>
 
     </b-table>
@@ -78,12 +85,14 @@ import CategoryTag from '@/components/CategoryTag.vue'
 import { mapState } from 'vuex'
 
 import CategoryDropdown from '@/components/CategoryDropdown.vue'
+import Upvote from '@/components/Upvote.vue'
 import Avatar from '@/components/Avatar.vue'
 
 export default {
   name: 'home',
   components: {
     CategoryDropdown,
+    Upvote,
     Avatar,
     CategoryTag
   },

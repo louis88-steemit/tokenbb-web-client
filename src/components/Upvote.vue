@@ -3,17 +3,17 @@
     <b-dropdown position="is-top-right" hoverable>
       <div class="field has-addons" slot="trigger">
         <p class="control">
-          <a class="button is-small is-static">{{ value }}</a>
+          <a class="button is-small is-static has-text-black">{{ value }}</a>
         </p>
         <p class="control">
-          <a class="button is-small is-static">{{ votes.length }}</a>
+          <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
         </p>
         <p class="control">
           <a class="button is-primary is-small"
             :class="{ 'is-loading': this.fetching }"
              :disabled="this.voted"
             @click="handleClick">
-            <span>Upvote</span>
+            <!--<span>Upvote</span>-->
             <b-icon icon="arrow-up-drop-circle-outline" size="is-small">
             </b-icon>
           </a>
@@ -64,7 +64,7 @@ export default {
     return {
       percent: 10,
       fetching: false,
-      value: "0.000 SBD",
+      value: "0.000",
       votes: [],
       voted: false,
     }
@@ -78,7 +78,7 @@ export default {
     },
     async updateValue () {
       const data = await steem.getContent(this.author, this.permlink);
-      this.value = data.pending_payout_value;
+      this.value = data.pending_payout_value.split(' ')[0];
       this.votes = data.active_votes;
       this.voted = this.votes.filter((vote) => vote.voter === this.$store.state.auth.current).length > 0;
     },
