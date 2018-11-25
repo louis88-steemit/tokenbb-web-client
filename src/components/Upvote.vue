@@ -79,7 +79,8 @@ export default {
       const data = await steem.getContent(this.author, this.permlink);
       this.value = data.pending_payout_value.split(' ')[0];
       this.votes = data.active_votes;
-      this.voted = this.votes.filter((vote) => vote.voter === this.$store.state.auth.current).length > 0;
+      this.voted = this.$store.state.auth.current === 'anon'
+        || this.votes.filter((vote) => vote.voter === this.$store.state.auth.current).length > 0;
     },
     async handleClick () {
       if(this.voted){
