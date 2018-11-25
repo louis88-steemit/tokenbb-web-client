@@ -53,7 +53,7 @@ export default {
 
       api.createForum(this.name)
         .then((forum) => {
-          window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}`;
+          window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}/settings`;
         })
         .catch(err => {
           console.error(err)
