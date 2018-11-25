@@ -1,4 +1,5 @@
-import apiService from '@/services/api.service';
+import {} from '@/services/api.service';
+import { addCategory, listCategories, removeCategory } from '../services/api.service.js';
 
 export default {
   namespaced: true,
@@ -30,7 +31,7 @@ export default {
     add( { commit }, { name, title, description } ) {
       commit( 'setFetching', true );
 
-      apiService.addCategory( name, title, description )
+      addCategory( name, title, description )
         .then( ( category ) => {
           commit( 'add', category );
           commit( 'setFetching', false );
@@ -44,7 +45,7 @@ export default {
     remove( { commit }, category ) {
       commit( 'setFetching', true );
 
-      apiService.removeCategory( category.name )
+      removeCategory( category.name )
         .then( ( categories ) => {
           commit( 'remove', category );
           commit( 'setFetching', false );
@@ -58,7 +59,7 @@ export default {
     fetchAll( { commit } ) {
       commit( 'setFetching', true );
 
-      apiService.listCategories()
+      listCategories()
         .then( ( categories ) => {
           commit( 'updateCategoryList', categories.data );
           commit( 'setFetching', false );

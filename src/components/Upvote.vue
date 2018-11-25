@@ -3,11 +3,15 @@
     <b-dropdown position="is-top-right" hoverable>
       <div class="field has-addons" slot="trigger">
         <p class="control">
+          <a class="button is-small is-static">{{ value }}</a>
+        </p>
+        <p class="control">
           <a class="button is-small is-static">{{ votes.length }}</a>
         </p>
         <p class="control">
           <a class="button is-primary is-small"
             :class="{ 'is-loading': this.fetching }"
+             :disabled="this.voted"
             @click="handleClick">
             <span>Upvote</span>
             <b-icon icon="arrow-up-drop-circle-outline" size="is-small">
@@ -41,9 +45,12 @@
 </template>
 
 <script>
-import steem from '@/services/steem.service.js'
+import {vote} from '../services/api.service.js';
+import steem from '../services/steem.service.js'
 
 import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue'
+
+import Timeout from 'await-timeout';
 
 export default {
   components: {
@@ -52,37 +59,54 @@ export default {
   props: {
     author: String,
     permlink: String,
-    votes: Array
   },
   data () {
     return {
       percent: 10,
-      fetching: false
+      fetching: false,
+      value: "0.000 SBD",
+      votes: [],
+      voted: false,
     }
+  },
+  mounted () {
+    this.updateValue();
   },
   methods: {
     handleChange () {
       this.percent = this.$refs.slider.value
     },
+    async updateValue () {
+      const data = await steem.getContent(this.author, this.permlink);
+      this.value = data.pending_payout_value;
+      this.votes = data.active_votes;
+      this.voted = this.votes.filter((vote) => vote.voter === this.$store.state.auth.current).length > 0;
+    },
     async handleClick () {
-      this.fetching = true
-
-      try {
-        await steem.vote(this.author, this.permlink, this.percent)
-        this.$toast.open({
-          message: 'Upvoted!',
-          type: 'is-primary'
-        })
-        this.votes.length++
-      } catch (err) {
-        console.error('oops!', err)
-        this.$toast.open({
-          message: 'Oops! Could not upvote at this time.',
+      if(this.voted){
+        return this.$toast.open({
+          message: 'Oops! Already voted!.',
           type: 'is-danger'
         })
       }
+      this.fetching = true;
 
-      this.fetching = false
+      try {
+        await vote(this.author, this.permlink, this.$store.state.auth.current, this.percent);
+        this.$toast.open({
+          message: 'Upvoted!',
+          type: 'is-primary'
+        });
+        await Timeout.set(3000);
+        await this.updateValue();
+      } catch (err) {
+        console.error('oops!', err);
+        this.$toast.open({
+          message: 'Oops! Could not upvote at this time. ' + err,
+          type: 'is-danger'
+        })
+      }
+      this.fetching = false;
     }
   }
 }

@@ -76,13 +76,12 @@
                 </b-icon>
                 <span>Edit</span>
               </a>
-
+              -->
               <Upvote
                 :votes="[]"
-                :author="data.author"
+                :author="data.author.user"
                 :permlink="data.permlink">
               </Upvote>
-              -->
             </p>
           </div>
         </div>
@@ -119,32 +118,32 @@ export default {
       return 'https://img.busy.org/@' + author
     },
     onStartEditing () {
-      this.text = this.data.body
+      this.text = this.data.body;
       this.editing = true
     },
     onSave () {
-      this.fetching = true
+      this.fetching = true;
 
       var payload = {
         post: this.data,
         content: this.text
-      }
+      };
 
       this.$store.dispatch('posts/editPost', payload)
         .then(post => {
-          this.data.body = post.body
-          this.editing = false
+          this.data.body = post.body;
+          this.editing = false;
           this.fetching = false
         })
         .catch(err => {
-          console.error(err)
+          console.error(err);
           this.fetching = false
         })
     },
     onCancel () {
-      if (this.fetching) return
+      if (this.fetching) return;
 
-      this.text = ''
+      this.text = '';
       this.editing = false
     }
   },

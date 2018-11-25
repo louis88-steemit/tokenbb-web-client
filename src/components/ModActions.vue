@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import api from '@/services/api.service'
+  import { hide, pin, unpin } from '../services/api.service.js';
 
-function noop () {}
+  function noop () {}
 
 export default {
   props: {
@@ -29,9 +29,9 @@ export default {
       return this.$store.state.auth.admin
     },
     onSelect (item) {
-      item.callback()
+      item.callback();
       this.$nextTick(() => {
-        this.selected = this.options[0]
+        this.selected = this.options[0];
         this.isComponentModalActive = true
       })
     },
@@ -40,17 +40,17 @@ export default {
         message: 'This will pin the topic to the top of the category. ' +
           'Are you sure you want to do this?',
         onConfirm: async () => {
-          this.loading = true
+          this.loading = true;
 
           try {
-            await api.pin(this.post)
+            await pin(this.post);
 
-            this.$store.commit('topics/pin', this.post)
+            this.$store.commit('topics/pin', this.post);
 
             this.$toast.open({
               message: 'The topic has been pinned.',
               type: 'is-primary'
-            })
+            });
             router.push({name: 'home'})
           } catch (err) {
             const result = err.error.message;
@@ -69,17 +69,17 @@ export default {
         message: 'This will unpin the topic. ' +
           'Are you sure you want to do this?',
         onConfirm: async () => {
-          this.loading = true
+          this.loading = true;
 
           try {
-            await api.unpin(this.post)
+            await unpin(this.post);
 
-            this.$store.commit('topics/unpin', this.post)
+            this.$store.commit('topics/unpin', this.post);
 
             this.$toast.open({
               message: 'The topic has been unpinned.',
               type: 'is-primary'
-            })
+            });
             router.push({name: 'home'})
           } catch (err) {
             const result = err.error.message;
@@ -98,15 +98,15 @@ export default {
         message: 'This will hide the post from users. ' +
                  'Are you sure you want to do this?',
         onConfirm: async () => {
-          this.loading = true
+          this.loading = true;
 
           try {
-            await api.hide(this.post)
+            await hide(this.post);
 
             this.$toast.open({
               message: 'The post has been hidden.',
               type: 'is-primary'
-            })
+            });
             router.push({name: 'home'})
           } catch (err) {
             const result = err.error.message;
@@ -149,12 +149,12 @@ export default {
     }
   },
   mounted () {
-    this.selected = this.options[0]
+    this.selected = this.options[0];
 
     if (!this.isReply) {
       var action = this.post.pinned
         ? this.actions.unpin
-        : this.actions.pin
+        : this.actions.pin;
 
       this.options.push(action)
     }

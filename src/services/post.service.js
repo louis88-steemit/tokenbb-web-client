@@ -1,21 +1,13 @@
 import steem from '@/services/steem.service';
-import api from '@/services/api.service';
+import { getValidTopic, listValidTopics, publishReply, publishTopic } from './api.service.js';
 
-export default {
-  listTopics,
-  getTopic,
-  editPost,
-  deleteTopic,
-  createTopic,
-  createReply,
-};
 
-async function listTopics( category ) {
-  const topics = await api.listValidTopics( category );
+export async function listTopics( category ) {
+  const topics = await listValidTopics( category );
   return topics.data.map( postToTopic );
 }
 
-function postToTopic( post ) {
+export function postToTopic( post ) {
   return {
     id: post.id,
     pinned: post.pinned,
@@ -33,26 +25,22 @@ function postToTopic( post ) {
   };
 }
 
-async function getTopic( author, permlink ) {
+export async function getTopic( author, permlink ) {
 
   // throw Error('Implement this with api call to db and redirect')
-  const topic = await api.getValidTopic( author, permlink );
+  const topic = await getValidTopic( author, permlink );
   return postToTopic( topic.data );
 }
 
-function editPost( post, content ) {
+export function editPost( post, content ) {
   return steem.broadcastPatch( Object.assign( {}, post, { content } ) );
 }
 
-function deleteTopic( topic ) {
-  return api.deleteTopic( topic );
+export function createTopic( author, category, title, content ) {
+  return publishTopic( category, author, title, content );
 }
 
-function createTopic( author, category, title, content ) {
-  return api.publishTopic( category, author, title, content );
-}
-
-function createReply( parent, author, content ) {
+export function createReply( parent, author, content ) {
   const title = `re: ${parent.title}}`;
   const message = {
     author,
@@ -61,16 +49,16 @@ function createReply( parent, author, content ) {
     content,
   };
 
-  return api.publishReply( parent, message ).then( ( result ) => result.data );
+  return publishReply( parent, message ).then( ( result ) => result.data );
 }
 
 // -----------------------------------------------------------------------------
 
-function permlinkFrom( text ) {
+export function permlinkFrom( text ) {
   return removeSpecialChars( text.toLowerCase() ).split( ' ' ).join( '-' );
 }
 
-function removeSpecialChars( str ) {
+export function removeSpecialChars( str ) {
   return str.replace( /[^\w\s]/gi, '' );
 }
 

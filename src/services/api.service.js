@@ -1,29 +1,11 @@
 import steem from '@/services/steem.service';
 import requestAsync from 'request-promise';
 
-export default {
-  unpin,
-  pin,
-  hide,
-  listRoles,
-
-  // deleteTopic,
-  listCategories,
-  createForum,
-  addCategory,
-  removeCategory,
-  listValidTopics,
-  listValidReplies,
-  publishTopic,
-  publishReply,
-  getValidTopic,
-};
-
-function apiURL() {
+export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
 }
 
-function unpin( topic ) {
+export function unpin( topic ) {
   const opts = {
     method: 'DELETE',
     json: true,
@@ -34,7 +16,7 @@ function unpin( topic ) {
   return requestAsync( opts );
 }
 
-function pin( topic ) {
+export function pin( topic ) {
   const opts = {
     method: 'PUT',
     json: true,
@@ -45,7 +27,7 @@ function pin( topic ) {
   return requestAsync( opts );
 }
 
-function hide( topic ) {
+export function hide( topic ) {
   const opts = {
     method: 'DELETE',
     json: true,
@@ -56,7 +38,22 @@ function hide( topic ) {
   return requestAsync( opts );
 }
 
-function listRoles() {
+export function vote( author, permlink, voter, weight ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: apiURL() + `/topics/${author}/${permlink}/vote`,
+    body: {
+      voter,
+      weight,
+    },
+  };
+
+  return requestAsync( opts );
+}
+
+export function listRoles() {
   const opts = {
     method: 'GET',
     json: true,
@@ -79,7 +76,7 @@ function listRoles() {
 //   return requestAsync(opts)
 // }
 
-function listCategories() {
+export function listCategories() {
   return requestAsync( {
     method: 'GET',
     json: true,
@@ -88,7 +85,7 @@ function listCategories() {
   } );
 }
 
-function createForum( name ) {
+export function createForum( name ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -102,7 +99,7 @@ function createForum( name ) {
   return requestAsync( opts );
 }
 
-function addCategory( name, title, description ) {
+export function addCategory( name, title, description ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -118,7 +115,7 @@ function addCategory( name, title, description ) {
   return requestAsync( opts );
 }
 
-function removeCategory( name ) {
+export function removeCategory( name ) {
   const opts = {
     method: 'DELETE',
     json: true,
@@ -129,7 +126,7 @@ function removeCategory( name ) {
   return requestAsync( opts );
 }
 
-function listValidTopics( category ) {
+export function listValidTopics( category ) {
   let url = apiURL() + '/topics';
 
   if ( category ) {
@@ -146,7 +143,7 @@ function listValidTopics( category ) {
   return requestAsync( opts );
 }
 
-function listValidReplies( post ) {
+export function listValidReplies( post ) {
   const { author, permlink } = post;
   const url = apiURL() + `/replies?author=${author}&permlink=${permlink}`;
 
@@ -160,7 +157,7 @@ function listValidReplies( post ) {
   return requestAsync( opts );
 }
 
-function publishTopic( category, author, title, body ) {
+export function publishTopic( category, author, title, body ) {
   return requestAsync( {
     method: 'POST',
     url: `${apiURL()}/${category}/topics`,
@@ -174,7 +171,7 @@ function publishTopic( category, author, title, body ) {
   } );
 }
 
-function publishReply( parent, message ) {
+export function publishReply( parent, message ) {
   const { author, permlink, content } = message;
 
   const opts = {
@@ -192,7 +189,7 @@ function publishReply( parent, message ) {
   return requestAsync( opts );
 }
 
-function getValidTopic( author, permlink ) {
+export function getValidTopic( author, permlink ) {
   const opts = {
     method: 'GET',
     url: apiURL() + `/topics/${author}/${permlink}`,

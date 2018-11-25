@@ -20,6 +20,7 @@
   "dependencies": {
     "@steemit/steem-js": "^0.7.2",
     "@vue/cli-service": "^3.0.3",
+    "await-timeout": "^0.3.0",
     "buefy": "^0.6.7",
     "bulma-extensions": "^3.0.0",
     "es6-promisify": "^6.0.0",

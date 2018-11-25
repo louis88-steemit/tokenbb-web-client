@@ -1,4 +1,4 @@
-import postService from '@/services/post.service';
+import { editPost } from '../services/post.service.js';
 
 export default {
   namespaced: true,
@@ -6,7 +6,7 @@ export default {
   mutations: {},
   actions: {
     editPost( { commit }, { post, content } ) {
-      return postService.editPost( post, content );
+      return editPost( post, content );
     },
   },
 };

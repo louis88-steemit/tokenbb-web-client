@@ -1,8 +1,19 @@
-import api from '@/services/api.service';
+import steem from '@steemit/steem-js'
 
 class SteemService {
   constructor() {
     this.token = null;
+  }
+
+  getContent(author, permlink) {
+    return new Promise( ( ( resolve, reject ) => {
+      steem.api.getContent( author, permlink, ( err, result ) => {
+        if ( err ) {
+          return reject( err );
+        }
+        resolve( result );
+      } );
+    } ) );
   }
 
   getTopic( author, permlink ) {
@@ -20,14 +31,6 @@ class SteemService {
       } );
   }
 
-  listAllTopics() {
-    return api.listValidTopics();
-  }
-
-  listReplies( author, permlink ) {
-    return getContentRepliesAsync( author, permlink );
-  }
-
   broadcastPatch( post ) {
     const args = [
       post.parent_author,
@@ -37,20 +40,6 @@ class SteemService {
       post.title,
       post.content,
       post.metadata,
-    ];
-
-    return this._broadcast( args );
-  }
-
-  broadcastReply( parent, reply ) {
-    const args = [
-      parent.author,
-      parent.permlink,
-      reply.author,
-      reply.permlink,
-      reply.title,
-      reply.content,
-      this._createPostMetadata( reply ),
     ];
 
     return this._broadcast( args );
@@ -87,22 +76,6 @@ class SteemService {
       } );
     } );
   }
-
-  _createPostMetadata( post ) {
-    return {
-      'app': 'tokenbb/0.1',
-      'format': 'markdown',
-      'tags': [ 'tokenbb' ],
-      'images': [],
-      'videos': [],
-      'tokenbb': {
-        'account': this.parentPost.author,
-        'category': post.category || null,
-        'tags': [],
-      },
-    };
-  }
-
   _broadcast( args ) {
     const broadcastFn = promisify( this.connect.comment ).bind( this.connect );
 

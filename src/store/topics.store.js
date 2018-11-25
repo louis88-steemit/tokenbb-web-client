@@ -1,4 +1,4 @@
-import postService from '@/services/post.service';
+import { createTopic, listTopics } from '../services/post.service.js';
 
 export default {
   namespaced: true,
@@ -40,7 +40,7 @@ export default {
     createTopic( { commit }, { title, category, content } ) {
       const author = this.state.auth.current;
 
-      return postService.createTopic( author, category, title, content )
+      return createTopic( author, category, title, content )
         .then( ( topic ) => {
           console.log( topic );
           commit( 'addTopic', topic.data );
@@ -51,7 +51,7 @@ export default {
     fetchAll( { commit } ) {
       commit( 'setFetching', true );
 
-      postService.listTopics( null )
+      listTopics( null )
         .then( ( topics ) => {
           commit( 'updateTopicList', withPinnedToTop( topics ) );
           commit( 'setFetching', false );

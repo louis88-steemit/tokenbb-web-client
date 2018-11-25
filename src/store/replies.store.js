@@ -1,4 +1,4 @@
-import postService from '@/services/post.service';
+import { createReply } from '../services/post.service.js';
 
 export default {
   namespaced: true,
@@ -16,7 +16,7 @@ export default {
 
       const author = this.state.auth.current;
 
-      return postService.createReply( parent, author, content )
+      return createReply( parent, author, content )
         .then( ( reply ) => {
           commit( 'setFetching', false );
 

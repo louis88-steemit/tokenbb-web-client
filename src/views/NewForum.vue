@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import api from '../services/api.service.js';
+import { createForum } from '../services/api.service.js';
 
 export default {
   name: 'new-forum',
@@ -51,7 +51,7 @@ export default {
 
       this.fetching = true
 
-      api.createForum(this.name)
+      createForum(this.name)
         .then((forum) => {
           window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}/settings`;
         })

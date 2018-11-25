@@ -1,6 +1,6 @@
 import jwtdecode from 'jwt-decode';
 import steem from '@/services/steem.service';
-import apiService from '../services/api.service.js';
+import { listRoles } from '../services/api.service.js';
 
 export default {
   namespaced: true,
@@ -98,7 +98,7 @@ export default {
   },
   actions: {
     fetchRoles( { commit, state } ) {
-      apiService.listRoles()
+      listRoles()
         .then( ( forum ) => {
           const isAdmin = forum.data.owners.includes( state.id );
           const isMod = isAdmin || forum.data.mods.includes( state.id );

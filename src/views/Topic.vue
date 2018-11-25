@@ -44,11 +44,11 @@
 <script>
 import { mapState } from 'vuex'
 
-import postService from '@/services/post.service'
 import Post from '@/components/Post.vue'
 import ReplyForm from '@/components/ReplyForm.vue'
 import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue'
 import CategoryTag from '@/components/CategoryTag.vue'
+import { getTopic } from '../services/post.service.js';
 
 export default {
   name: 'topic',
@@ -96,7 +96,7 @@ export default {
 
       this.fetching = true
 
-      return postService.getTopic(author, permlink).then(topic => {
+      return getTopic(author, permlink).then(topic => {
         if (!topic) return this.$router.push('/')
 
         this.topic = topic
