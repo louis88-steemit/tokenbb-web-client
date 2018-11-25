@@ -66,6 +66,10 @@ export default {
     setUsername( state, username ) {
       state.username = username;
     },
+    setCurrent( state, username ) {
+      state.current = username;
+      console.log(state.current)
+    },
     setRoles( state, { mod, admin } ) {
       state.mod = mod;
       state.admin = admin;

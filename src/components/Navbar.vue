@@ -34,9 +34,9 @@
 
         <div class="navbar-end">
           <div class="navbar-item is-expanded tr">
-              <p v-if="auth.username" class="tr">
-                <Avatar :author="auth.current" size="small"></Avatar>
-                {{ auth.current }} (<a @click="logout">logout</a>)
+              <p v-if="auth.username" class="tr is-right">
+                <AccountSwitcher></AccountSwitcher>
+                (<a @click="logout">logout</a>)
               </p>
 
               <p v-if="!auth.username" class="tr is-right">
@@ -59,14 +59,16 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
+import AccountSwitcher from '@/components/AccountSwitcher.vue'
 import Avatar from '@/components/Avatar.vue'
 
 export default {
   name: 'Navbar',
   components: {
-    Avatar
+    AccountSwitcher,
+    Avatar,
   },
   data () {
     return {
