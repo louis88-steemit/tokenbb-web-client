@@ -1,14 +1,14 @@
 <template>
   <ShowIfLoggedIn :hidden="true" class="upvote">
-    <b-dropdown position="is-top-right" hoverable>
-      <div class="field has-addons" slot="trigger">
-        <p class="control">
-          <a class="button is-small is-static has-text-black">{{ value }}</a>
-        </p>
-        <p class="control">
-          <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
-        </p>
-        <p class="control">
+    <div class="field has-addons">
+      <p class="control">
+        <a class="button is-small is-static has-text-black">{{ value }}</a>
+      </p>
+      <p class="control">
+        <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
+      </p>
+      <b-dropdown position="is-top-left" hoverable :disabled="this.voted">
+        <p class="control" slot="trigger">
           <a class="button is-primary is-small"
             :class="{ 'is-loading': this.fetching }"
              :disabled="this.voted"
@@ -18,29 +18,28 @@
             </b-icon>
           </a>
         </p>
-      </div>
 
-      <b-dropdown-item custom>
-        <div class="container popover">
-          <div class="columns">
-            <div class="column is-3 vertical">
-              <span class="percent-label">{{ percent }}%</span>
-            </div>
-            <div class="column is-6">
-              <input class="slider is-primary is-circle"
-                ref="slider"
-                @input="handleChange"
-                step="1"
-                min="0"
-                max="100"
-                :value="percent"
-                type="range">
+        <b-dropdown-item custom>
+          <div class="container popover">
+            <div class="columns">
+              <div class="column is-3 vertical">
+                <span class="percent-label">{{ percent }}%</span>
+              </div>
+              <div class="column is-6">
+                <input class="slider is-primary is-circle"
+                  ref="slider"
+                  @input="handleChange"
+                  step="1"
+                  min="0"
+                  max="100"
+                  :value="percent"
+                  type="range">
+              </div>
             </div>
           </div>
-        </div>
-
-      </b-dropdown-item>
-    </b-dropdown>
+        </b-dropdown-item>
+      </b-dropdown>
+    </div>
   </ShowIfLoggedIn>
 </template>
 
