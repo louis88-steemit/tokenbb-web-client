@@ -45,6 +45,13 @@
                 </a>
               </p>
           </div>
+          <div v-if="auth.username" class="navbar-item is-expanded tr">
+            <p class="tr is-right">
+              <a class="navbar-item is-primary" target="_blank" v-bind:href="auth.manageLink">
+                Manage
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -52,7 +59,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import Avatar from '@/components/Avatar.vue'
 
@@ -67,7 +74,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['auth'])
+    ...mapState(['auth']),
   },
   methods: {
     toggleMenu () {

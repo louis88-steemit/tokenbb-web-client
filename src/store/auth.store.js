@@ -15,6 +15,7 @@ export default {
       mod: false,
     },
     current: 'anon',
+    manageLink: '',
   },
   mutations: {
     init( state, store ) {
@@ -51,9 +52,6 @@ export default {
     toggleAccountModal() {
       window.BTSSO.modal();
     },
-    getAccountManageLink() {
-      return window.BTSSO.getAccountManageLink();
-    },
     setUser( state, user ) {
       state.user = user;
       state.id = jwtdecode( user ).user_id;
@@ -63,6 +61,7 @@ export default {
       } else {
         steem.token = user;
       }
+      state.manageLink = window.BTSSO.getAccountManageLink();
     },
     setUsername( state, username ) {
       state.username = username;
