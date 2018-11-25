@@ -12,14 +12,6 @@
             </h1>
           </router-link>
         </div>
-        <div class="navbar-item">
-          <router-link
-            v-if="this.$store.state.auth.admin"
-            to="/settings"
-            class="navbar-item is-primary">
-            Settings
-          </router-link>
-        </div>
 
         <a role="button" class="navbar-burger" :class="{ 'is-active': menuActive }" aria-label="menu" aria-expanded="false" @click="toggleMenu">
           <span aria-hidden="true"></span>
@@ -30,6 +22,24 @@
 
       <div class="navbar-menu" :class="{ 'is-active': menuActive }">
         <div class="navbar-start">
+          <div class="navbar-item is-expanded tr">
+            <p class="tr is-right">
+              <router-link
+                      v-if="auth.username"
+                      to="/new"
+                      class="button is-primary has-icon has-text-white">
+                New Topic
+              </router-link>
+            </p>
+            <p class="tr is-right">
+              <router-link
+                      v-if="auth.admin"
+                      to="/settings"
+                      class="navbar-item is-primary">
+                Settings
+              </router-link>
+            </p>
+          </div>
         </div>
 
         <div class="navbar-end">
