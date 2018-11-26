@@ -92,67 +92,69 @@
 </template>
 
 <script>
-import Avatar from '@/components/Avatar.vue'
-import Upvote from '@/components/Upvote.vue'
-import ModActions from '@/components/ModActions.vue'
+import Avatar from '@/components/Avatar.vue';
+import Upvote from '@/components/Upvote.vue';
+import ModActions from '@/components/ModActions.vue';
 
 export default {
   components: {
     Avatar,
     Upvote,
-    ModActions
+    ModActions,
   },
   props: {
     data: Object,
-    isReply: Boolean
+    isReply: Boolean,
   },
   computed: {
-    editable () {
-      return this.$store.state.auth.accounts.includes(this.data.author)
-    }
+    editable() {
+      return this.$store.state.auth.accounts.includes( this.data.author );
+    },
   },
-  mounted () {
+  mounted() {
   },
   methods: {
-    avatarURL (author) {
-      return 'https://img.busy.org/@' + author
+    avatarURL( author ) {
+      return 'https://img.busy.org/@' + author;
     },
-    onStartEditing () {
+    onStartEditing() {
       this.text = this.data.body;
-      this.editing = true
+      this.editing = true;
     },
-    onSave () {
+    onSave() {
       this.fetching = true;
 
-      var payload = {
+      const payload = {
         post: this.data,
-        content: this.text
+        content: this.text,
       };
 
-      this.$store.dispatch('posts/editPost', payload)
-        .then(post => {
+      this.$store.dispatch( 'posts/editPost', payload )
+        .then( ( post ) => {
           this.data.body = post.body;
           this.editing = false;
-          this.fetching = false
-        })
-        .catch(err => {
-          console.error(err);
-          this.fetching = false
-        })
+          this.fetching = false;
+        } )
+        .catch( ( err ) => {
+          console.error( err );
+          this.fetching = false;
+        } );
     },
-    onCancel () {
-      if (this.fetching) return;
+    onCancel() {
+      if ( this.fetching ) {
+        return;
+      }
 
       this.text = '';
-      this.editing = false
-    }
+      this.editing = false;
+    },
   },
-  data () {
+  data() {
     return {
       fetching: false,
       editing: false,
-      text: ''
-    }
-  }
-}
+      text: '',
+    };
+  },
+};
 </script>

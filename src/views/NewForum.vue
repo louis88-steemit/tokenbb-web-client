@@ -34,36 +34,36 @@ export default {
   name: 'new-forum',
   components: {
   },
-  data () {
+  data() {
     return {
       fetching: false,
       name: '',
-    }
+    };
   },
   methods: {
-    onSubmit () {
-      if (this.name.length < 3) {
-        return this.$toast.open({
+    onSubmit() {
+      if ( this.name.length < 3 ) {
+        return this.$toast.open( {
           type: 'is-danger',
-          message: 'Please write title and slug'
-        })
+          message: 'Please write title and slug',
+        } );
       }
 
-      this.fetching = true
+      this.fetching = true;
 
-      createForum(this.name)
-        .then((forum) => {
+      createForum( this.name )
+        .then( ( forum ) => {
           window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}/settings`;
-        })
-        .catch(err => {
-          console.error(err)
-          this.$toast.open({
+        } )
+        .catch( ( err ) => {
+          console.error( err );
+          this.$toast.open( {
             message: 'Oops! Could not create your forum at this moment. ' + err,
-            type: 'is-danger'
-          })
-          this.fetching = false
-        })
+            type: 'is-danger',
+          } );
+          this.fetching = false;
+        } );
     },
-  }
-}
+  },
+};
 </script>

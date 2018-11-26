@@ -14,17 +14,17 @@
 export default {
   props: {
     text: String,
-    hidden: Boolean
+    hidden: Boolean,
   },
   computed: {
-    loggedIn () {
-      return this.$store.state.auth.username
-    }
+    loggedIn() {
+      return this.$store.state.auth.username;
+    },
   },
   methods: {
-    login () {
-      this.$store.commit('auth/toggleAccountModal')
-    }
-  }
-}
+    login() {
+      this.$store.commit( 'auth/toggleAccountModal' );
+    },
+  },
+};
 </script>

@@ -77,8 +77,6 @@ Vue.filter( 'fromNow', ( value ) => {
   }
 } );
 
-global.router = router;
-
 new Vue( {
   router,
   store,

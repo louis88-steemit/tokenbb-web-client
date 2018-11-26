@@ -7,6 +7,9 @@
     },
     "parser": "babel-eslint"
   },
+  "extends": [
+    "plugin:vue/essential"
+  ],
   "env": {
     "browser": true,
     "node": true,

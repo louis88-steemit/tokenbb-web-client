@@ -91,43 +91,43 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
 export default {
   name: 'settings',
-  data () {
+  data() {
     return {
       name: '',
       title: '',
-      description: ''
-    }
+      description: '',
+    };
   },
   computed: {
-    ...mapState('categories', [
+    ...mapState( 'categories', [
       'categoryList',
-      'fetching'
-    ])
+      'fetching',
+    ] ),
   },
   methods: {
-    add () {
-      this.$store.dispatch('categories/add', {name: this.name, title: this.title, description: this.description})
-        .then(() => {
-          this.name = ''
-          this.title = ''
-          this.description = ''
-        })
-        .catch(err => {
-          console.error(err)
-          this.fetching = false
-        })
+    add() {
+      this.$store.dispatch( 'categories/add', { name: this.name, title: this.title, description: this.description } )
+        .then( () => {
+          this.name = '';
+          this.title = '';
+          this.description = '';
+        } )
+        .catch( ( err ) => {
+          console.error( err );
+          this.fetching = false;
+        } );
     },
-    remove (category) {
-      this.$store.dispatch('categories/remove', category)
-        .catch(err => {
-          console.error(err)
-          this.fetching = false
-        })
-    }
-  }
-}
+    remove( category ) {
+      this.$store.dispatch( 'categories/remove', category )
+        .catch( ( err ) => {
+          console.error( err );
+          this.fetching = false;
+        } );
+    },
+  },
+};
 </script>

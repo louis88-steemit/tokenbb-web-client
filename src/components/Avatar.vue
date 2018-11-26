@@ -16,23 +16,23 @@
 const SIZES = {
   small: 'is-16x16',
   medium: 'is-32x32',
-  large: 'is-48x48'
-}
+  large: 'is-48x48',
+};
 
 export default {
   props: {
     author: String,
-    size: String
+    size: String,
   },
   computed: {
-    classes () {
-      return SIZES[this.size]
-    }
+    classes() {
+      return SIZES[this.size];
+    },
   },
   methods: {
-    avatarURL (author) {
-      return 'https://img.busy.org/@' + author
-    }
-  }
-}
+    avatarURL( author ) {
+      return 'https://img.busy.org/@' + author;
+    },
+  },
+};
 </script>

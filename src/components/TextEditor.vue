@@ -1,5 +1,5 @@
 <template>
-  <VueEditor 
+  <VueEditor
     v-model="content"
     @input="handleTextChange"
     :disabled="fetching"
@@ -8,30 +8,30 @@
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor'
+import { VueEditor } from 'vue2-editor';
 
 export default {
   components: {
-    VueEditor
+    VueEditor,
   },
   props: {
-    fetching: Boolean
+    fetching: Boolean,
   },
-  data () {
+  data() {
     return {
       content: '',
       customToolbar: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+        [ { 'header': [ 1, 2, 3, 4, 5, 6, false ] } ],
         [ 'bold', 'italic', 'underline' ],
         [ { 'list': 'ordered' }, { 'list': 'bullet' } ],
-        [ 'code-block' ]
-      ]
-    }
+        [ 'code-block' ],
+      ],
+    };
   },
   methods: {
-    handleTextChange (value) {
-      this.$emit('input', value)
-    }
-  }
-}
+    handleTextChange( value ) {
+      this.$emit( 'input', value );
+    },
+  },
+};
 </script>

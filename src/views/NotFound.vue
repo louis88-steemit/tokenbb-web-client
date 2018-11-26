@@ -7,12 +7,12 @@
 <script>
 export default {
   name: 'not-found',
-  mounted () {
+  mounted() {
 
   },
-  data () {
+  data() {
     return {
-    }
-  }
-}
+    };
+  },
+};
 </script>
