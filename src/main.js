@@ -65,13 +65,13 @@ const options = {
 
 Vue.use( VueNotifications, options );
 
-Vue.filter( 'formatDate', function ( value ) {
+Vue.filter( 'formatDate', ( value ) => {
   if ( value ) {
     return moment.utc( String( value ) ).format( 'MMM Do YYYY' );
   }
 } );
 
-Vue.filter( 'fromNow', function ( value ) {
+Vue.filter( 'fromNow', ( value ) => {
   if ( value ) {
     return moment.utc( String( value ) ).fromNow();
   }

@@ -38,7 +38,7 @@ export default {
       window.BTSSO.on( 'error', ( e ) => {
         console.error( e );
       } );
-      window.BTSSO.on( 'needsSetup', function () {
+      window.BTSSO.on( 'needsSetup', () => {
         window.BTSSO.setup();
       } );
     },
@@ -68,7 +68,7 @@ export default {
     },
     setCurrent( state, username ) {
       state.current = username;
-      console.log(state.current)
+      console.log( state.current );
     },
     setRoles( state, { mod, admin } ) {
       state.mod = mod;

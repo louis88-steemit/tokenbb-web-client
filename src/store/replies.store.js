@@ -11,12 +11,12 @@ export default {
     },
   },
   actions: {
-    submitReply( { commit }, { parent, content } ) {
+    submitReply( { commit }, { parentComment, content } ) {
       commit( 'setFetching', true );
 
       const author = this.state.auth.current;
 
-      return createReply( parent, author, content )
+      return createReply( parentComment, author, content )
         .then( ( reply ) => {
           commit( 'setFetching', false );
 

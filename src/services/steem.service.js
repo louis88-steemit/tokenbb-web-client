@@ -1,11 +1,12 @@
-import steem from '@steemit/steem-js'
+import steem from '@steemit/steem-js';
+import { promisify } from 'util';
 
 class SteemService {
   constructor() {
     this.token = null;
   }
 
-  getContent(author, permlink) {
+  getContent( author, permlink ) {
     return new Promise( ( ( resolve, reject ) => {
       steem.api.getContent( author, permlink, ( err, result ) => {
         if ( err ) {
@@ -25,7 +26,7 @@ class SteemService {
         const topic = res.content[`${author}/${permlink}`];
 
         topic.metadata = JSON.parse( topic.json_metadata );
-        topic.replies = topic.replies.map( ( permlink ) => res.content[permlink] );
+        topic.replies = topic.replies.map( ( _permlink ) => res.content[_permlink] );
 
         return topic;
       } );
@@ -46,16 +47,13 @@ class SteemService {
   }
 
   vote( author, permlink, weight = 0.01 ) {
-
-    // weight 1 to 10000 (100%)
-
-    weight *= 100;
+    // eslint-disable-next-line no-param-reassign
+    weight *= 100; // weight 1 to 10000 (100%)
 
     return new Promise( async ( resolve, reject ) => {
       const { account } = await this.me();
-      const { name } = account;
 
-      this.connect.vote( name, author, permlink, weight, ( err, res ) => {
+      this.connect.vote( account.name, author, permlink, weight, ( err, res ) => {
         if ( err ) {
           return reject( err );
         }

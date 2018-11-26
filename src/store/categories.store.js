@@ -28,10 +28,10 @@ export default {
     },
   },
   actions: {
-    add( { commit }, { name, title, description } ) {
+    add( { commit }, { categoryName, title, description } ) {
       commit( 'setFetching', true );
 
-      addCategory( name, title, description )
+      addCategory( categoryName, title, description )
         .then( ( category ) => {
           commit( 'add', category );
           commit( 'setFetching', false );
@@ -46,7 +46,7 @@ export default {
       commit( 'setFetching', true );
 
       removeCategory( category.name )
-        .then( ( categories ) => {
+        .then( () => {
           commit( 'remove', category );
           commit( 'setFetching', false );
         } )

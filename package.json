@@ -8,8 +8,8 @@
     "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
     "serve": "vue-cli-service serve --host 0.0.0.0 --port 3000",
     "build": "vue-cli-service build",
-    "pretest": "eslint --ignore-path .gitignore .",
-    "lint": "eslint --ignore-path .gitignore . --fix",
+    "pretest": "eslint .",
+    "lint": "eslint . --fix",
     "test": "npm run lint",
     "deploy": "bash scripts/deploy.sh lab",
     "postinstall": "vue-cli-service build && cp ./_secure-random.patch.js ./node_modules/secure-random/lib/secure-random.js"

@@ -85,28 +85,28 @@ export function listCategories() {
   } );
 }
 
-export function createForum( name ) {
+export function createForum( forumName ) {
   const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: `${process.env.VUE_APP_API_HOST}/v1/forum/`,
     body: {
-      name,
+      forumName,
     },
   };
 
   return requestAsync( opts );
 }
 
-export function addCategory( name, title, description ) {
+export function addCategory( categoryName, title, description ) {
   const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories/',
     body: {
-      name,
+      categoryName,
       title,
       description,
     },
@@ -115,12 +115,12 @@ export function addCategory( name, title, description ) {
   return requestAsync( opts );
 }
 
-export function removeCategory( name ) {
+export function removeCategory( categoryName ) {
   const opts = {
     method: 'DELETE',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
-    url: apiURL() + '/categories/' + name,
+    url: apiURL() + '/categories/' + categoryName,
   };
 
   return requestAsync( opts );
@@ -171,12 +171,12 @@ export function publishTopic( category, author, title, body ) {
   } );
 }
 
-export function publishReply( parent, message ) {
+export function publishReply( parentComment, message ) {
   const { author, permlink, content } = message;
 
   const opts = {
     method: 'POST',
-    url: apiURL() + `/topics/${parent.steem.author}/${parent.steem.permlink}/reply`,
+    url: apiURL() + `/topics/${parentComment.steem.author}/${parentComment.steem.permlink}/reply`,
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     body: {

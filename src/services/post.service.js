@@ -40,8 +40,8 @@ export function createTopic( author, category, title, content ) {
   return publishTopic( category, author, title, content );
 }
 
-export function createReply( parent, author, content ) {
-  const title = `re: ${parent.title}}`;
+export function createReply( parentComment, author, content ) {
+  const title = `re: ${parentComment.title}}`;
   const message = {
     author,
     title,
@@ -49,7 +49,7 @@ export function createReply( parent, author, content ) {
     content,
   };
 
-  return publishReply( parent, message ).then( ( result ) => result.data );
+  return publishReply( parentComment, message ).then( ( result ) => result.data );
 }
 
 // -----------------------------------------------------------------------------
