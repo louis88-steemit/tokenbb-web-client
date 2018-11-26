@@ -4,18 +4,15 @@
   "private": true,
   "author": "Buildteam <reggaemuffin@buildteam.io>",
   "scripts": {
-    "start": "npm run serve",
-    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
     "serve": "vue-cli-service serve --host 0.0.0.0 --port 3000",
     "build": "vue-cli-service build",
-    "pretest": "eslint .",
-    "lint": "eslint . --fix",
     "test": "npm run lint",
+    "lint": "vue-cli-service lint",
     "deploy": "bash scripts/deploy.sh lab",
-    "postinstall": "vue-cli-service build && cp ./_secure-random.patch.js ./node_modules/secure-random/lib/secure-random.js"
-  },
-  "browser": {
-    "request": "xhr"
+    "postinstall": "vue-cli-service build && cp ./_secure-random.patch.js ./node_modules/secure-random/lib/secure-random.js",
+    "pretest": "eslint .",
+    "start": "npm run serve",
+    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs"
   },
   "dependencies": {
     "@steemit/steem-js": "^0.7.2",
@@ -48,10 +45,14 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",
-    "@vue/cli-plugin-eslint": "^3.0.3",
+    "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-plugin-pwa": "^3.0.3",
     "@vue/eslint-config-standard": "^3.0.3",
+    "babel-eslint": "^10.0.1",
     "dotenv": "^6.1.0",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-0",
+    "lint-staged": "^7.2.2",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "standard": "^12.0.1",
@@ -64,7 +65,8 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "@vue/standard"
+      "@vue/standard",
+      "eslint:recommended"
     ],
     "rules": {},
     "parserOptions": {
@@ -80,5 +82,21 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "browser": {
+    "request": "xhr"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
 }
