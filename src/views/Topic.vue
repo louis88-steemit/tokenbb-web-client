@@ -81,7 +81,7 @@ export default {
     },
     onReplySubmit() {
       const payload = {
-        parent: this.topic,
+        parentComment: this.topic,
         content: this.replyText,
       };
 

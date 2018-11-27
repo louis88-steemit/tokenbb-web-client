@@ -172,7 +172,7 @@ export function publishTopic( category, author, title, body ) {
 }
 
 export function publishReply( parentComment, message ) {
-  const { author, permlink, content } = message;
+  const { author, content } = message;
 
   const opts = {
     method: 'POST',
@@ -181,7 +181,6 @@ export function publishReply( parentComment, message ) {
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     body: {
       author,
-      title: permlink,
       body: content,
     },
   };
