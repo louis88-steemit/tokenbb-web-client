@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@steemit/steem-js": "^0.7.2",
-    "@vue/cli-service": "^3.0.3",
     "await-timeout": "^0.3.0",
     "buefy": "^0.6.7",
     "bulma-extensions": "^3.0.0",
@@ -44,10 +43,6 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.3",
-    "@vue/cli-plugin-eslint": "^3.1.5",
-    "@vue/cli-plugin-pwa": "^3.0.3",
-    "@vue/eslint-config-standard": "^3.0.3",
     "babel-eslint": "^10.0.1",
     "dotenv": "^6.1.0",
     "eslint": "^5.8.0",
@@ -71,7 +66,7 @@
     "request": "xhr"
   },
   "gitHooks": {
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged || true"
   },
   "lint-staged": {
     "*.js": [

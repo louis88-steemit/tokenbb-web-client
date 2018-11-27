@@ -85,10 +85,10 @@ export default {
         content: this.replyText,
       };
 
-      this.$store.dispatch('replies/submitReply', payload)
-        .then(reply => {
-          if(reply) {
-            this.fetchTopic()
+      this.$store.dispatch( 'replies/submitReply', payload )
+        .then( ( reply ) => {
+          if ( reply ) {
+            this.fetchTopic();
           }
         } );
     },

@@ -40,7 +40,7 @@ export function createTopic( author, category, title, content ) {
   return publishTopic( category, author, title, content );
 }
 
-export function createReply( parent, author, content ) {
+export function createReply( parentComment, author, content ) {
   const message = {
     author,
     content,
