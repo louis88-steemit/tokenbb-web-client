@@ -86,8 +86,7 @@ export default {
       this.$store.dispatch('replies/submitReply', payload)
         .then(reply => {
           if(reply) {
-            this.topic.replies.push( reply )
-            this.replyText = ''
+            this.fetchTopic()
           }
         })
     },
@@ -100,6 +99,7 @@ export default {
         if (!topic) return this.$router.push('/')
 
         this.topic = topic
+        console.log(topic)
         this.fetching = false
       })
     },

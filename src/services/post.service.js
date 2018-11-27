@@ -41,24 +41,11 @@ export function createTopic( author, category, title, content ) {
 }
 
 export function createReply( parent, author, content ) {
-  const title = `re: ${parent.title}}`;
   const message = {
     author,
-    title,
-    permlink: permlinkFrom( title ),
     content,
   };
 
   return publishReply( parent, message ).then( ( result ) => result.data );
-}
-
-// -----------------------------------------------------------------------------
-
-export function permlinkFrom( text ) {
-  return removeSpecialChars( text.toLowerCase() ).split( ' ' ).join( '-' );
-}
-
-export function removeSpecialChars( str ) {
-  return str.replace( /[^\w\s]/gi, '' );
 }
 
