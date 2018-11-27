@@ -46,6 +46,6 @@ export function createReply( parent, author, content ) {
     content,
   };
 
-  return publishReply( parent, message ).then( ( result ) => result.data );
+  return publishReply( parentComment, message ).then( ( result ) => result.data );
 }
 

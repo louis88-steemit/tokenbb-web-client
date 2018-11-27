@@ -69,13 +69,13 @@ function withPinnedToTop( topics ) {
   const pinned = [];
   const notPinned = [];
 
-  topics.forEach( ( topic, i ) => {
+  topics.forEach( ( topic ) => {
     return topic.pinned
       ? pinned.push( topic )
       : notPinned.push( topic );
   } );
 
-  notPinned.sort( function ( a, b ) {
+  notPinned.sort( ( a, b ) => {
     return b.lastUpdate - a.lastUpdate;
   } );
 

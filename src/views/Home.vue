@@ -81,12 +81,12 @@
 </template>
 
 <script>
-import CategoryTag from '@/components/CategoryTag.vue'
-import { mapState } from 'vuex'
+import CategoryTag from '@/components/CategoryTag.vue';
+import { mapState } from 'vuex';
 
-import CategoryDropdown from '@/components/CategoryDropdown.vue'
-import Upvote from '@/components/Upvote.vue'
-import Avatar from '@/components/Avatar.vue'
+import CategoryDropdown from '@/components/CategoryDropdown.vue';
+import Upvote from '@/components/Upvote.vue';
+import Avatar from '@/components/Avatar.vue';
 
 export default {
   name: 'home',
@@ -94,60 +94,62 @@ export default {
     CategoryDropdown,
     Upvote,
     Avatar,
-    CategoryTag
+    CategoryTag,
   },
   computed: {
-    ...mapState('topics', [
+    ...mapState( 'topics', [
       'fetching',
-      'list'
-    ]),
-    ...mapState('categories', [
-      'categoriesBySlug'
-    ]),
-    loggedIn () {
-      return this.$store.state.auth.username
+      'list',
+    ] ),
+    ...mapState( 'categories', [
+      'categoriesBySlug',
+    ] ),
+    loggedIn() {
+      return this.$store.state.auth.username;
     },
-    topicList () {
-      if (!this.selectedCategoryId) {
-        return this.$store.state.topics.topicList
+    topicList() {
+      if ( !this.selectedCategoryId ) {
+        return this.$store.state.topics.topicList;
       }
 
-      return this.$store.state.topics.topicList.filter(topic => {
-        return topic.categoryId === this.selectedCategoryId
-      })
+      return this.$store.state.topics.topicList.filter( ( topic ) => {
+        return topic.categoryId === this.selectedCategoryId;
+      } );
     },
   },
-  beforeRouteUpdate (to, from, next) {
-    this.selectedCategoryId = to.query.category || null
+  beforeRouteUpdate( to, from, next ) {
+    this.selectedCategoryId = to.query.category || null;
 
-    next()
+    next();
   },
-  mounted () {
-    this.$store.dispatch('categories/fetchAll')
-      .then(()=>this.$store.dispatch('topics/fetchAll'))
-      .then(()=>this.selectedCategoryId = this.$router.currentRoute.query.category || null)
+  mounted() {
+    this.$store.dispatch( 'categories/fetchAll' )
+      .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
+      .then( () => {
+        this.selectedCategoryId = this.$router.currentRoute.query.category || null;
+      } );
   },
-  data () {
+  data() {
     return {
       selectedCategoryId: null,
-      selected: null
-    }
+      selected: null,
+    };
   },
   methods: {
-    getRowClass (row) {
-      return row.pinned ? 'pinned' : ''
+    getRowClass( row ) {
+      return row.pinned ? 'pinned' : '';
     },
-    onSelectCategoryId (id) {
-      this.$router.push({
+    onSelectCategoryId( id ) {
+      this.$router.push( {
         path: '/',
         query: id
           ? { category: id }
-          : {}
-      })
+          : {},
+      } );
     },
-    topicRoute (topic) {
-      return `/topics/${topic.author.user}/${topic.permlink}`
-    }
-  }
-}
+    topicRoute( topic ) {
+      return `/topics/${topic.author.user}/${topic.permlink}`;
+    },
+  },
+};
 </script>

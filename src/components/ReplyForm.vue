@@ -20,31 +20,31 @@
 </template>
 
 <script>
-import TextEditor from '@/components/TextEditor.vue'
+import TextEditor from '@/components/TextEditor.vue';
 
 export default {
   components: {
-    TextEditor
+    TextEditor,
   },
   props: {
     fetching: Boolean,
-    text: String
+    text: String,
   },
   methods: {
-    handleTextChange (value) {
-      this.$emit('input', value)
-    }
+    handleTextChange( value ) {
+      this.$emit( 'input', value );
+    },
   },
-  data () {
+  data() {
     return {
       content: '',
       customToolbar: [
         [ { 'header': [ 1, 2, 3, 4, 5, 6, false ] } ],
         [ 'bold', 'italic', 'underline' ],
         [ { 'list': 'ordered' }, { 'list': 'bullet' } ],
-        [ 'code-block' ]
-      ]
-    }
-  }
-}
+        [ 'code-block' ],
+      ],
+    };
+  },
+};
 </script>

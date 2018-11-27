@@ -73,37 +73,39 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
-import AccountSwitcher from '@/components/AccountSwitcher.vue'
-import Avatar from '@/components/Avatar.vue'
+import AccountSwitcher from '@/components/AccountSwitcher.vue';
+
+// import Avatar from '@/components/Avatar.vue';
 
 export default {
   name: 'Navbar',
   components: {
     AccountSwitcher,
-    Avatar,
+
+    // Avatar,
   },
-  data () {
+  data() {
     return {
-      menuActive: false
-    }
+      menuActive: false,
+    };
   },
   computed: {
-    ...mapState(['auth']),
+    ...mapState( [ 'auth' ] ),
   },
   methods: {
-    toggleMenu () {
-      this.menuActive = !this.menuActive
+    toggleMenu() {
+      this.menuActive = !this.menuActive;
     },
-    logout () {
-      this.$store.commit('auth/logout')
+    logout() {
+      this.$store.commit( 'auth/logout' );
     },
-    login () {
-      this.$store.commit('auth/toggleAccountModal')
-    }
-  }
-}
+    login() {
+      this.$store.commit( 'auth/toggleAccountModal' );
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">

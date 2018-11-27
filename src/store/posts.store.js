@@ -5,7 +5,7 @@ export default {
   state: {},
   mutations: {},
   actions: {
-    editPost( { commit }, { post, content } ) {
+    editPost( {}, { post, content } ) {
       return editPost( post, content );
     },
   },

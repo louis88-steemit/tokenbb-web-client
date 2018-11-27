@@ -13,29 +13,30 @@
 </style>
 
 <script>
-import Navbar from './components/Navbar.vue'
-
+import Navbar from './components/Navbar.vue';
 
 
 export default {
   components: {
-    Navbar
+    Navbar,
   },
-  data () {
+  data() {
     return {
       loaded: false,
-      theme: 'theme-default'
-    }
+      theme: 'theme-default',
+    };
   },
-  mounted () {
-    this.$nextTick(function () {
+  mounted() {
+    this.$nextTick( () => {
 
-      this.$store.commit('auth/init', this.$store)
+      this.$store.commit( 'auth/init', this.$store );
 
-      this.$store.dispatch('categories/fetchAll')
-        .then(() => this.$store.dispatch('topics/fetchAll'))
-        .then(() => this.loaded = true)
-    })
-  }
-}
+      this.$store.dispatch( 'categories/fetchAll' )
+        .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
+        .then( () => {
+          this.loaded = true;
+        } );
+    } );
+  },
+};
 </script>

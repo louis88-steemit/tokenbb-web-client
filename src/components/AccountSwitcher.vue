@@ -10,7 +10,7 @@
       {{ all }}
     </b-dropdown-item>
 
-    <b-dropdown-item v-for="account in accounts" :value="account">
+    <b-dropdown-item v-for="(account, index) in accounts" :value="account" :key="index">
       <Avatar :author="account" size="small"></Avatar>&nbsp;
       {{ account }}
     </b-dropdown-item>
@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
-import Avatar from '@/components/Avatar.vue'
+import Avatar from '@/components/Avatar.vue';
 
 const ALL = 'anon';
 
@@ -28,23 +28,23 @@ export default {
   components: {
     Avatar,
   },
-  data () {
+  data() {
     return {
       selected: ALL,
-      all: ALL
-    }
+      all: ALL,
+    };
   },
   computed: {
-    ...mapState('auth', [
+    ...mapState( 'auth', [
       'accounts',
-      'current'
-    ])
+      'current',
+    ] ),
   },
   methods: {
-    onChange (value) {
+    onChange( value ) {
       this.selected = value;
-      this.$store.commit('auth/setCurrent', value)
-    }
-  }
-}
+      this.$store.commit( 'auth/setCurrent', value );
+    },
+  },
+};
 </script>
