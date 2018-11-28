@@ -102,7 +102,8 @@ export default {
       'list',
     ] ),
     ...mapState( 'categories', [
-      'categoriesBySlug',
+      'categoriesById',
+      'categoryList',
     ] ),
     loggedIn() {
       return this.$store.state.auth.username;
@@ -118,7 +119,7 @@ export default {
     },
   },
   beforeRouteUpdate( to, from, next ) {
-    this.selectedCategoryId = to.query.category || null;
+    this.fetchCategory( to.query.category );
 
     next();
   },
@@ -126,7 +127,7 @@ export default {
     this.$store.dispatch( 'categories/fetchAll' )
       .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
       .then( () => {
-        this.selectedCategoryId = this.$router.currentRoute.query.category || null;
+        this.fetchCategory( this.$router.currentRoute.query.category );
       } );
   },
   data() {
@@ -136,14 +137,22 @@ export default {
     };
   },
   methods: {
+    fetchCategory( categoryQuery ) {
+      this.selectedCategoryId = categoryQuery || null;
+      const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+        return category.slug === this.selectedCategoryId
+               || category._id === this.selectedCategoryId;
+      } ) || {};
+      this.selectedCategoryId = selectedCategory._id;
+    },
     getRowClass( row ) {
       return row.pinned ? 'pinned' : '';
     },
-    onSelectCategoryId( id ) {
+    onSelectCategoryId( selectedCategory ) {
       this.$router.push( {
         path: '/',
-        query: id
-          ? { category: id }
+        query: selectedCategory
+          ? { category: selectedCategory.slug }
           : {},
       } );
     },
