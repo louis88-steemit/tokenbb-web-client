@@ -77,7 +77,6 @@ export default {
     },
     async updateValue() {
       const data = await steem.getContent( this.author, this.permlink );
-      console.log( data );
       const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
       const paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
       this.value = ( paid + pending ).toFixed( 3 );

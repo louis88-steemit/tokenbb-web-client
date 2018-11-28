@@ -1,7 +1,7 @@
 <template>
   <div class="post columns is-mobile">
     <div class="column is-narrow">
-      <Avatar :author="data.author.user" size="large"></Avatar>
+      <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
     </div>
 
     <div class="column is-8 post-body">

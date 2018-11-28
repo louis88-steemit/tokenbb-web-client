@@ -45,7 +45,9 @@
           </router-link>
         </b-table-column>
         <b-table-column field="author" label="Author">
-          <Avatar :author="props.row.author.user" size="medium"></Avatar>
+          <Avatar :author="props.row.author.user"
+                  :owner="props.row.author.owner_id"
+                  size="medium"></Avatar>
         </b-table-column>
         <b-table-column field="categoryId" label="Category">
           <CategoryTag :categoryId="props.row.categoryId">
@@ -64,7 +66,9 @@
         </b-table-column>
         <b-table-column field="numberOfReplies" label="User">
           <template v-if="props.row.numberOfReplies > 0">
-            <Avatar :author="props.row.lastReply.author" size="medium"></Avatar>
+            <Avatar :author="props.row.lastReply.author"
+                    :owner="props.row.lastReply.owner"
+                    size="medium"></Avatar>
           </template>
         </b-table-column>
         <b-table-column field="numberOfVotes" label="Votes">
