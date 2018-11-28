@@ -61,6 +61,11 @@
         <div class="level-left"></div>
         <div class="level-right">
           <div class="level-item">
+            <a  v-bind:href="this.steemitLink" target="_blank">
+              View on steemit.com
+            </a>
+          </div>
+          <div class="level-item">
             <ModActions :post="data" :isReply="isReply">
             </ModActions>
           </div>
@@ -109,6 +114,9 @@ export default {
   computed: {
     editable() {
       return this.$store.state.auth.accounts.includes( this.data.author );
+    },
+    steemitLink() {
+      return `https://steemit.com/@${this.data.steem.author}/${this.data.steem.permlink}`;
     },
   },
   mounted() {
