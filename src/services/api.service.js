@@ -106,7 +106,7 @@ export function addCategory( categoryName, title, description ) {
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories/',
     body: {
-      categoryName,
+      name: categoryName,
       title,
       description,
     },
