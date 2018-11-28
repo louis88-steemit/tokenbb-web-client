@@ -127,7 +127,24 @@ export default {
     this.$store.dispatch( 'categories/fetchAll' )
       .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
       .then( () => {
-        this.fetchCategory( this.$router.currentRoute.query.category );
+        this.$nextTick( () => {
+          const categoryParam = this.$router.currentRoute.query.category;
+          const counter = parseInt( this.$router.currentRoute.query.i ) || 0;
+          if ( categoryParam ) {
+            this.$router.push( {
+              path: '/',
+              query: { category: categoryParam, i: counter + 1 },
+            } );
+            this.$nextTick( () => {
+              if ( categoryParam ) {
+                this.$router.push( {
+                  path: '/',
+                  query: { category: categoryParam },
+                } );
+              }
+            } );
+          }
+        } );
       } );
   },
   data() {
