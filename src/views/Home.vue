@@ -136,12 +136,10 @@ export default {
               query: { category: categoryParam, i: counter + 1 },
             } );
             this.$nextTick( () => {
-              if ( categoryParam ) {
-                this.$router.push( {
-                  path: '/',
-                  query: { category: categoryParam },
-                } );
-              }
+              this.$router.push( {
+                path: '/',
+                query: { category: categoryParam },
+              } );
             } );
           }
         } );
