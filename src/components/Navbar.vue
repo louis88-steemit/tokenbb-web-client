@@ -33,6 +33,14 @@
             </p>
             <p class="tr is-right">
               <router-link
+                      v-if="auth.username"
+                      to="/create-forum"
+                      class="navbar-item is-primary">
+                Create Forum
+              </router-link>
+            </p>
+            <p class="tr is-right">
+              <router-link
                       v-if="auth.admin"
                       to="/settings"
                       class="navbar-item is-primary">
