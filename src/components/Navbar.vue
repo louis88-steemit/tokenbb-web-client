@@ -64,6 +64,11 @@
           </div>
           <div v-if="auth.username" class="navbar-item is-expanded tr">
             <p class="tr is-right">
+              <a class="navbar-item is-primary" @click="auth.addLink">
+                Add Steem Account
+              </a>
+            </p>
+            <p class="tr is-right">
               <a class="navbar-item is-primary" @click="logout">
                 Logout
               </a>
