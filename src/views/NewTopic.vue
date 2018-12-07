@@ -17,7 +17,7 @@
               <CategoryDropdown
                 @change="onSelectCategory"
                 :selectedId="selectedCategory ? selectedCategory._id : null"
-                :labelForAll="'Uncategorized'">
+                :labelForAll="'-- Select a Category --'">
               </CategoryDropdown>
             </b-field>
           </div>
