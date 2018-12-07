@@ -31,14 +31,14 @@
                 New Topic
               </router-link>
             </p>
-            <p class="tr is-right">
+            <!--<p class="tr is-right">
               <router-link
                       v-if="auth.username"
                       to="/create-forum"
                       class="navbar-item is-primary">
                 Create Forum
               </router-link>
-            </p>
+            </p>-->
             <p class="tr is-right">
               <router-link
                       v-if="auth.admin"
