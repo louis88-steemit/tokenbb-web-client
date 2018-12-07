@@ -5,7 +5,8 @@
         <div class="level-item">
           <CategoryDropdown
             :selectedId="selectedCategoryId"
-            @change="onSelectCategoryId">
+            @change="onSelectCategoryId"
+            :labelForAll="'All Categories'">>
           </CategoryDropdown>
         </div>
       </div>
