@@ -11,8 +11,10 @@
     </b-dropdown-item>
 
     <b-dropdown-item v-for="(account, index) in accounts" :value="account" :key="index">
-      <Avatar :author="account" size="small"></Avatar>&nbsp;
-      {{ account }}
+      <Avatar :author="account.account" size="small"></Avatar>&nbsp;
+      <b-icon icon="check-circle" type="is-success" v-if="account.authority.posting"></b-icon>
+      <b-icon icon="alert-circle" type="is-danger" v-else></b-icon>
+      {{ account.account }}
     </b-dropdown-item>
   </b-dropdown>
 </template>
@@ -42,8 +44,12 @@ export default {
   },
   methods: {
     onChange( value ) {
-      this.selected = value;
-      this.$store.commit( 'auth/setCurrent', value );
+      if ( value.authority.posting ) {
+        this.selected = value;
+        this.$store.commit( 'auth/setCurrent', value.account );
+      } else {
+        window.open( `https://steemconnect.com/authorize/@${process.env.VUE_APP_BUILDTEAM_USER}`, '_blank' );
+      }
     },
   },
 };

@@ -80,8 +80,9 @@ export default {
       state.level = level;
     },
     setAccounts( state, accounts ) {
-      state.accounts = accounts.map( ( account ) => account.account );
-      const current = state.accounts[0] || 'anon';
+      state.accounts = accounts;
+      const first = state.accounts.filter( ( account ) => account.authority.posting )[0];
+      const current = first ? first.account : 'anon';
       console.log( `Using first account ${current}` );
       state.current = current;
     },
