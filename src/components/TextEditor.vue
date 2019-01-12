@@ -3,12 +3,7 @@
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor'
-
 export default {
-  components: {
-    VueEditor
-  },
   props: {
     fetching: Boolean
   },
