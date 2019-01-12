@@ -1,10 +1,5 @@
 <template>
-  <VueEditor 
-    v-model="content"
-    @input="handleTextChange"
-    :disabled="fetching"
-    :editorToolbar="customToolbar">
-  </VueEditor>
+  <mavon-editor v-model="value" language="en" :toolbars="customToolbar" />
 </template>
 
 <script>
@@ -20,18 +15,18 @@ export default {
   data () {
     return {
       content: '',
-      customToolbar: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        [ 'bold', 'italic', 'underline' ],
-        [ { 'list': 'ordered' }, { 'list': 'bullet' } ],
-        [ 'code-block' ]
-      ]
+      customToolbar: {
+        header: true,
+        bold: true,
+        italic: true,
+        underline: true,
+        li: true,
+        ol: true,
+        fullscreen: true,
+        subfield: true, 
+        preview: true, 
+      },
     }
   },
-  methods: {
-    handleTextChange (value) {
-      this.$emit('input', value)
-    }
-  }
 }
 </script>
