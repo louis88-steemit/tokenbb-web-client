@@ -1,38 +1,31 @@
 <template>
-  <VueEditor
-    v-model="content"
-    @input="handleTextChange"
-    :disabled="fetching"
-    :editorToolbar="customToolbar">
-  </VueEditor>
+  <mavon-editor v-model="content" language="en" :toolbars="customToolbar" />
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor';
-
 export default {
-  components: {
-    VueEditor,
-  },
   props: {
     fetching: Boolean,
   },
   data() {
     return {
       content: '',
-      customToolbar: [
-        [ { 'header': [ 1, 2, 3, 4, 5, 6, false ] } ],
-        [ 'bold', 'italic', 'underline', 'strike' ],
-        [ { 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' } ],
-        [ 'link', 'video' ],
-        [ 'blockquote', 'code-block' ],
-        [ 'clean' ],
-      ],
+      customToolbar: {
+        header: true,
+        bold: true,
+        italic: true,
+        underline: true,
+        li: true,
+        ol: true,
+        fullscreen: true,
+        subfield: true,
+        preview: true,
+      },
     };
   },
-  methods: {
-    handleTextChange( value ) {
-      this.$emit( 'input', value );
+  watch: {
+    content() {
+      this.$emit( 'input', this.content );
     },
   },
 };
