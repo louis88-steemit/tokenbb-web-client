@@ -5,9 +5,9 @@
 <script>
 export default {
   props: {
-    fetching: Boolean
+    fetching: Boolean,
   },
-  data () {
+  data() {
     return {
       content: '',
       customToolbar: {
@@ -18,10 +18,10 @@ export default {
         li: true,
         ol: true,
         fullscreen: true,
-        subfield: true, 
-        preview: true, 
+        subfield: true,
+        preview: true,
       },
-    }
+    };
   },
-}
+};
 </script>

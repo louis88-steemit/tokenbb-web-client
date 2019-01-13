@@ -1,32 +1,32 @@
-import postService from '@/services/post.service'
+import { createReply } from '../services/post.service.js';
 
 export default {
   namespaced: true,
   state: {
-    fetching: false
+    fetching: false,
   },
   mutations: {
-    setFetching (state, fetching) {
-      state.fetching = fetching
-    }
+    setFetching( state, fetching ) {
+      state.fetching = fetching;
+    },
   },
   actions: {
-    submitReply ({ commit }, { parent, content }) {
-      commit('setFetching', true)
+    submitReply( { commit }, { parentComment, content } ) {
+      commit( 'setFetching', true );
 
-      var author = this.state.auth.current
+      const author = this.state.auth.current;
 
-      return postService.createReply(parent, author, content)
-        .then(reply => {
-          commit('setFetching', false)
+      return createReply( parentComment, author, content )
+        .then( ( reply ) => {
+          commit( 'setFetching', false );
 
-          return reply
-        })
-        .catch(err => {
-          commit('setFetching', false)
+          return reply;
+        } )
+        .catch( ( err ) => {
+          commit( 'setFetching', false );
 
-          console.error(err)
-        })
-    }
-  }
-}
+          console.error( err );
+        } );
+    },
+  },
+};

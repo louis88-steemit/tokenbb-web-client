@@ -7,31 +7,31 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
-  export default {
+export default {
   props: {
     categoryId: String,
   },
   computed: {
-    ...mapState({
-      category (state) {
-        const byId = state.categories.categoriesById || {}
-        const category = byId[this.categoryId]
-        return category ? category.name : 'oops'
-      }
-    }),
+    ...mapState( {
+      category( state ) {
+        const byId = state.categories.categoriesById || {};
+        const category = byId[this.categoryId];
+        return category ? category.name : 'oops';
+      },
+    } ),
 
   },
   methods: {
-    categoryRoute (id) {
+    categoryRoute( id ) {
       return {
         path: '/',
         query: {
-          category: id
-        }
-      }
-    }
-  }
-}
+          category: id,
+        },
+      };
+    },
+  },
+};
 </script>

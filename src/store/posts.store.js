@@ -1,12 +1,12 @@
-import postService from '@/services/post.service'
+import { editPost } from '../services/post.service.js';
 
 export default {
   namespaced: true,
   state: {},
   mutations: {},
   actions: {
-    editPost ({ commit }, { post, content }) {
-      return postService.editPost(post, content)
-    }
-  }
-}
+    editPost( {}, { post, content } ) {
+      return editPost( post, content );
+    },
+  },
+};

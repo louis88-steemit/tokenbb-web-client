@@ -16,8 +16,8 @@
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
-                :selectedId="selectedCategoryId"
-                :labelForAll="'Uncategorized'">
+                :selectedId="selectedCategory ? selectedCategory._id : null"
+                :labelForAll="'-- Select a Category --'">
               </CategoryDropdown>
             </b-field>
           </div>
@@ -45,69 +45,69 @@
 </template>
 
 <script>
-import TextEditor from '@/components/TextEditor.vue'
-import CategoryDropdown from '@/components/CategoryDropdown.vue'
-import { mapState } from 'vuex'
+import TextEditor from '@/components/TextEditor.vue';
+import CategoryDropdown from '@/components/CategoryDropdown.vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'new-topic',
   components: {
     TextEditor,
-    CategoryDropdown
+    CategoryDropdown,
   },
-  data () {
+  data() {
     return {
       fetching: false,
-      selectedCategoryId: null,
+      selectedCategory: null,
       title: '',
-      content: ''
-    }
+      content: '',
+    };
   },
   computed: {
-    ...mapState('categories', [
-      'categoriesById'
-    ])
+    ...mapState( 'categories', [
+      'categoriesById',
+    ] ),
   },
   methods: {
-    onSubmit () {
-      if (!this.selectedCategoryId) {
-        return this.$toast.open({
+    onSubmit() {
+      if ( !this.selectedCategory ) {
+        return this.$toast.open( {
           type: 'is-danger',
-          message: 'Please select a category'
-        })
+          message: 'Please select a category',
+        } );
       }
 
-      var payload = {
+      const payload = {
         title: this.title,
-        category: this.categoriesById[this.selectedCategoryId].slug,
-        content: this.content
-      }
+        category: this.selectedCategory.slug,
+        content: this.content,
+      };
 
-      this.fetching = true
+      this.fetching = true;
 
-      this.$store.dispatch('topics/createTopic', payload)
-        .then(topic => {
-          this.$router.push(`/`)
-          this.$toast.open({
+      this.$store.dispatch( 'topics/createTopic', payload )
+        .then( () => {
+          this.$router.push( '/' );
+          this.$toast.open( {
             message: 'Your topic has been posted.',
-            type: 'is-primary'
-          })
-        })
-        .catch(err => {
-          console.error(err)
-          this.$toast.open({
+            type: 'is-primary',
+          } );
+        } )
+        .catch( ( err ) => {
+          console.error( err );
+          this.$toast.open( {
             message: 'Oops! Could not create your topic at this moment.',
-            type: 'is-danger'
-          })
-          this.fetching = false
-        })
+            type: 'is-danger',
+          } );
+          this.fetching = false;
+        } );
     },
-    onSelectCategory (selectedId) {
-      this.selectedCategoryId = selectedId
+    onSelectCategory( selectedId ) {
+      this.selectedCategory = selectedId;
     },
-    handleTextChange (text) {
-      this.content = text
-    }
-  }
-}
+    handleTextChange( text ) {
+      this.content = text;
+    },
+  },
+};
 </script>

@@ -20,9 +20,11 @@
       <main ref="posts">
         <Post :data="topic"></Post>
 
-        <Post v-for="reply in topic.replies"
+        <Post v-for="(reply, index) in topic.replies"
           :data="reply"
-          :isReply="true">
+          :isReply="true"
+          :key="index"
+        >
         </Post>
       </main>
 
@@ -42,13 +44,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
-import postService from '@/services/post.service'
-import Post from '@/components/Post.vue'
-import ReplyForm from '@/components/ReplyForm.vue'
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue'
-import CategoryTag from '@/components/CategoryTag.vue'
+import Post from '@/components/Post.vue';
+import ReplyForm from '@/components/ReplyForm.vue';
+import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
+import CategoryTag from '@/components/CategoryTag.vue';
+import { getTopic } from '../services/post.service.js';
 
 export default {
   name: 'topic',
@@ -56,56 +58,57 @@ export default {
     Post,
     ReplyForm,
     ShowIfLoggedIn,
-    CategoryTag
+    CategoryTag,
   },
-  created () {
-    this.fetchTopic()
+  created() {
+    this.fetchTopic();
   },
-  data () {
+  data() {
     return {
       fetching: true,
       topic: {},
-      replyText: ''
-    }
+      replyText: '',
+    };
   },
   computed: {
-    ...mapState('categories', [
-      'categoriesBySlug'
-    ])
+    ...mapState( 'categories', [
+      'categoriesBySlug',
+    ] ),
   },
   methods: {
-    onReplyInput (text) {
-      this.replyText = text
+    onReplyInput( text ) {
+      this.replyText = text;
     },
-    onReplySubmit () {
-      var payload = {
-        parent: this.topic,
-        content: this.replyText
-      }
+    onReplySubmit() {
+      const payload = {
+        parentComment: this.topic,
+        content: this.replyText,
+      };
 
-      this.$store.dispatch('replies/submitReply', payload)
-        .then(reply => {
-          if(reply) {
-            this.topic.replies.push( reply )
-            this.replyText = ''
+      this.$store.dispatch( 'replies/submitReply', payload )
+        .then( ( reply ) => {
+          if ( reply ) {
+            this.fetchTopic();
           }
-        })
+        } );
     },
-    fetchTopic () {
-      var { author, permlink } = this.$route.params
+    fetchTopic() {
+      const { author, permlink } = this.$route.params;
 
-      this.fetching = true
+      this.fetching = true;
 
-      return postService.getTopic(author, permlink).then(topic => {
-        if (!topic) return this.$router.push('/')
+      return getTopic( author, permlink ).then( ( topic ) => {
+        if ( !topic ) {
+          return this.$router.push( '/' );
+        }
 
-        this.topic = topic
-        this.fetching = false
-      })
+        this.topic = topic;
+        this.fetching = false;
+      } );
     },
-    categoryFromId (id) {
-      return ( this.categoriesBySlug[id] || { name: '' }).name
-    }
-  }
-}
+    categoryFromId( id ) {
+      return ( this.categoriesBySlug[id] || { name: '' } ).name;
+    },
+  },
+};
 </script>

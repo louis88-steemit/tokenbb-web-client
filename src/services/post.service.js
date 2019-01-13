@@ -1,21 +1,13 @@
-import steem from '@/services/steem.service'
-import api from '@/services/api.service'
+import steem from '@/services/steem.service';
+import { getValidTopic, listValidTopics, publishReply, publishTopic } from './api.service.js';
 
-export default {
-  listTopics,
-  getTopic,
-  editPost,
-  deleteTopic,
-  createTopic,
-  createReply
+
+export async function listTopics( category ) {
+  const topics = await listValidTopics( category );
+  return topics.data.map( postToTopic );
 }
 
-async function listTopics (category) {
-  const topics = await api.listValidTopics(category)
-  return topics.data.map(postToTopic)
-}
-
-function postToTopic (post) {
+export function postToTopic( post ) {
   return {
     id: post.id,
     pinned: post.pinned,
@@ -29,47 +21,31 @@ function postToTopic (post) {
     replies: post.replies,
     numberOfReplies: post.meta.replies,
     numberOfViews: post.meta.views,
-    lastReply: post.meta.last_reply
-  }
+    lastReply: post.meta.last_reply,
+  };
 }
 
-async function getTopic (author, permlink) {
+export async function getTopic( author, permlink ) {
+
   // throw Error('Implement this with api call to db and redirect')
-  const topic = await api.getValidTopic(author, permlink)
-  return postToTopic(topic.data)
+  const topic = await getValidTopic( author, permlink );
+  return postToTopic( topic.data );
 }
 
-function editPost (post, content) {
-  return steem.broadcastPatch(Object.assign({}, post, { content }))
+export function editPost( post, content ) {
+  return steem.broadcastPatch( Object.assign( {}, post, { content } ) );
 }
 
-function deleteTopic (topic) {
-  return api.deleteTopic(topic)
+export function createTopic( author, category, title, content ) {
+  return publishTopic( category, author, title, content );
 }
 
-function createTopic (author, category, title, content) {
-  return api.publishTopic(category, author, title, content)
-}
-
-function createReply (parent, author, content) {
-  var title = `re: ${parent.title}}`
-  var message = {
+export function createReply( parentComment, author, content ) {
+  const message = {
     author,
-    title,
-    permlink: permlinkFrom(title),
-    content
-  }
+    content,
+  };
 
-  return api.publishReply(parent, message).then((result) => result.data)
-}
-
-// -----------------------------------------------------------------------------
-
-function permlinkFrom (text) {
-  return removeSpecialChars(text.toLowerCase()).split(' ').join('-')
-}
-
-function removeSpecialChars (str) {
-  return str.replace(/[^\w\s]/gi, '')
+  return publishReply( parentComment, message ).then( ( result ) => result.data );
 }
 

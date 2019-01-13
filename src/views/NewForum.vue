@@ -28,42 +28,42 @@
 </template>
 
 <script>
-import api from '../services/api.service.js';
+import { createForum } from '../services/api.service.js';
 
 export default {
   name: 'new-forum',
   components: {
   },
-  data () {
+  data() {
     return {
       fetching: false,
       name: '',
-    }
+    };
   },
   methods: {
-    onSubmit () {
-      if (this.name.length < 3) {
-        return this.$toast.open({
+    onSubmit() {
+      if ( this.name.length < 3 ) {
+        return this.$toast.open( {
           type: 'is-danger',
-          message: 'Please write title and slug'
-        })
+          message: 'Please write title and slug',
+        } );
       }
 
-      this.fetching = true
+      this.fetching = true;
 
-      api.createForum(this.name)
-        .then((forum) => {
-          window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}`;
-        })
-        .catch(err => {
-          console.error(err)
-          this.$toast.open({
+      createForum( this.name )
+        .then( ( forum ) => {
+          window.location = `https://${forum.data.slug}.${process.env.VUE_APP_BASE_PATH}/settings`;
+        } )
+        .catch( ( err ) => {
+          console.error( err );
+          this.$toast.open( {
             message: 'Oops! Could not create your forum at this moment. ' + err,
-            type: 'is-danger'
-          })
-          this.fetching = false
-        })
+            type: 'is-danger',
+          } );
+          this.fetching = false;
+        } );
     },
-  }
-}
+  },
+};
 </script>

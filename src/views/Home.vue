@@ -5,7 +5,8 @@
         <div class="level-item">
           <CategoryDropdown
             :selectedId="selectedCategoryId"
-            @change="onSelectCategoryId">
+            @change="onSelectCategoryId"
+            :labelForAll="'All Categories'">>
           </CategoryDropdown>
         </div>
       </div>
@@ -45,7 +46,9 @@
           </router-link>
         </b-table-column>
         <b-table-column field="author" label="Author">
-          <Avatar :author="props.row.author.user" size="medium"></Avatar>
+          <Avatar :author="props.row.author.user"
+                  :owner="props.row.author.owner_id"
+                  size="medium"></Avatar>
         </b-table-column>
         <b-table-column field="categoryId" label="Category">
           <CategoryTag :categoryId="props.row.categoryId">
@@ -64,8 +67,17 @@
         </b-table-column>
         <b-table-column field="numberOfReplies" label="User">
           <template v-if="props.row.numberOfReplies > 0">
-            <Avatar :author="props.row.lastReply.author" size="medium"></Avatar>
+            <Avatar :author="props.row.lastReply.author"
+                    :owner="props.row.lastReply.owner"
+                    size="medium"></Avatar>
           </template>
+        </b-table-column>
+        <b-table-column field="numberOfVotes" label="Votes">
+          <Upvote
+                  :votes="[]"
+                  :author="props.row.steem.author"
+                  :permlink="props.row.steem.permlink">
+          </Upvote>
         </b-table-column>
       </template>
 
@@ -74,71 +86,99 @@
 </template>
 
 <script>
-import CategoryTag from '@/components/CategoryTag.vue'
-import { mapState } from 'vuex'
+import CategoryTag from '@/components/CategoryTag.vue';
+import { mapState } from 'vuex';
 
-import CategoryDropdown from '@/components/CategoryDropdown.vue'
-import Avatar from '@/components/Avatar.vue'
+import CategoryDropdown from '@/components/CategoryDropdown.vue';
+import Upvote from '@/components/Upvote.vue';
+import Avatar from '@/components/Avatar.vue';
 
 export default {
   name: 'home',
   components: {
     CategoryDropdown,
+    Upvote,
     Avatar,
-    CategoryTag
+    CategoryTag,
   },
   computed: {
-    ...mapState('topics', [
+    ...mapState( 'topics', [
       'fetching',
-      'list'
-    ]),
-    ...mapState('categories', [
-      'categoriesBySlug'
-    ]),
-    loggedIn () {
-      return this.$store.state.auth.username
+      'list',
+    ] ),
+    ...mapState( 'categories', [
+      'categoriesById',
+      'categoryList',
+    ] ),
+    loggedIn() {
+      return this.$store.state.auth.username;
     },
-    topicList () {
-      if (!this.selectedCategoryId) {
-        return this.$store.state.topics.topicList
+    topicList() {
+      if ( !this.selectedCategoryId ) {
+        return this.$store.state.topics.topicList;
       }
 
-      return this.$store.state.topics.topicList.filter(topic => {
-        return topic.categoryId === this.selectedCategoryId
-      })
+      return this.$store.state.topics.topicList.filter( ( topic ) => {
+        return topic.categoryId === this.selectedCategoryId;
+      } );
     },
   },
-  beforeRouteUpdate (to, from, next) {
-    this.selectedCategoryId = to.query.category || null
+  beforeRouteUpdate( to, from, next ) {
+    this.fetchCategory( to.query.category );
 
-    next()
+    next();
   },
-  mounted () {
-    this.$store.dispatch('categories/fetchAll')
-      .then(()=>this.$store.dispatch('topics/fetchAll'))
-      .then(()=>this.selectedCategoryId = this.$router.currentRoute.query.category || null)
+  mounted() {
+    this.$store.dispatch( 'categories/fetchAll' )
+      .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
+      .then( () => {
+        this.$nextTick( () => {
+          const categoryParam = this.$router.currentRoute.query.category;
+          const counter = parseInt( this.$router.currentRoute.query.i ) || 0;
+          if ( categoryParam ) {
+            this.$router.push( {
+              path: '/',
+              query: { category: categoryParam, i: counter + 1 },
+            } );
+            this.$nextTick( () => {
+              this.$router.push( {
+                path: '/',
+                query: { category: categoryParam },
+              } );
+            } );
+          }
+        } );
+      } );
   },
-  data () {
+  data() {
     return {
       selectedCategoryId: null,
-      selected: null
-    }
+      selected: null,
+    };
   },
   methods: {
-    getRowClass (row) {
-      return row.pinned ? 'pinned' : ''
+    fetchCategory( categoryQuery ) {
+      this.selectedCategoryId = categoryQuery || null;
+      const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+        return category.slug === this.selectedCategoryId
+               || category._id === this.selectedCategoryId;
+      } ) || {};
+      this.selectedCategoryId = selectedCategory._id;
     },
-    onSelectCategoryId (id) {
-      this.$router.push({
+    getRowClass( row ) {
+      return row.pinned ? 'pinned' : '';
+    },
+    onSelectCategoryId( selectedCategory ) {
+      this.$router.push( {
         path: '/',
-        query: id
-          ? { category: id }
-          : {}
-      })
+        query: selectedCategory
+          ? { category: selectedCategory.slug }
+          : {},
+      } );
     },
-    topicRoute (topic) {
-      return `/topics/${topic.author.user}/${topic.permlink}`
-    }
-  }
-}
+    topicRoute( topic ) {
+      return `/topics/${topic.author.user}/${topic.permlink}`;
+    },
+  },
+};
 </script>

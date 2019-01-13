@@ -9,49 +9,49 @@
       {{ allCategories.name }}
     </b-dropdown-item>
 
-    <b-dropdown-item v-for="category in categoryList" :value="category">
+    <b-dropdown-item v-for="(category, index) in categoryList" :value="category" :key="index">
       {{ category.name }}
     </b-dropdown-item>
   </b-dropdown>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
-const ALL = { name: 'All Categories' }
+const ALL = { name: 'All Categories' };
 
 export default {
   props: [
     'selectedId',
-    'labelForAll'
+    'labelForAll',
   ],
-  data () {
+  data() {
     return {
       selected: ALL,
-      all: ALL
-    }
+      all: ALL,
+    };
   },
   watch: {
-    selectedId ( value) {
-      this.selected = this.categoriesById[value]
-    }
+    selectedId( value ) {
+      this.selected = this.categoriesById[value];
+    },
   },
   computed: {
-    allCategories () {
+    allCategories() {
       return this.labelForAll
-        ? Object.assign(this.all, { name: this.labelForAll })
-        : this.all
+        ? Object.assign( this.all, { name: this.labelForAll } )
+        : this.all;
     },
-    ...mapState('categories', [
+    ...mapState( 'categories', [
       'fetching',
       'categoryList',
-      'categoriesById'
-    ])
+      'categoriesById',
+    ] ),
   },
   methods: {
-    onChange (value) {
-      this.$emit('change', value._id || null)
-    }
-  }
-}
+    onChange( value ) {
+      this.$emit( 'change', value || null );
+    },
+  },
+};
 </script>
