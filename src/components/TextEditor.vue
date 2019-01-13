@@ -1,5 +1,5 @@
 <template>
-  <mavon-editor v-model="value" language="en" :toolbars="customToolbar" />
+  <mavon-editor v-model="content" language="en" :toolbars="customToolbar" />
 </template>
 
 <script>
@@ -22,6 +22,11 @@ export default {
         preview: true,
       },
     };
+  },
+  watch: {
+    content() {
+      this.$emit( 'input', this.content );
+    },
   },
 };
 </script>
