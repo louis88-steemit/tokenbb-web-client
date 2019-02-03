@@ -73,8 +73,8 @@ export default {
       console.log( state.current );
     },
     setRoles( state, { mod, admin } ) {
-      state.mod = mod;
-      state.admin = admin;
+      state.roles.mod = mod;
+      state.roles.admin = admin;
     },
     setLevel( state, level ) {
       state.level = level;

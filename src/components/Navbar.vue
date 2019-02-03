@@ -41,7 +41,7 @@
             </p>-->
             <p class="tr is-right">
               <router-link
-                      v-if="auth.admin"
+                      v-if="auth.roles.admin"
                       to="/settings"
                       class="navbar-item is-primary">
                 Settings
