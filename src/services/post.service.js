@@ -1,4 +1,3 @@
-import steem from '@/services/steem.service';
 import { getValidTopic, listValidTopics, publishReply, publishTopic } from './api.service.js';
 
 
@@ -31,11 +30,6 @@ export async function getTopic( author, permlink ) {
   const topic = await getValidTopic( author, permlink );
   return postToTopic( topic.data );
 }
-
-export function editPost( post, content ) {
-  return steem.broadcastPatch( Object.assign( {}, post, { content } ) );
-}
-
 export function createTopic( author, category, title, content ) {
   return publishTopic( category, author, title, content );
 }

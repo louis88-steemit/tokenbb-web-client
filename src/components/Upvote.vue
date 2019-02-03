@@ -45,11 +45,13 @@
 
 <script>
 import { vote } from '../services/api.service.js';
-import steem from '../services/steem.service.js';
+import { Client } from 'dsteem';
 
 import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
 
 import Timeout from 'await-timeout';
+
+const client = new Client( 'https://api.steemit.com' );
 
 export default {
   components: {
@@ -76,7 +78,7 @@ export default {
       this.percent = this.$refs.slider.value;
     },
     async updateValue() {
-      const data = await steem.getContent( this.author, this.permlink );
+      const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
       const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
       const paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
       this.value = ( paid + pending ).toFixed( 3 );

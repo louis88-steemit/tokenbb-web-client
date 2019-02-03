@@ -15,10 +15,10 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@steemit/steem-js": "^0.7.4",
     "await-timeout": "^0.3.0",
     "buefy": "^0.7.2",
     "bulma-extensions": "^4.0.1",
+    "dsteem": "^0.11.2",
     "jwt-decode": "^2.2.0",
     "koa": "^2.7.0",
     "koa-no-cache": "^2.0.0",
@@ -30,7 +30,6 @@
     "register-service-worker": "^1.5.2",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "secure-random": "git+https://github.com/BuildTeamDev/secure-random.git",
     "steem-editor": "^1.0.1",
     "vue": "^2.5.22",
     "vue-notifications": "^0.9.0",
