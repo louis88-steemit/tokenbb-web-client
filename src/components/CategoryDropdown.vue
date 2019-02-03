@@ -9,7 +9,7 @@
       {{ allCategories.name }}
     </b-dropdown-item>
 
-    <b-dropdown-item v-for="(category, index) in categoryList" :value="category" :key="index">
+    <b-dropdown-item v-for="category in categoryList" :value="category" :key="category._id">
       {{ category.name }}
     </b-dropdown-item>
   </b-dropdown>

@@ -10,8 +10,6 @@
   $twitter: #6562ff;
   $twitter-invert: findColorInvert($twitter);
 
-  @import "./global/variables.scss";
-
   // Setup $colors to use as bulma classes (e.g. 'is-twitter')
   $colors: (
           "white": ($white, $black),
@@ -125,5 +123,8 @@
       width: 12rem;
     }
   }
+
+  // make sure to have all sensible defaults set
+  @import "./global/sensible-defaults.scss";
 
 }
