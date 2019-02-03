@@ -1,5 +1,5 @@
-import jwtdecode from 'jwt-decode';
 import steem from '@/services/steem.service';
+import jwtdecode from 'jwt-decode';
 import { listRoles } from '../services/api.service.js';
 
 export default {
@@ -17,6 +17,7 @@ export default {
     current: 'anon',
     manageLink: '',
     addLink: '',
+    autoMode: '',
   },
   mutations: {
     init( state, store ) {
@@ -64,6 +65,25 @@ export default {
       }
       state.manageLink = window.BTSSO.getAccountManageLink();
       state.addLink = window.BTSSO.addSteemAccount;
+      state.autoMode = () => {
+        console.log( state );
+        const json = JSON.stringify( {
+          'account': state.current,
+          'referrer': 'buildteam',
+          'sell_flag': 'true',
+          'sell_for_comments': 'true',
+          'auto_promote': 'true',
+          'claim_rewards': 'true',
+          'minimum_balance': '5',
+          'daily_payout': 'false',
+          'top_level_only': 'false',
+        } );
+        window.steem_keychain.requestCustomJson( state.current, 'minnowbooster.settings', 'Posting', json, 'Enable MB Auto Mode',
+          ( response ) => {
+            console.log( response );
+          } );
+
+      };
     },
     setUsername( state, username ) {
       state.username = username;
@@ -83,7 +103,7 @@ export default {
       state.accounts = accounts;
       const first = state.accounts.filter( ( account ) => account.authority.posting )[0];
       const current = first ? first.account : 'anon';
-      console.log( `Using first account ${current}` );
+      console.log( `Using first account ${ current }` );
       state.current = current;
     },
   },

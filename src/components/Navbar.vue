@@ -62,23 +62,25 @@
                 </a>
               </p>
           </div>
-          <div v-if="auth.username" class="navbar-item is-expanded tr">
-            <p class="tr is-right">
-              <a class="navbar-item is-primary" @click="auth.addLink">
+          <b-dropdown v-if="auth.username" class="navbar-item">
+            <button class="button" type="button" slot="trigger">
+              <span>Account</span>
+              <b-icon icon="menu-down"></b-icon>
+            </button>
+
+            <b-dropdown-item class="is-right" @click="auth.addLink">
                 Add Steem Account
-              </a>
-            </p>
-            <p class="tr is-right">
-              <a class="navbar-item is-primary" @click="logout">
+            </b-dropdown-item>
+            <b-dropdown-item class="is-right" @click="auth.autoMode">
+                Enable MB Auto Mode
+            </b-dropdown-item>
+            <b-dropdown-item class="is-right" @click="logout">
                 Logout
-              </a>
-            </p>
-            <p class="tr is-right">
-              <a class="navbar-item is-primary" target="_blank" v-bind:href="auth.manageLink">
+            </b-dropdown-item>
+            <b-dropdown-item class="is-right" target="_blank" v-bind:href="auth.manageLink">
                 Manage
-              </a>
-            </p>
-          </div>
+            </b-dropdown-item>
+          </b-dropdown>
         </div>
       </div>
     </div>
