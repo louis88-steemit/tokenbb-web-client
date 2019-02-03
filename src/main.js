@@ -9,8 +9,8 @@ import store from './store/index.js';
 import VueNotifications from 'vue-notifications';
 import miniToastr from 'mini-toastr';
 
-import mavonEditor from 'mavon-editor';
-import 'mavon-editor/dist/css/index.css';
+import steemEditor from 'steem-editor';
+import 'steem-editor/dist/css/index.css';
 
 import sanitize from './plugins/sanitize.js';
 import { registerSW } from './registerServiceWorker';
@@ -68,7 +68,7 @@ const options = {
 
 Vue.use( VueNotifications, options );
 
-Vue.use( mavonEditor );
+Vue.use( steemEditor );
 
 Vue.filter( 'formatDate', ( value ) => {
   if ( value ) {
