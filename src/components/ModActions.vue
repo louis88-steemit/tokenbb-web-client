@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     isAdmin() {
-      return this.$store.state.auth.admin;
+      return this.$store.state.auth.roles.admin;
     },
     onSelect( item ) {
       item.callback();
