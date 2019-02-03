@@ -11,7 +11,8 @@
     "deploy": "bash scripts/deploy.sh lab",
     "pretest": "vue-cli-service lint --no-fix",
     "start": "npm run serve",
-    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs"
+    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@steemit/steem-js": "^0.7.4",
