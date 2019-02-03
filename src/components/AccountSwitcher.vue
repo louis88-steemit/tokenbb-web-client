@@ -48,7 +48,7 @@ export default {
         this.selected = value;
         this.$store.commit( 'auth/setCurrent', value.account );
       } else {
-        window.open( `https://steemconnect.com/authorize/@${process.env.VUE_APP_BUILDTEAM_USER}`, '_blank' );
+        window.BTSSO.authorizePosting( value.account );
       }
     },
   },
