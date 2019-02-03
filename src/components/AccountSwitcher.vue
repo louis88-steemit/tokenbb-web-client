@@ -6,8 +6,8 @@
     </button>
 
     <b-dropdown-item :value="all">
-      <Avatar :author="all" size="small"></Avatar>&nbsp;
-      {{ all }}
+      <Avatar :author="all.account" size="small"></Avatar>&nbsp;
+      {{ all.account }}
     </b-dropdown-item>
 
     <b-dropdown-item v-for="(account, index) in accounts" :value="account" :key="index">
@@ -24,7 +24,7 @@ import { mapState } from 'vuex';
 
 import Avatar from '@/components/Avatar.vue';
 
-const ALL = 'anon';
+const ALL = { account: 'anon', 'authority': { 'posting': true } };
 
 export default {
   components: {
@@ -44,11 +44,14 @@ export default {
   },
   methods: {
     onChange( value ) {
+      console.log( value );
       if ( value.authority.posting ) {
         this.selected = value;
         this.$store.commit( 'auth/setCurrent', value.account );
       } else {
         window.BTSSO.authorizePosting( value.account );
+        this.$store.commit( 'auth/setCurrent', this.selected.account );
+        this.selected = this.selected;
       }
     },
   },
