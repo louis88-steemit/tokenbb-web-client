@@ -70,13 +70,7 @@ export default {
         const json = JSON.stringify( {
           'account': state.current,
           'referrer': 'buildteam',
-          'sell_flag': 'true',
-          'sell_for_comments': 'true',
-          'auto_promote': 'true',
-          'claim_rewards': 'true',
-          'minimum_balance': '5',
-          'daily_payout': 'false',
-          'top_level_only': 'false',
+          'auto': 'true',
         } );
         window.steem_keychain.requestCustomJson( state.current, 'minnowbooster.settings', 'Posting', json, 'Enable MB Auto Mode',
           ( response ) => {
