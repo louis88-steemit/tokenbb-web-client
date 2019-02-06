@@ -20,7 +20,7 @@ registerSW();
 const contextMap = {
   default: { theme: 'theme-default', forum: 'support', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
-  localhost: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
+  localhost: { theme: 'theme-default', forum: 'monsters', icon: 'favicon_teeth.png' },
 };
 let context = contextMap.default;
 const subs = ( new URL( window.location ) ).hostname.split( '.' );
