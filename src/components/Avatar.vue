@@ -1,12 +1,12 @@
 <template>
   <b-tooltip
-    :label="'@' + author"
+    :label="author | usernameDisplay"
     size="is-small"
     type="is-black">
     <figure class="image avatar" :class="classes">
       <img
         class="is-rounded"
-        :title="author"
+        :title="author | usernameDisplay"
         :src="avatarURL(author, owner)">
     </figure>
   </b-tooltip>
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     avatarURL( author, owner ) {
-      if ( author !== 'tokentestanon' ) {
+      if ( author !== process.env.VUE_APP_ANON_USER ) {
         return `https://img.busy.org/@${author}`;
       }
       return `https://robohash.org/${owner}.png?set=set4`;
