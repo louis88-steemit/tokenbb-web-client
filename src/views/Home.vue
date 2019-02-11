@@ -60,10 +60,8 @@
         <b-table-column field="numberOfViews" label="Views">
           {{ props.row.numberOfViews }}
         </b-table-column>
-        <b-table-column field="numberOfReplies" label="Last Reply">
-          <template v-if="props.row.numberOfReplies > 0">
-            {{ props.row.lastReply.time | fromNow }}
-          </template>
+        <b-table-column field="numberOfReplies" label="Last Activity">
+          {{ props.row.lastReply.time | fromNow }}
         </b-table-column>
         <b-table-column field="numberOfReplies" label="User">
           <template v-if="props.row.numberOfReplies > 0">
