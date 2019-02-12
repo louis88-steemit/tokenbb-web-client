@@ -2,7 +2,7 @@
   <ShowIfLoggedIn :hidden="true" class="upvote">
     <div class="field has-addons">
       <p class="control">
-        <a class="button is-small is-static has-text-black">{{ value }}</a>
+        <a class="button is-small is-static has-text-black">$ {{ value }}</a>
       </p>
       <p class="control">
         <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
