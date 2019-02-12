@@ -30,7 +30,7 @@
     "register-service-worker": "^1.6.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
-    "steem-editor": "^1.0.4",
+    "steem-editor": "^1.0.8",
     "vue": "^2.6.6",
     "vue-notifications": "^0.9.0",
     "vue-router": "^3.0.2",

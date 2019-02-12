@@ -25,7 +25,7 @@
       <article
         v-if="!editing"
         class="content has-text-left"
-        v-html="$sanitize(data.body)">
+        v-html="$renderMD(data.body)">
       </article>
 
       <form v-if="editing">
