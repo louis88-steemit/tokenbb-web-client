@@ -65,6 +65,12 @@
     content:$logo;
   }
 
+  .content {
+    blockquote {
+      background-color: #eeeeee;
+    }
+  }
+
   #nav {
     background-color: #002a30;
     background: linear-gradient(to bottom, #f1f1f6 0%, #cacad2 93%, #888587 100%);
