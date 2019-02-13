@@ -1,23 +1,29 @@
-# TokenBB Vue.js app
+# TokenBB Frontend
 
 ## Install
 
-.env file:
+.env file: copy `.env.example`
 
+run:
 ```sh
-VUE_APP_STACK_NAME=my-app
+npm install
 ```
 
 ## Develop
 
-`npm run serve` -> http://localhost:8080
+`npm run start` -> http://localhost:3000
 
-## Build
+Make sure to keep the port at 3000, 
+other origins will be rejected 
+by our staging environment.
 
+The staging BT SSO login is different from production. 
 
-## Deploy
+## Contribute
 
-```sh
-NODE_ENV=production npm run build && 
-aws s3 sync dist/ s3://$STACK_NAME.tokenbb.io/`
-```
+Branch off from `master` and point prs to `master`.
+Make sure to apply our `.eslintrc`,
+npm should install convenience git hooks.
+
+Communication should happen in issues and prs.
+Be nice, be respectful.
