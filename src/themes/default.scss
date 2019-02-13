@@ -141,6 +141,10 @@
     }
   }
 
+  ul {
+    list-style: disc !important;
+  }  
+
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 
