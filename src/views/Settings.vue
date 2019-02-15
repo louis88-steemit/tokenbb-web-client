@@ -7,7 +7,6 @@
     <b-table
       :data="categoryList"
       striped
-      hoverable
       mobile-cards>
 
       <template slot-scope="props">
