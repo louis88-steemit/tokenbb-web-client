@@ -23,14 +23,6 @@
       <div class="navbar-menu" :class="{ 'is-active': menuActive }">
         <div class="navbar-start">
           <div class="navbar-item is-expanded tr">
-            <p class="tr is-right">
-              <router-link
-                      v-if="auth.username"
-                      to="/new"
-                      class="button is-primary has-icon has-text-white">
-                New Topic
-              </router-link>
-            </p>
             <!--<p class="tr is-right">
               <router-link
                       v-if="auth.username"
