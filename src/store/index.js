@@ -1,17 +1,21 @@
-import auth from '@/store/auth.store';
-import categories from '@/store/categories.store';
-import replies from '@/store/replies.store';
-import topics from '@/store/topics.store';
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use( Vuex );
+import example from './module-example'
 
-export default new Vuex.Store( {
-  modules: {
-    auth,
-    categories,
-    topics,
-    replies,
-  },
-} );
+Vue.use(Vuex)
+
+/*
+ * If not building with SSR mode, you can
+ * directly export the Store instantiation
+ */
+
+export default function (/* { ssrContext } */) {
+  const Store = new Vuex.Store({
+    modules: {
+      example
+    }
+  })
+
+  return Store
+}

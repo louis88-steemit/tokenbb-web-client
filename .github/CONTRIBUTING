@@ -1,8 +1,0 @@
-## Contribute
-
-Branch off from `master` and point prs to `master`.
-Make sure to apply our `.eslintrc`,
-npm should install convenience git hooks.
-
-Communication should happen in issues and prs.
-Be nice, be respectful.

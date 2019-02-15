@@ -1,83 +1,41 @@
 {
   "name": "@tokenbb/client",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.0.1",
+  "description": "TokenBB Web Client",
+  "productName": "TokenBB Web Client",
+  "cordovaId": "org.cordova.quasar.app",
   "author": "Buildteam <reggaemuffin@buildteam.io>",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --host 0.0.0.0 --port 3000",
-    "build": "vue-cli-service build",
-    "test": "npm run lint",
-    "lint": "vue-cli-service lint",
-    "pretest": "vue-cli-service lint --no-fix",
-    "start": "npm run serve",
-    "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
-    "heroku-postbuild": "npm run build"
+    "lint": "eslint --ext .js,.vue src",
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "await-timeout": "^0.3.0",
-    "buefy": "^0.7.2",
-    "bulma-extensions": "^4.1.0",
-    "dsteem": "^0.11.2",
-    "jwt-decode": "^2.2.0",
-    "koa": "^2.7.0",
-    "koa-no-cache": "^2.0.0",
-    "koa-send": "^5.0.0",
-    "koa-static": "^5.0.0",
-    "koa-static-cache": "^5.1.2",
-    "mini-toastr": "^0.8.1",
-    "moment": "^2.24.0",
-    "register-service-worker": "^1.6.1",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "steem-editor": "^1.0.8",
-    "vue": "^2.6.6",
-    "vue-analytics": "^5.16.2",
-    "vue-notifications": "^0.9.0",
-    "vue-router": "^3.0.2",
-    "vue-sanitize": "^0.2.0",
-    "vue2-editor": "^2.6.6",
-    "vuex": "^3.1.0",
-    "xhr": "^2.5.0"
+    "@quasar/extras": "^1.0.0",
+    "axios": "^0.18.0",
+    "quasar": "^1.0.0-beta.0",
+    "vue-i18n": "^7.3.3"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-eslint": "^3.4.0",
-    "@vue/cli-plugin-pwa": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@quasar/app": "^1.0.0-beta.0",
+    "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.13.0",
-    "eslint-plugin-vue": "^5.1.0",
-    "lint-staged": "^8.1.3",
-    "node-sass": "^4.11.0",
-    "sass-loader": "^7.1.0",
-    "terser": "^3.16.1",
-    "vue-template-compiler": "^2.6.6"
+    "eslint": "^5.10.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-vue": "^5.0.0",
+    "strip-ansi": "=3.0.1"
   },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
+  "engines": {
+    "node": ">= 8.9.0",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "not ie <= 10"
   ],
-  "browser": {
-    "request": "xhr"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+  "resolutions": {
+    "ajv": "6.8.1"
   }
 }
