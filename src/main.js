@@ -105,6 +105,7 @@ moment.locale( locale );
 Vue.filter( 'fromNow', ( value ) => {
   if ( value ) {
     return moment.utc( String( value ) )
+      .add( moment().utcOffset(), 'minutes' )
       .calendar();
   }
 } );
