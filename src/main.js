@@ -21,7 +21,7 @@ registerSW();
 const contextMap = {
   default: { theme: 'theme-default', forum: 'support', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
-  localhost: { theme: 'theme-default', forum: 'monsters', icon: 'favicon_teeth.png' },
+  localhost: { theme: 'theme-silver', forum: 'monsters', icon: 'favicon_teeth.png' },
 };
 let context = contextMap.default;
 const subs = ( new URL( window.location ) ).hostname.split( '.' );
@@ -105,9 +105,9 @@ Vue.filter( 'fromNow', ( value ) => {
   }
 } );
 
-Vue.filter( 'usernameDisplay', ( username ) => {
+Vue.filter( 'usernameDisplay', ( username, owner ) => {
   if ( username === process.env.VUE_APP_ANON_USER ) {
-    return 'guest user';
+    return `GuestUser#${owner.substring( 4, 10 )}`;
   }
   return username;
 } );

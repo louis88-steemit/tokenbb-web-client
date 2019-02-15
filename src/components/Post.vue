@@ -8,7 +8,7 @@
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <strong>{{ data.author.user | usernameDisplay }}</strong>
+            <strong>{{ data.author.user | usernameDisplay(data.author.owner_id) }}</strong>
             <br>
           </div>
         </div>
