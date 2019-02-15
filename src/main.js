@@ -35,6 +35,7 @@ if ( contextMap.hasOwnProperty( subs[0] ) ) {
 console.log( `Loading TokenBB on ${ context.forum } with ${ context.theme }` );
 document.documentElement.className = `${ context.theme }`;
 global.forumname = context.forum;
+document.title = `TokenBB ${global.forumname}`;
 
 const link = document.querySelector( 'link[rel*=\'icon\']' ) || document.createElement( 'link' );
 link.type = 'image/x-icon';
