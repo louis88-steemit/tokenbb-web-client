@@ -90,6 +90,11 @@ export default {
           if ( reply ) {
             this.fetchTopic();
           }
+        } )
+        .catch( ( err ) => {
+
+          // TODO: Feedback for the user
+          this.$ga.exception( err );
         } );
     },
     fetchTopic() {

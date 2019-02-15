@@ -7,6 +7,7 @@ import 'steem-editor/dist/css/index.css';
 import Vue from 'vue';
 
 import VueNotifications from 'vue-notifications';
+import VueAnalytics from 'vue-analytics';
 
 import App from './App.vue';
 
@@ -46,6 +47,25 @@ Vue.config.productionTip = false;
 
 Vue.use( Buefy );
 Vue.use( sanitize );
+
+Vue.use( VueAnalytics, {
+  id: process.env.VUE_APP_GA_ID,
+  router,
+  autoTracking: {
+    exception: true,
+    exceptionLogs: true,
+  },
+  batch: {
+    enabled: true,
+    amount: 5,
+    delay: 500,
+  },
+} );
+
+window.setGAUserID = setGAUserID;
+function setGAUserID( userID ) {
+  Vue.$ga.set( 'userId', userID );
+}
 
 const toastTypes = {
   success: 'success',

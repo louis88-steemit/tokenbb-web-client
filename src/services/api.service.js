@@ -202,6 +202,8 @@ export function getValidTopic( author, permlink ) {
         return null;
       }
 
+      this.$ga.exception( err );
+
       throw err;
     } );
 }

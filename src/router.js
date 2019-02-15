@@ -45,6 +45,7 @@ const router = new Router( {
     },
     {
       path: '*',
+      name: 'wildcard-unmatched',
       redirect: '/404',
     },
   ],

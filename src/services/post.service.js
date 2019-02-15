@@ -28,6 +28,9 @@ export async function getTopic( author, permlink ) {
 
   // throw Error('Implement this with api call to db and redirect')
   const topic = await getValidTopic( author, permlink );
+  if ( topic === null ) {
+    return null;
+  }
   return postToTopic( topic.data );
 }
 export function createTopic( author, category, title, content ) {

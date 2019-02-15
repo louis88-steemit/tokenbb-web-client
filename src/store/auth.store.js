@@ -60,8 +60,10 @@ export default {
       if ( !user ) {
         state.accounts = [];
         state.current = 'anon';
+        window.setGAUserID();
       } else {
         steem.token = user;
+        window.setGAUserID( state.id );
       }
       state.manageLink = window.BTSSO.getAccountManageLink();
       state.addLink = window.BTSSO.addSteemAccount;

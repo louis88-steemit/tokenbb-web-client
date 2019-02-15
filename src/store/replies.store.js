@@ -25,7 +25,7 @@ export default {
         .catch( ( err ) => {
           commit( 'setFetching', false );
 
-          console.error( err );
+          throw err;
         } );
     },
   },
