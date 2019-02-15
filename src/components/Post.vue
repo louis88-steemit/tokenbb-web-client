@@ -16,7 +16,7 @@
         <div class="level-right">
           <p class="level-item">
             <small>
-              {{ data.created | formatDate() }}
+              {{ data.createdAt | fromNow }}
             </small>
           </p>
         </div>

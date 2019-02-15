@@ -11,6 +11,7 @@ export function postToTopic( post ) {
     id: post.id,
     pinned: post.pinned,
     hidden: post.hidden,
+    createdAt: post.createdAt,
     categoryId: post.category,
     author: post.author,
     permlink: post.steem.permlink,

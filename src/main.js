@@ -98,10 +98,14 @@ Vue.filter( 'formatDate', ( value ) => {
   }
 } );
 
+const locale = window.navigator.userLanguage || window.navigator.language || 'en';
+console.log( `Setting TimeZone Language to ${locale}` );
+moment.locale( locale );
+
 Vue.filter( 'fromNow', ( value ) => {
   if ( value ) {
     return moment.utc( String( value ) )
-      .fromNow();
+      .calendar();
   }
 } );
 
