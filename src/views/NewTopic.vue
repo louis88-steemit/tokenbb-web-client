@@ -96,7 +96,7 @@ export default {
         .catch( ( err ) => {
           console.error( err );
           this.$toast.open( {
-            message: 'Oops! Could not create your topic at this moment.',
+            message: 'Oops! Could not create your topic at this moment. ' + err.error.message,
             type: 'is-danger',
           } );
           this.fetching = false;
