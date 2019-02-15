@@ -8,11 +8,14 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "win:dev:ssr": "set NODE_OPTIONS=--inspect&&set DEBUG=v8:*&&quasar dev -m ssr",
+    "unix:dev:ssr": "NODE_OPTIONS=--inspect DEBUG=v8:* quasar dev -m ssr"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
     "quasar": "^1.0.0-beta.0",
     "vue-i18n": "^7.3.3"
   },

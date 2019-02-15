@@ -1,4 +1,6 @@
 // Configuration for your app
+const { version } = require('./package.json')
+require('dotenv').config({ path: './.env' })
 
 module.exports = function (ctx) {
   return {
@@ -62,6 +64,16 @@ module.exports = function (ctx) {
       // gzip: true,
       // analyze: true,
       // extractCSS: false,
+      env: {
+        VERSION: JSON.stringify(version),
+        VUE_APP_AUTH_HOST: JSON.stringify(process.env.VUE_APP_AUTH_HOST),
+        VUE_APP_API_HOST: JSON.stringify(process.env.VUE_APP_API_HOST),
+        VUE_APP_BASE_URL: JSON.stringify(process.env.VUE_APP_BASE_URL),
+        VUE_APP_BASE_PATH: JSON.stringify(process.env.VUE_APP_BASE_PATH),
+        VUE_APP_BUILDTEAM_USER: JSON.stringify(process.env.VUE_APP_BUILDTEAM_USER),
+        VUE_APP_ANON_USER: JSON.stringify(process.env.VUE_APP_ANON_USER),
+        VUE_APP_GA_ID: JSON.stringify(process.env.VUE_APP_GA_ID)
+      },
       extendWebpack (cfg) {
         cfg.module.rules.push({
           enforce: 'pre',
