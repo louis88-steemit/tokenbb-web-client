@@ -46,7 +46,10 @@
   /* background */
   body {
     font-size: 15px;
-    background: url(https://drugwars.tokenbb.io/themes/drugwars/background.jpg) no-repeat 50% fixed !important;
+    background-image: url(https://drugwars.tokenbb.io/themes/drugwars/background.jpg);
+    background-position: center;
+    background-repeat: repeat;
+    background-size: 100%;
     background-color: $background;
   }
 
