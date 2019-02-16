@@ -6,9 +6,12 @@ module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
+    preFetch: true,
     boot: [
       'i18n',
-      'axios'
+      'axios',
+      { path: 'api-client', server: false },
+      { path: 'api-server', server: true }
     ],
 
     css: [
@@ -72,7 +75,8 @@ module.exports = function (ctx) {
         VUE_APP_BASE_PATH: JSON.stringify(process.env.VUE_APP_BASE_PATH),
         VUE_APP_BUILDTEAM_USER: JSON.stringify(process.env.VUE_APP_BUILDTEAM_USER),
         VUE_APP_ANON_USER: JSON.stringify(process.env.VUE_APP_ANON_USER),
-        VUE_APP_GA_ID: JSON.stringify(process.env.VUE_APP_GA_ID)
+        VUE_APP_GA_ID: JSON.stringify(process.env.VUE_APP_GA_ID),
+        FORUM_NAME: JSON.stringify(process.env.FORUM_NAME)
       },
       extendWebpack (cfg) {
         cfg.module.rules.push({
