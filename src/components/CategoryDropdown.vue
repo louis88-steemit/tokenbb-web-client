@@ -1,16 +1,16 @@
 <template>
   <b-dropdown @change="onChange">
     <button class="button" type="button" slot="trigger">
-      <span>{{ selected ? selected.name : allCategories.name }}</span>
+      <span v-html="selected ? selected.name : allCategories.name"></span>
       <b-icon icon="menu-down"></b-icon>
     </button>
 
     <b-dropdown-item :value="allCategories">
-      {{ allCategories.name }}
+      <span v-html="allCategories.name"></span>
     </b-dropdown-item>
 
     <b-dropdown-item v-for="category in categoryList" :value="category" :key="category._id">
-      {{ category.name }}
+      <span v-html="category.name"></span>
     </b-dropdown-item>
   </b-dropdown>
 </template>

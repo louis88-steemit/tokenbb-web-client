@@ -1,7 +1,6 @@
 <template>
   <router-link :to="categoryRoute(categoryId)">
-    <span class="tag is-info">
-      {{ category }}
+    <span class="tag is-info" v-html="category">
     </span>
   </router-link>
 </template>
