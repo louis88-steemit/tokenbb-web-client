@@ -1,13 +1,13 @@
 <template>
   <b-dropdown @change="onChange">
     <button class="button is-primary" type="button" slot="trigger">
-      <Avatar :author="current" size="small"></Avatar>&nbsp;
-      {{ current }}
+      <Avatar :author="current" owner="id" size="small"></Avatar>&nbsp;
+      {{ current | usernameDisplay(id) }}
     </button>
 
     <b-dropdown-item :value="all">
-      <Avatar :author="all.account" size="small"></Avatar>&nbsp;
-      {{ all.account }}
+      <Avatar :author="all.account" owner="id" size="small"></Avatar>&nbsp;
+      {{ all.account | usernameDisplay(id) }}
     </b-dropdown-item>
 
     <b-dropdown-item v-for="(account, index) in accounts" :value="account" :key="index">
@@ -24,7 +24,7 @@ import { mapState } from 'vuex';
 
 import Avatar from '@/components/Avatar.vue';
 
-const ALL = { account: 'anon', 'authority': { 'posting': true } };
+const ALL = { account: process.env.VUE_APP_ANON_USER, 'authority': { 'posting': true } };
 
 export default {
   components: {
@@ -40,6 +40,7 @@ export default {
     ...mapState( 'auth', [
       'accounts',
       'current',
+      'id',
     ] ),
   },
   methods: {

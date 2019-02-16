@@ -22,7 +22,7 @@ const contextMap = {
   default: { theme: 'theme-default', forum: 'support', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
   drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
-  localhost: { theme: 'theme-drugwars', forum: 'monsters', icon: 'favicon_teeth.png' },
+  localhost: { theme: 'theme-drugwars', forum: 'monsters', icon: 'favicon.ico' },
 };
 let context = contextMap.default;
 const subs = ( new URL( window.location ) ).hostname.split( '.' );
