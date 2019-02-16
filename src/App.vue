@@ -9,6 +9,7 @@
 
 <style lang="scss">
 @import "./themes/default.scss";
+@import "./themes/drugwars.scss";
 @import "./themes/monsters.scss";
 @import "./themes/silver.scss";
 </style>

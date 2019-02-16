@@ -21,6 +21,7 @@ registerSW();
 const contextMap = {
   default: { theme: 'theme-default', forum: 'support', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
+  drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
   localhost: { theme: 'theme-silver', forum: 'monsters', icon: 'favicon_teeth.png' },
 };
 let context = contextMap.default;
