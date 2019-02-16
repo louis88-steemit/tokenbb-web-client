@@ -1,3 +1,4 @@
+// that module will be dinamically registered on Settings page
 export default {
   namespaced: true,
   state: {
@@ -11,6 +12,9 @@ export default {
     codescriptionntent (state, value) { state.description = value }
   },
   actions: {
+    async init () {
+
+    },
     async add ({ state, dispatch, commit }) {
       try {
         await dispatch('categories/add', state)

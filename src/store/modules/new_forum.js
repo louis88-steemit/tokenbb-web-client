@@ -1,6 +1,7 @@
 import { Notify } from 'quasar'
 import api from '../../services/api'
 
+// that module will be dinamically registered on New Forum page
 export default {
   namespaced: true,
   state: {
@@ -12,6 +13,9 @@ export default {
     name (state, value) { state.name = value }
   },
   actions: {
+    async init () {
+
+    },
     async onSubmit ({ state, commit }) {
       if (state.name.length < 3) {
         Notify.create({

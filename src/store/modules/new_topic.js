@@ -1,6 +1,7 @@
 import { Notify } from 'quasar'
 import { Vue } from 'vue'
 
+// that module will be dinamically registered on New Topic page
 export default {
   namespaced: true,
   state: {
@@ -16,6 +17,9 @@ export default {
     content (state, value) { state.content = value }
   },
   actions: {
+    async init () {
+
+    },
     async onSubmit ({ state, dispatch, commit }) {
       if (!state.selectedCategory) {
         Notify.create({

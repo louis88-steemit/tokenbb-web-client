@@ -1,6 +1,7 @@
 import post from '../../services/post'
 import { Vue } from 'vue'
 
+// that module will be dinamically registered on Topic page
 export default {
   namespaced: true,
   state: {
@@ -14,11 +15,8 @@ export default {
     replyText (state, value) { state.replyText = value }
   },
   actions: {
-    onReplyInput ({ commit }, text) {
-      commit('replyText', text)
-    },
-    categoryFromId ({ getters }, id) {
-      return getters.categoryFromId(id)
+    async init () {
+
     },
     async onReplySubmit ({ state, dispatch }) {
       const payload = {
@@ -45,6 +43,12 @@ export default {
       }
       commit('topic', topic)
       commit('fetching', false)
+    },
+    onReplyInput ({ commit }, text) {
+      commit('replyText', text)
+    },
+    categoryFromId ({ getters }, id) {
+      return getters.categoryFromId(id)
     }
   },
   getters: {
