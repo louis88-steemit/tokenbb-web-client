@@ -23,7 +23,6 @@
           "warning": ($warning, $warning-invert),
           "danger": ($danger, $danger-invert),
           "twitter": ($twitter, $twitter-invert)
-
   );
 
   $background: #181E24;
@@ -47,10 +46,12 @@
     -moz-osx-font-smoothing: grayscale;
     color: #000000;
   }
+
   /* background */
   body {
     background-color: $background;
   }
+
   /* Forum Link Colors*/
   a {
     color: $primary-invert;
@@ -59,6 +60,7 @@
   a:hover {
     color: $primary;
   }
+
   .title {
     color: $twitter;
   }
@@ -68,7 +70,7 @@
   }
 
   .logo {
-    content:$logo;
+    content: $logo;
   }
 
   .content {
@@ -76,139 +78,176 @@
       background-color: $background;
     }
   }
+
   /* Top Bar Navigation */
   .navbar-item img {
     max-height: 3.75rem;
   }
+
   #nav {
     background-color: #002a30;
     background: $background;
     color: #000000;
     font-family: ruba, sans-serif;
+
     a {
       font-weight: bold;
       color: $primary-invert;
+
       &.router-link-exact-active {
         color: $primary;
       }
     }
+
     a:hover {
       color: $primary;
     }
+
     .navbar-item {
       border-radius: 5px;
       background-color: $background;
       background: $background;
     }
+
     .navbar-item:hover {
       background-color: $info;
       background: $background;
     }
+
     .button {
       color: white;
       background-color: $background;
     }
+
     .dropdown-content {
       background-color: $background;
     }
   }
+
   /* Category Dropdown */
   .container .level-left .button {
     background-color: $background;
     border-color: $primary-invert;
     color: white;
   }
+
   .dropdown-content {
     background-color: $background;
   }
+
   .dropdown-content a {
     color: $primary;
   }
+
   .dropdown-content a:hover {
     color: white;
     background: none;
   }
+
   /* New Topic Button */
   .container .level-right .button {
     background: $primary;
     color: white;
   }
+
   .level-right .button:hover {
     color: $background;
   }
+
   /* Front-Page Table Styling */
   .table {
     background-color: $background;
   }
+
   /* Front-Page Table Styling - Stripes Styling */
   .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
     background: $background;
   }
+
   /* Front-Page Table Styling - Head */
   .table thead th {
     color: $primary-invert;
   }
+
   /* Front-Page Table Styling - Information */
   .table td {
     color: $primary-invert;
   }
+
   /* Front-Page Table Styling - Category */
   .tag {
     color: white;
   }
+
   /* Percentage Gauge Label */
   .percent-label {
     color: $primary;
   }
+
   /*------ Pinned Post ------*/
   .b-table tr.pinned {
     margin-top: 20px;
     color: $primary;
     background-color: $primary;
+
     a {
       color: white;
     }
+
     a:hover {
       color: $background;
     }
+
     td p {
       color: $primary-invert;
     }
+
     .icon {
       color: $primary-invert;
     }
   }
+
   tr.pinned td > span > a {
     font-weight: bold;
   }
+
   tr.pinned td > span > a > span.tag {
     font-weight: normal;
   }
+
   /*--------- Thread Content ------------*/
   article {
     color: white;
   }
+
   .content h1 {
     color: $primary-invert;
   }
+
   .content h2 {
     color: $primary-invert;
   }
+
   .content h3 {
     color: $primary-invert;
   }
+
   .content h4 {
     color: $primary-invert;
   }
+
   .content h5 {
     color: $primary-invert;
   }
+
   .content h6 {
     color: $primary-invert;
   }
+
   article a {
     text-decoration: underline;
   }
+
   .container.fill {
     background-color: $background;
     background: $background;
@@ -216,21 +255,26 @@
     padding: 20px;
     border-color: primary-inverted;
   }
+
   /* Timestamp Color */
   .container .level-item {
     color: white;
   }
+
   .quillWrapper {
     background-color: $background;
     color: $primary-invert;
   }
+
   /* Settings Page */
   form .label {
     color: $primary-invert;
   }
+
   table tr:hover {
     background: none;
   }
+
   form.new-topic {
     width: 500px;
   }
@@ -257,6 +301,7 @@
       align-items: center;
       min-width: 3rem;
     }
+
     .popover {
       width: 12rem;
     }
