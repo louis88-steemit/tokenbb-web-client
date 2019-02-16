@@ -4,155 +4,276 @@
 
   @import "./global/variables.scss";
 
-  // Set your colors
-  $primary: #696568;
-  $primary-invert: findColorInvert($primary);
-  $twitter: #180830;
-  $twitter-invert: findColorInvert($twitter);
+// Set your colors
+$primary: #286CB2;
+$info: #0d0e34;
+$tag: #CD7B2F;
+$primary-second: #94b1d3;
 
-  // Setup $colors to use as bulma classes (e.g. 'is-twitter')
-  $colors: (
-          "white": ($white, $black),
-          "black": ($black, $white),
-          "light": ($light, $light-invert),
-          "dark": ($dark, $dark-invert),
-          "primary": ($primary, $primary-invert),
-          "info": ($info, $info-invert),
-          "success": ($success, $success-invert),
-          "warning": ($warning, $warning-invert),
-          "danger": ($danger, $danger-invert),
-          "twitter": ($twitter, $twitter-invert)
-  );
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+        "white": ($white, $black),
+        "black": ($black, $white),
+        "light": ($light, $light-invert),
+        "dark": ($dark, $dark-invert),
+        "primary": ($primary, $primary-invert),
+        "info": ($info, $info-invert),
+        "success": ($success, $success-invert),
+        "warning": ($warning, $warning-invert),
+        "danger": ($danger, $danger-invert),
 
-  $background: rgb(19, 19, 20);
+);
 
-  // Links
-  $link: $primary;
-  $link-invert: $primary-invert;
-  $link-focus-border: $primary;
+$background: #f3f3f3;
+$background-second: #f8f8f8;
 
-  $logo: url("https://tokenbb.bt-stage.com/favicon.ico");
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
 
-  // Import Bulma and Buefy styles
-  @import "~bulma";
-  @import "~buefy/src/scss/buefy";
-  @import "~bulma-extensions/bulma-slider/dist/css/bulma-slider.sass";
+$logo: url("https://tokenbb.io/wp-content/uploads/2018/11/icon-reverse.png");
 
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #000000;
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+@import "~bulma-extensions/bulma-slider/dist/css/bulma-slider.sass";
+
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #000000;
+}
+/* background */
+body {
+  background-color: $background;
+}
+/* Forum Link Colors*/
+a {
+  color: black;
+}
+
+a:hover {
+  color: $primary;
+}
+.title {
+  color: $primary;
+}
+strong {
+  color: $primary;
+}
+
+.logo {
+  content:$logo;
+}
+
+.content {
+  blockquote {
+    background-color: $background;
   }
-
+}
+/* Top Bar Navigation */
+.navbar-item img {
+  max-height: 3.75rem;
+}
+#nav {
+  background-color: $background;
+  background: $background;
+  color: $primary;
   a {
-    color: #000000;
+    font-weight: bold;
+    color: $primary;
+    &.router-link-exact-active {
+      color: $primary;
+    }
   }
-
   a:hover {
-    color: #000000;
+    color: $primary;
   }
-
-  .title {
-    color: #000000;
+  .navbar-item {
+    border-radius: 5px;
+    background-color: $info;
+    background: $background;
   }
-
-  strong {
-    color: #000000;
+  .navbar-item:hover {
+    background-color: $primary;
+    background: $background;
   }
-
-  .logo {
-    content:$logo;
+  .button {
+    color: white;
+    background-color: $primary;
   }
-
-  .content {
-    blockquote {
-      background-color: #eeeeee;
-    }
-  }
-
-  #nav {
-    background-color: #002a30;
-    background: linear-gradient(to bottom, #f1f1f6 0%, #cacad2 93%, #888587 100%);
-    color: #000000;
-    font-family: ruba, sans-serif;
-
-    // padding: 30px;
-    a {
-      font-weight: bold;
-      color: #000000;
-      &.router-link-exact-active {
-        color: $primary;
-      }
-    }
-  }
-
-  .container.fill {
+  .dropdown-content {
     background-color: $background;
-    background: linear-gradient(to bottom, #eeeeee 0%, #cccccc 50%, #eeeeee 100%);
-    border-radius: 25px;
-    padding: 20px;
   }
-
-  .quillWrapper {
-    background-color: $background;
+ a.dropdown-item {
+    padding-right: 0px !important;
+    width: 210px;
+  }
+  .dropdown-content a:hover {
+    background-color: $primary;
+    color: $background;
+  }
+}
+/* Category Dropdown */
+.container .level-left .button {
+  background-color: $background;
+  border-color: $primary;
+  color: $primary;
+}
+.dropdown-content {
+  background-color: $background;
+}
+.dropdown-content a {
+  color: $primary;
+}
+.dropdown-content a:hover {
+  color: white;
+  background: $primary;
+}
+a.dropdown-item {
+  padding-right: 0px !important;
+  width: 210px;
+}
+/* New Topic Button */
+.container .level-right .button {
+  background: $primary;
+  color: $background;
+}
+.level-right .button:hover {
+  color: $info;
+}
+/* Front-Page Table Styling */
+.table {
+  background-color: $background;
+}
+/* Front-Page Table Styling - Stripes Styling */
+.table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+  background: $background-second;
+}
+/* Front-Page Table Styling - Head */
+.table thead th {
+  color: $primary;
+}
+/* Front-Page Table Styling - Information */
+.table td {
+  color: $info;
+  font-size: 13px;
+}
+.table a {
+  font-size: 16px;
+}
+/* Front-Page Table Styling - Category */
+.tag:not(body).is-info {
+  background-color: $primary-second;
+  color: $info;
+}
+background-color: white;
+/* Percentage Gauge Label */
+.percent-label {
+  color: $primary;
+}
+/*------ Pinned Post ------*/
+.b-table tr.pinned {
+  margin-top: 20px;
+  color: $background-second;
+  background-color: $primary;
+  a {
     color: white;
   }
-
-  .b-table tr.pinned {
-    color: #000000;
-    background-color: $pinned-background-color;
-    a {
-      color: #000000;
-    }
-    a:hover {
-      color: #000000;
-    }
+  a:hover {
+    color: $info;
   }
-  tr.pinned td > span > a {
-    font-weight: bold;
+  td p {
+    color: white;
   }
-  tr.pinned td > span > a > span.tag {
-    font-weight: normal;
+  .icon {
+    color: $info;
   }
-
-  form.new-topic {
-    width: 500px;
+  .dropdown-trigger {
+    background-color: white;
   }
-
-  form.new-reply {
-    width: 640px;
+}
+tr.pinned td > span > a {
+  font-weight: bold;
+}
+tr.pinned td > span > a > span.tag {
+  font-weight: normal;
+}
+/*--------- Thread Content ------------*/
+article {
+  color: #333;
+}
+.content h1 {
+  color: $primary;
+}
+.content h2 {
+  color: $primary;
+}
+.content h3 {
+  color: $primary;
+}
+.content h4 {
+  color: $primary;
+}
+.content h5 {
+  color: $primary;
+}
+.content h6 {
+  color: $primary;
+}
+article a {
+  text-decoration: underline;
+  color: $primary;
+}
+.container.fill {
+  background-color: $background-second;
+  background: $background-second;
+  border-radius: 25px;
+  padding: 20px;
+  border-color: $primary;
+}
+.quillWrapper {
+  background-color: $background;
+  color: $primary;
+}
+/* Settings Page */
+form .label {
+  color: $primary;
+}
+table tr:hover {
+  background: none;
+}
+form.new-topic {
+  width: 500px;
+}
+form.new-reply {
+  width: 640px;
+}
+.spacer {
+  height: 300px;
+}
+.post {
+  margin-bottom: 2rem;
+}
+.post-body {
+  border-bottom: 1px solid $primary;
+}
+.upvote {
+  .vertical {
+    display: flex;
+    align-items: center;
+    min-width: 3rem;
   }
-
-  .spacer {
-    height: 300px;
+  .popover {
+    width: 12rem;
   }
-
-  .post {
-    margin-bottom: 2rem;
-  }
-
-  .post-body {
-    border-bottom: 1px solid $post-border-color;
-  }
-
-  .upvote {
-    .vertical {
-      display: flex;
-      align-items: center;
-      min-width: 3rem;
-    }
-    .popover {
-      width: 12rem;
-    }
-  }
-
-  form.new-reply ul,
-  form.new-topic ul {
-    list-style: disc !important;
-  }
-
-  // make sure to have all sensible defaults set
-  @import "./global/sensible-defaults.scss";
-
+}
+form.new-reply ul,
+form.new-topic ul {
+  list-style: disc !important;
+}
+// make sure to have all sensible defaults set
+@import "./global/sensible-defaults.scss";
 }
