@@ -1,23 +1,23 @@
 import { mapStateAndMutations } from '../../utils/mapper'
 import { mapActions } from 'vuex'
-import store from '../../store/modules/settings'
+import store from '../../store/pages/settings'
 
 export default {
   name: 'SettingsPage',
   async preFetch ({ store }) {
-    store.registerModule('settings', store, { ignoreIfExists: true })
+    store.registerModule('page_settings', store, { ignoreIfExists: true })
     await store.dispatch('init')
   },
   created () {
-    this.$store.registerModule('settings', store, { preserveState: true })
+    this.$store.registerModule('page_settings', store, { preserveState: true })
   },
   destroyed () {
-    this.$store.unregisterModule('settings')
+    this.$store.unregisterModule('page_settings')
   },
   computed: {
-    ...mapStateAndMutations('settings', ['name', 'title', 'description'])
+    ...mapStateAndMutations('page_settings', ['name', 'title', 'description'])
   },
   methods: {
-    ...mapActions('settings', ['init', 'add', 'remove'])
+    ...mapActions('page_settings', ['init', 'add', 'remove'])
   }
 }
