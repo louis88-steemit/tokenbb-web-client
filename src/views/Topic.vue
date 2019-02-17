@@ -29,6 +29,9 @@
           :key="index"
         >
         </Post>
+        <a class="topic-nav topic-nav-to-top" @click="scrollTo('posts')">
+          Back to Top
+        </a>
       </main>
 
       <br>
