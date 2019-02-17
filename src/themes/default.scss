@@ -312,6 +312,22 @@
     list-style: disc !important;
   }
 
+  /* Topic navigation buttons */
+  .topic-nav {
+    /* styles to apply to all topic navigation */
+    /* links, e.g. Jump to end, Back to top    */
+  }
+
+  .topic-nav-to-top {
+    /* styles to apply to topic navigation for */
+    /* Back to top only                            */
+  }  
+
+  .topic-nav-to-end {
+    /* styles to apply to all topic navigation for */
+    /* Jump to end only                                */
+  }   
+
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 

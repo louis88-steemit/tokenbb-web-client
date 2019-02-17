@@ -12,7 +12,10 @@
 
         <CategoryTag :categoryId="topic.categoryId">
         </CategoryTag>
-
+        &nbsp;
+        <a class="topic-nav topic-nav-to-end" @click="scrollTo('endOfTopic')">
+          Jump to end
+        </a>
       </header>
 
       <br>
@@ -26,10 +29,13 @@
           :key="index"
         >
         </Post>
+        <a class="topic-nav topic-nav-to-top" @click="scrollTo('posts')">
+          Back to Top
+        </a>
       </main>
 
       <br>
-
+      <a ref="endOfTopic" />
       <ShowIfLoggedIn>
         <ReplyForm
           :fetching="$store.state.replies.fetching"
@@ -113,6 +119,9 @@ export default {
     },
     categoryFromId( id ) {
       return ( this.categoriesBySlug[id] || { name: '' } ).name;
+    },
+    scrollTo( refName ) {
+      window.scrollTo( 0, this.$refs[refName].offsetTop );
     },
   },
 };
