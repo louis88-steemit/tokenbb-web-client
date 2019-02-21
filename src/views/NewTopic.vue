@@ -38,6 +38,13 @@
             class="button is-primary">
             Create Topic
           </button>
+          &nbsp;
+          <button role="cancel"
+            @click="$emit('close_new_topic')"
+            :class="{ 'is-loading': fetching }"
+            class="button">
+            Cancel
+          </button>
         </div>
       </div>
     </form>
