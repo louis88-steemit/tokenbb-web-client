@@ -29,13 +29,13 @@
           :key="index"
         >
         </Post>
-        <a class="topic-nav topic-nav-to-top" @click="scrollTo('posts')">
+        <a class="topic-nav topic-nav-to-top" @click="scrollTo('topOfPage')">
           Back to Top
         </a>
       </main>
 
       <br>
-      <a ref="endOfTopic" />
+      <a id="endOfTopic" />
       <ShowIfLoggedIn>
         <ReplyForm
           :fetching="$store.state.replies.fetching"
@@ -120,8 +120,8 @@ export default {
     categoryFromId( id ) {
       return ( this.categoriesBySlug[id] || { name: '' } ).name;
     },
-    scrollTo( refName ) {
-      window.scrollTo( 0, this.$refs[refName].offsetTop );
+    scrollTo( id ) {
+      window.scrollTo( 0, document.getElementById( id ).offsetTop );
     },
   },
 };
