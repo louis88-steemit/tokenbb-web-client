@@ -1,6 +1,7 @@
 <template>
   <nav  id="nav" class="navbar" role="navigation" aria-label="main navigation">
     <div class="container">
+      <a id="topOfPage" />
       <div class="navbar-brand">
         <div class="navbar-item">
           <router-link
