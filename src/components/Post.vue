@@ -145,6 +145,10 @@ export default {
         } )
         .catch( ( err ) => {
           console.error( err );
+          this.$toast.open( {
+            message: 'Oops! Could not edit your post at this moment. ' + err,
+            type: 'is-danger',
+          } );
           this.fetching = false;
         } );
     },

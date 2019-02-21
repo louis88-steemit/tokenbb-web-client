@@ -1,12 +1,10 @@
 import Buefy from 'buefy';
-import miniToastr from 'mini-toastr';
 import moment from 'moment';
 
 import steemEditor from 'steem-editor';
 import 'steem-editor/dist/css/index.css';
 import Vue from 'vue';
 
-import VueNotifications from 'vue-notifications';
 import VueAnalytics from 'vue-analytics';
 
 import App from './App.vue';
@@ -68,27 +66,6 @@ window.setGAUserID = setGAUserID;
 function setGAUserID( userID ) {
   Vue.$ga.set( 'userId', userID );
 }
-
-const toastTypes = {
-  success: 'success',
-  error: 'error',
-  info: 'info',
-  warn: 'warn',
-};
-miniToastr.init( { types: toastTypes } );
-
-function toast( { title, message, type, timeout, cb } ) {
-  return miniToastr[type]( message, title, timeout, cb );
-}
-
-const options = {
-  success: toast,
-  error: toast,
-  info: toast,
-  warn: toast,
-};
-
-Vue.use( VueNotifications, options );
 
 Vue.use( steemEditor );
 

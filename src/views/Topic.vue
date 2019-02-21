@@ -98,8 +98,10 @@ export default {
           }
         } )
         .catch( ( err ) => {
-
-          // TODO: Feedback for the user
+          this.$toast.open( {
+            message: 'Oops! Could not submit reply at this moment. ' + err,
+            type: 'is-danger',
+          } );
           this.$ga.exception( err );
         } );
     },

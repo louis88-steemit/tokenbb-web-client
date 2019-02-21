@@ -1,5 +1,6 @@
 import {} from '@/services/api.service';
 import { addCategory, listCategories, removeCategory } from '../services/api.service.js';
+import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,
@@ -38,7 +39,10 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-
+          Toast.open( {
+            message: `Error adding category ${categoryName} : ${err.message}`,
+            type: 'is-danger',
+          } );
           console.error( err );
         } );
     },
@@ -52,7 +56,10 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-
+          Toast.open( {
+            message: `Error removing category ${category.name} : ${err.message}`,
+            type: 'is-danger',
+          } );
           console.error( err );
         } );
     },
@@ -66,7 +73,10 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-
+          Toast.open( {
+            message: 'Error fetching categories: ' + err.message,
+            type: 'is-danger',
+          } );
           console.error( err );
         } );
     },
