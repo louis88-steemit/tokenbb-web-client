@@ -115,6 +115,10 @@ export default {
     handleTextChange( text ) {
       this.content = text;
     },
+    onCancel( event ) {
+      event.preventDefault();
+      this.$router.go( -1 );
+    },
   },
 };
 </script>
