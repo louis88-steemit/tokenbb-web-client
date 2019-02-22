@@ -38,6 +38,13 @@
             class="button is-primary">
             Create Topic
           </button>
+          &nbsp;
+          <button role="cancel"
+            :class="{ 'is-loading': fetching }"
+            @click="onCancel"
+            class="button">
+            Cancel
+          </button>
         </div>
       </div>
     </form>
