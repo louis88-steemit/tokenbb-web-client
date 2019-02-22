@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker';
+import { Toast } from 'buefy/dist/components/toast';
 export function registerSW() {
   if ( process.env.NODE_ENV === 'production' ) {
     register( `${process.env.BASE_URL}service-worker.js`, {
@@ -19,6 +20,10 @@ export function registerSW() {
       },
       updated( registration ) {
         console.log( 'New content is available; please refresh.' );
+        Toast.open( 'New update available. Please refresh.' );
+
+        // TODO: see if caching is causing problems.... Want a user button that
+        // can be hit to trigger the adoption of the new SW and reload the page.
       },
       offline() {
         console.log( 'No internet connection found. App is running in offline mode.' );
