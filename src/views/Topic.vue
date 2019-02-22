@@ -95,6 +95,7 @@ export default {
         .then( ( reply ) => {
           if ( reply ) {
             this.fetchTopic();
+            this.replyText = '';
           }
         } )
         .catch( ( err ) => {
