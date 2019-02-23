@@ -47,7 +47,7 @@ export default {
     },
     handleQuoteClick( event ) {
       event.preventDefault();
-      this.$refs.editor.content += `> @${this.quoteAuthor}:\n> ${this.quote}\n---\n`;
+      this.$refs.editor.content += `> @${this.quoteAuthor}:\n${this.quote.replace( /^/gm, '> ' )}\n---`;
     },
   },
   data() {
