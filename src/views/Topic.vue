@@ -41,7 +41,7 @@
           :fetching="$store.state.replies.fetching"
           :text="replyText"
           :quote="quote"
-          :quoteAuthor="topic.lastReply.author"
+          :quoteAuthor="quoteAuthor"
           @input="onReplyInput"
           @submit="onReplySubmit">
         </ReplyForm>
@@ -90,6 +90,10 @@ export default {
         return this.topic.body.trim();
       }
       return '';
+    },
+    quoteAuthor() {
+      const topic = this.topic;
+      return topic.lastReply.author === '' ? topic.author.user : topic.lastReply.author;
     },
   },
   methods: {
