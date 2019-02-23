@@ -40,7 +40,7 @@
         <ReplyForm
           :fetching="$store.state.replies.fetching"
           :text="replyText"
-          :quote="topic.lastReply.preview"
+          :quote="topic.replies[topic.replies.length-1].body.trim()"
           :quoteAuthor="topic.lastReply.author"
           @input="onReplyInput"
           @submit="onReplySubmit">
