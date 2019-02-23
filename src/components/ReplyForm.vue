@@ -38,6 +38,8 @@ export default {
   props: {
     fetching: Boolean,
     text: String,
+    quote: String,
+    quoteAuthor: String,
   },
   methods: {
     handleTextChange( value ) {
