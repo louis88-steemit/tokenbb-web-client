@@ -40,7 +40,7 @@
         <ReplyForm
           :fetching="$store.state.replies.fetching"
           :text="replyText"
-          :quote="topic.replies[topic.replies.length-1].body.trim()"
+          :quote="quote"
           :quoteAuthor="topic.lastReply.author"
           @input="onReplyInput"
           @submit="onReplySubmit">
@@ -82,6 +82,14 @@ export default {
     ...mapState( 'categories', [
       'categoriesBySlug',
     ] ),
+    quote() {
+      const arr = this.topic.replies;
+      if ( arr && arr.length > 0 ) {
+        return arr[arr.length - 1].body.trim();
+      }
+      return '';
+
+    },
   },
   methods: {
     onReplyInput( text ) {
