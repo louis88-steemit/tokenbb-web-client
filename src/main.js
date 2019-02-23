@@ -45,7 +45,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 Vue.config.productionTip = false;
 
-Vue.use( Buefy );
+Vue.use( Buefy, {
+  defaultToastDuration: 3000,
+} );
+
 Vue.use( sanitize );
 
 Vue.use( VueAnalytics, {
