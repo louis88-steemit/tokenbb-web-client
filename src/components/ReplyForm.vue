@@ -2,6 +2,7 @@
   <form @submit.prevent="$emit('submit')" class="new-reply">
     <b-field>
       <TextEditor
+        ref="editor"
         :fetching="fetching"
         @input="handleTextChange">
       </TextEditor>
