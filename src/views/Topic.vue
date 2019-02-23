@@ -86,9 +86,10 @@ export default {
       const arr = this.topic.replies;
       if ( arr && arr.length > 0 ) {
         return arr[arr.length - 1].body.trim();
+      } else if ( this.topic.body ) {
+        return this.topic.body.trim();
       }
       return '';
-
     },
   },
   methods: {
