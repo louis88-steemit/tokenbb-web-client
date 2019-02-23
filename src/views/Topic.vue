@@ -98,8 +98,9 @@ export default {
           }
         } )
         .catch( ( err ) => {
+          console.log( err );
           this.$toast.open( {
-            message: 'Oops! Could not submit reply at this moment. ' + err,
+            message: 'Oops! Could not submit reply at this moment: ' + err.message,
             type: 'is-danger',
           } );
           this.$ga.exception( err );
