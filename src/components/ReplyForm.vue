@@ -16,6 +16,13 @@
           v-bind:class="{ 'is-loading': fetching }">
           Reply
         </button>
+        &nbsp;
+        <button role="button"
+          class="button"
+          v-bind:class="{ 'is-loading': fetching }"
+          @click="handleQuoteClick">
+          Quote
+        </button>
       </div>
     </b-field>
   </form>
