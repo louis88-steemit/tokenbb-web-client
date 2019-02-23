@@ -45,6 +45,10 @@ export default {
     handleTextChange( value ) {
       this.$emit( 'input', value );
     },
+    handleQuoteClick( event ) {
+      event.preventDefault();
+      this.$refs.editor.content += `> @${this.quoteAuthor}:\n> ${this.quote}\n---\n`;
+    },
   },
   data() {
     return {
