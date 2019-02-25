@@ -34,7 +34,7 @@ export function registerSW() {
         );
 
         Snackbar.open( {
-          message: 'New content is available. Please refresh.',
+          message: 'A new version of this web app is available, please refresh the page to update.',
           type: 'is-warning',
           position: 'is-bottom-left',
           actionText: 'Refresh',
