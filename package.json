@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --host 0.0.0.0 --port 3000",
-    "build": "vue-cli-service build && cp skip-waiting.js dist",
+    "build": "vue-cli-service build",
     "test": "npm run lint",
     "lint": "vue-cli-service lint",
     "pretest": "vue-cli-service lint --no-fix",
