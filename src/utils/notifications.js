@@ -1,8 +1,8 @@
 export function errorAlertOptions( message, err ) {
-  const fullMessage = `${message}: <br><pre>${err}</pre>`;
+  const fullMessage = `${message}: ${err.message}`;
   return {
-    title: 'Error',
     message: fullMessage,
     type: 'is-danger',
+    duration: 5000,
   };
 }

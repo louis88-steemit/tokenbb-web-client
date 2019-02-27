@@ -2,7 +2,6 @@ import {} from '@/services/api.service';
 import { addCategory, listCategories, removeCategory } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 import { Toast } from 'buefy/dist/components/toast';
-import { Dialog } from 'buefy/dist/components/dialog';
 
 export default {
   namespaced: true,
@@ -41,10 +40,7 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-          Toast.open( {
-            message: `Error adding category ${categoryName} : ${err.message}`,
-            type: 'is-danger',
-          } );
+          Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
           console.error( err );
         } );
     },
@@ -58,10 +54,7 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-          Toast.open( {
-            message: `Error removing category ${category.name} : ${err.message}`,
-            type: 'is-danger',
-          } );
+          Toast.open( errorAlertOptions( `Error removing category ${category.name}`, err ) );
           console.error( err );
         } );
     },
@@ -72,11 +65,10 @@ export default {
         .then( ( categories ) => {
           commit( 'updateCategoryList', categories.data );
           commit( 'setFetching', false );
-          throw new Error( 'hello' );
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-          Dialog.alert( errorAlertOptions( 'Error fetching categories', err ) );
+          Toast.open( errorAlertOptions( 'Error fetching categories', err ) );
           console.error( err );
         } );
     },

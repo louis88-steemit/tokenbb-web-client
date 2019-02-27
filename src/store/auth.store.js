@@ -1,6 +1,7 @@
 import steem from '@/services/steem.service';
 import jwtdecode from 'jwt-decode';
 import { listRoles } from '../services/api.service.js';
+import { errorAlertOptions } from '../utils/notifications.js';
 import { Toast } from 'buefy/dist/components/toast';
 
 export default {
@@ -136,10 +137,7 @@ export default {
           commit( 'setRoles', { admin: isAdmin, mod: isMod } );
         } )
         .catch( ( err ) => {
-          Toast.open( {
-            message: `Error fetching roles: ${err.message}`,
-            type: 'is-danger',
-          } );
+          Toast.open( errorAlertOptions( `Error fetching roles: ${err.message}`, err ) );
           console.error( err );
         } );
     },
