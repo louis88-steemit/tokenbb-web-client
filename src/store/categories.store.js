@@ -36,7 +36,7 @@ export default {
 
       addCategory( categoryName, title, description )
         .then( ( category ) => {
-          commit( 'add', category );
+          commit( 'add', category.data );
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {

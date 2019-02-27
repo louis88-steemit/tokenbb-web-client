@@ -7,11 +7,11 @@
       <p class="control">
         <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
       </p>
-      <b-dropdown position="is-top-left" hoverable :disabled="this.voted">
+      <b-dropdown position="is-top-left" hoverable :disabled="voted">
         <p class="control" slot="trigger">
           <a class="button is-primary is-small"
             :class="{ 'is-loading': this.fetching }"
-            :disabled="this.voted"
+            :disabled="voted"
             @click="handleClick">
             <!--<span>Upvote</span>-->
             <b-icon icon="arrow-up-drop-circle-outline" size="is-small">
@@ -65,10 +65,17 @@ export default {
     return {
       percent: 10,
       fetching: false,
+      paid: 0,
       value: '0.000',
       votes: [],
-      voted: false,
     };
+  },
+  computed: {
+    voted() {
+      return this.paid > 0
+        || this.$store.state.auth.current === 'anon'
+        || this.votes.filter( ( _vote ) => _vote.voter === this.$store.state.auth.current ).length > 0;
+    },
   },
   mounted() {
     this.updateValue();
@@ -80,12 +87,9 @@ export default {
     async updateValue() {
       const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
       const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
-      const paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
-      this.value = ( paid + pending ).toFixed( 3 );
+      this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
+      this.value = ( this.paid + pending ).toFixed( 3 );
       this.votes = data.active_votes;
-      this.voted = paid > 0
-        || this.$store.state.auth.current === 'anon'
-        || this.votes.filter( ( _vote ) => _vote.voter === this.$store.state.auth.current ).length > 0;
     },
     async handleClick() {
       if ( this.voted ) {

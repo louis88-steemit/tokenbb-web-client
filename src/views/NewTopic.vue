@@ -38,6 +38,13 @@
             class="button is-primary">
             Create Topic
           </button>
+          &nbsp;
+          <button role="cancel"
+            :class="{ 'is-loading': fetching }"
+            @click="onCancel"
+            class="button">
+            Cancel
+          </button>
         </div>
       </div>
     </form>
@@ -107,6 +114,10 @@ export default {
     },
     handleTextChange( text ) {
       this.content = text;
+    },
+    onCancel( event ) {
+      event.preventDefault();
+      this.$router.go( -1 );
     },
   },
 };

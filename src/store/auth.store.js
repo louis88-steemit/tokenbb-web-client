@@ -87,7 +87,7 @@ export default {
     },
     setCurrent( state, username ) {
       state.current = username;
-      console.log( state.current );
+      window.BTSSO.rememberSteemAccountForApp( `${global.forumname}.tokenbb`, username );
     },
     setRoles( state, { mod, admin } ) {
       state.roles.mod = mod;
@@ -98,10 +98,18 @@ export default {
     },
     setAccounts( state, accounts ) {
       state.accounts = accounts;
-      const first = state.accounts.filter( ( account ) => account.authority.posting )[0];
-      const current = first ? first.account : 'anon';
-      console.log( `Using first account ${ current }` );
-      state.current = current;
+
+      const saved = window.BTSSO.getSteemAccountForApp( `${global.forumname}.tokenbb` );
+      if ( state.accounts.filter( ( account ) => account.account === saved && account.authority.posting ).length > 0 ) {
+        state.current = saved;
+        console.log( `Using saved account ${ saved }` );
+      } else {
+        const first = state.accounts.filter( ( account ) => account.authority.posting )[0];
+        const current = first ? first.account : 'anon';
+        console.log( `Using first account ${ current }` );
+        state.current = current;
+        window.BTSSO.rememberSteemAccountForApp( `${global.forumname}.tokenbb`, current );
+      }
     },
   },
   computed: {

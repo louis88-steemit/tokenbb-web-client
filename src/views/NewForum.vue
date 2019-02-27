@@ -42,10 +42,10 @@ export default {
   },
   methods: {
     onSubmit() {
-      if ( this.name.length < 3 ) {
+      if ( this.name.length < 1 ) {
         return this.$toast.open( {
           type: 'is-danger',
-          message: 'Please write title and slug',
+          message: 'Please write a forum name',
         } );
       }
 
