@@ -11,7 +11,8 @@
 @import "./themes/default.scss";
 @import "./themes/drugwars.scss";
 @import "./themes/monsters.scss";
-@import "./themes/silver.scss";
+@import "./themes/lightmode.scss";
+@import "./themes/darkmode.scss";
 </style>
 
 <script>
