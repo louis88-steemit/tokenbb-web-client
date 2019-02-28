@@ -95,13 +95,11 @@
       color: $tag;
       background-color: $primary;
       border-color: $tag;
-      border-width: 2px;
+      border-width: 1px;
     }
     .button:hover {
       color: $primary;
       background-color: $tag;
-      border-color: $primary;
-      border-width: 2px;
     }
     .dropdown-content {
       background-color: $background;
@@ -141,13 +139,11 @@
     background: $primary;
     color: white;
     border-color: $tag;
-    border-width: 2px;
+    border-width: 1px;
   }
   .container .level-right .level-item .topic-style .button:hover {
     background-color: $tag;
     color: $primary;
-    border-color: $primary;
-    border-width: 2px;
     transition-duration: 450ms;
   }
   /* Front-Page Table Styling */
