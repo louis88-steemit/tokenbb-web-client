@@ -100,6 +100,7 @@
 import Avatar from '@/components/Avatar.vue';
 import Upvote from '@/components/Upvote.vue';
 import ModActions from '@/components/ModActions.vue';
+import { errorAlertOptions } from '../utils/notifications.js';
 
 export default {
   components: {
@@ -145,6 +146,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.error( err );
+          this.$toast.open( errorAlertOptions( 'Oops! Could not edit your post at this moment' ) );
           this.fetching = false;
         } );
     },

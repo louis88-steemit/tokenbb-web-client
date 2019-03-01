@@ -1,6 +1,8 @@
 import steem from '@/services/steem.service';
 import jwtdecode from 'jwt-decode';
 import { listRoles } from '../services/api.service.js';
+import { errorAlertOptions } from '../utils/notifications.js';
+import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,
@@ -135,15 +137,9 @@ export default {
           commit( 'setRoles', { admin: isAdmin, mod: isMod } );
         } )
         .catch( ( err ) => {
+          Toast.open( errorAlertOptions( `Error fetching roles: ${err.message}`, err ) );
           console.error( err );
         } );
-    },
-  },
-  notifications: {
-    showLoginError: { // You can have any name you want instead of 'showLoginError'
-      title: 'Login Failed',
-      message: 'Failed to authenticate',
-      type: 'error', // You also can use 'VueNotifications.types.error' instead of 'error'
     },
   },
 };
