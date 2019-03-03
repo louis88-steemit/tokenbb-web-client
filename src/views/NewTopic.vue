@@ -27,6 +27,7 @@
       <b-field label="Message">
         <TextEditor
           :fetching="fetching"
+          :initialContent="content"
           @input="handleTextChange">
         </TextEditor>
       </b-field>
@@ -65,9 +66,9 @@ export default {
   data() {
     return {
       fetching: false,
-      selectedCategory: null,
-      title: '',
-      content: '',
+      selectedCategory: this.$route.query.categoryId ? { _id: this.$route.query.categoryId } : null,
+      title: this.$route.query.title ? this.$route.query.title : '',
+      content: this.$route.query.content ? this.$route.query.content : '',
     };
   },
   computed: {

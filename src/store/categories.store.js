@@ -25,6 +25,9 @@ export default {
       categories.forEach( ( category ) => {
         state.categoriesById[category._id] = category;
       } );
+
+      // For Vue Reactivity.
+      state.categoriesById = { ...state.categoriesById };
     },
   },
   actions: {
