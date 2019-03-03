@@ -3,7 +3,7 @@
     <div class="container">
       <a id="topOfPage" />
       <div class="navbar-brand">
-        <div class="navbar-item">
+        <div class="nav-logo navbar-item">
           <router-link
             :to="{ path: '/' }"
             exact-active-class="noop"
@@ -32,6 +32,7 @@
                 Create Forum
               </router-link>
             </p>-->
+          <div class="nav-settings">
             <p class="tr is-right">
               <router-link
                       v-if="auth.roles.admin"
@@ -39,24 +40,28 @@
                       class="navbar-item is-primary">
                 Settings
               </router-link>
-            </p>
+              </p>
+          </div>
           </div>
         </div>
 
         <div class="navbar-end">
           <div class="navbar-item is-expanded tr">
+            <div class="nav-account">
               <p v-if="auth.username" class="tr is-right">
                 <AccountSwitcher></AccountSwitcher>
               </p>
-
+            </div>
+            <div class="nav-login">
               <p v-if="!auth.username" class="tr is-right">
                 <a class="button is-primary has-text-white" @click="login">
                   Connect
                 </a>
               </p>
+            </div>
           </div>
           <b-dropdown v-if="auth.username" class="navbar-item">
-            <button class="button" type="button" slot="trigger">
+            <button class="button nav-account-settings" type="button" slot="trigger">
               <span>Account</span>
               <b-icon icon="menu-down"></b-icon>
             </button>

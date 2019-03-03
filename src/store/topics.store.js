@@ -1,4 +1,6 @@
 import { createTopic, listTopics } from '../services/post.service.js';
+import { errorAlertOptions } from '../utils/notifications.js';
+import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,
@@ -58,7 +60,7 @@ export default {
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-
+          Toast.open( errorAlertOptions( 'Error fetching topics ', err ) );
           console.error( err );
         } );
     },

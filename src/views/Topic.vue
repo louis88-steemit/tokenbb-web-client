@@ -57,6 +57,7 @@ import ReplyForm from '@/components/ReplyForm.vue';
 import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
 import CategoryTag from '@/components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
+import { errorAlertOptions } from '../utils/notifications.js';
 
 export default {
   name: 'topic',
@@ -99,8 +100,8 @@ export default {
           }
         } )
         .catch( ( err ) => {
-
-          // TODO: Feedback for the user
+          console.log( err );
+          this.$toast.open( errorAlertOptions( 'Oops! Could not submit reply at this moment', err ) );
           this.$ga.exception( err );
         } );
     },

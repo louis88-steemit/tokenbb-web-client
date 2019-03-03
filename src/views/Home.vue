@@ -13,12 +13,14 @@
 
       <div class="level-right">
         <div class="level-item">
+          <div class="topic-button-style">
           <router-link
             v-if="loggedIn"
             to="/new"
             class="button is-primary has-icon">
             New Topic
           </router-link>
+          </div>
         </div>
       </div>
     </nav>
