@@ -6,9 +6,9 @@
 
     <div v-if="!fetching">
       <header class="has-text-left">
-        <h2 class="title is-3">
+        <h1 class="title is-3">
           {{ topic.title }}
-        </h2>
+        </h1>
 
         <CategoryTag :categoryId="topic.categoryId">
         </CategoryTag>
