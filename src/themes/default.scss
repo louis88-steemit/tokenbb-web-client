@@ -1,5 +1,5 @@
 .theme-default {
- // Import Bulma's core
+  // Import Bulma's core
   @import "~bulma/sass/utilities/_all";
   @import "./global/variables.scss";
   // Set your colors
@@ -517,34 +517,68 @@ tr {
   background-color: $background-second;
   border: 1px solid $background;
 }
+/* New Topic Page */
+.newtopic-control {
+  .dropdown {
+    .button {
+      background-color: $background;
+      color: $tag;
+      border-color: $tag;
+      border-width: 2px;
+      border-radius: 0px;
+    }
+    .dropdown-content {
+      background-color: $background-second;
+    }
+    .dropdown-content a {
+      color: $tag;
+    }
+    .dropdown-content a:hover {
+      color: $background;
+      background: $primary;
+    }
+    .dropdown-item {
+      background-color: $background-second;
+    }
+    a.dropdown-item {
+      padding-right: 0px !important;
+      width: 210px;
+    }
+  }
+  -webkit-box-shadow: 5px 5px 0px 0px $primary;
+  -moz-box-shadow: 5px 5px 0px 0px $primary;
+  box-shadow: 5px 5px 0px 0px $primary;
+  background-color: transparent;
+  border: 1px solid $background-second;
+  padding: 35px;
+}
+.input-title {
+  width: 100%;
+}
+.category-dropdown {
+  float:right;
+}
+form label.label {
+  color: $tag;
+}
+.texteditor-control {
+  width: 100%;
+}
+form .button {
+  background-color: transparent;
+  border-color: $tag;
+  border-radius: 0px;
+  color: $tag;
+}
 
+form .button:hover {
+  background-color: $tag;
+  color:$background;
+}
+.topline-newtopic {
+  display: flex;
+}
   /* Settings Page */
-  form .label {
-    color: $tag;
-  }
-  table tr:hover {
-    background: none;
-  }
-  form.new-topic {
-    width: 500px;
-  }
-  form.new-reply {
-    width: 640px;
-  }
-  .spacer {
-    height: 300px;
-  }
-  .post {
-    margin-bottom: 2rem;
-  }
-  .post-body {
-    border-bottom: 1px solid $tag;
-  }
-  form.new-reply ul,
-  form.new-topic ul {
-    list-style: disc !important;
-  }
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
-
