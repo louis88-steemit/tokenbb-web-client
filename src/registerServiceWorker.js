@@ -2,6 +2,8 @@
 /* eslint-disable no-console */
 
 import { register } from 'register-service-worker';
+import { Snackbar } from 'buefy/dist/components/snackbar';
+
 export function registerSW() {
   if ( process.env.NODE_ENV === 'production' ) {
     register( `${process.env.BASE_URL}service-worker.js`, {
@@ -19,6 +21,28 @@ export function registerSW() {
       },
       updated( registration ) {
         console.log( 'New content is available; please refresh.' );
+
+        let refreshing;
+        navigator.serviceWorker.addEventListener( 'controllerchange',
+          () => {
+            if ( refreshing ) {
+              return;
+            }
+            refreshing = true;
+            window.location.reload();
+          }
+        );
+
+        Snackbar.open( {
+          message: 'A new version of this web app is available, please refresh the page to update.',
+          type: 'is-warning',
+          position: 'is-bottom-left',
+          actionText: 'Refresh',
+          indefinite: true,
+          onAction: () => {
+            registration.waiting.postMessage( 'skipWaiting' );
+          },
+        } );
       },
       offline() {
         console.log( 'No internet connection found. App is running in offline mode.' );

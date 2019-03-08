@@ -1,1 +1,71 @@
-
+/* Mobile Navigation */
+@media screen and (min-width: 1087px) {  
+    .nav-settings .navbar-item .is-primary {
+      padding: 25px;
+    }
+  }
+  /* Mobile Nav */
+  @media screen and (max-width: 1087px) {
+  section {
+    position: relative;
+  }
+  /* Mobile Navigation Menu */
+  #nav {
+    .navbar-burger {
+      padding: 10px;
+      height: 5rem;
+      width: 5rem;
+    }
+    .navbar-brand .nav-logo .navbar-item {
+      margin: 0;
+      padding-top: 10px;
+    }
+    .navbar-item {
+      display: inline-block;
+    }
+    .navbar-end {
+      float: right;
+    }
+    /* "Settings" Mobile Position */
+    .navbar-item .is-expanded tr {
+      position: absolute;
+    }
+    .navbar-start {
+      display: inline;
+    }
+    /* "Account Picker" Mobile CSS */
+    .navbar-item .nav-account {
+      float: left;
+    }
+    /*"Account Settings" Mobile CSS */
+    .navbar-item .nav-account-settings {
+      float: right;
+    }
+    .dropdown-content {
+      width: 210px;
+      float: right;
+      margin-right: 0px;
+    }
+    .dropdown-content {
+    max-width: 235px;
+    top: 10%;
+    }
+    .dropdown.is-mobile-modal .dropdown-menu {
+      position: fixed;
+      max-width: 100%;
+      top: 27% !important;
+      overflow-x: hidden;
+    }
+    .dropdown .background {
+      background-color: transparent;
+    }
+    .navbar-menu {
+      background-color: $background;
+      width: 100%;
+      box-shadow:none;
+      transition-duration: 500ms;
+      position: absolute;
+      padding-bottom: 50px;
+    }
+  }
+}

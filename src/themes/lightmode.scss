@@ -1,13 +1,12 @@
-.theme-default {
+.theme-lightmode {
   // Import Bulma's core
   @import "~bulma/sass/utilities/_all";
   @import "./global/variables.scss";
   // Set your colors
-  $primary: #286CB2;
-  $primary-invert: #94B3DA;
-  $twitter: #94B3DA;
-  $twitter-invert: findColorInvert($twitter);
-  $info: #CD7B2F;
+  $primary: #38007D;
+  $info: #0d0e34;
+  $tag: #04F3C6;
+  $primary-second: #e0e0e0;
   // Setup $colors to use as bulma classes (e.g. 'is-twitter')
   $colors: (
           "white": ($white, $black),
@@ -19,10 +18,9 @@
           "success": ($success, $success-invert),
           "warning": ($warning, $warning-invert),
           "danger": ($danger, $danger-invert),
-          "twitter": ($twitter, $twitter-invert)
   );
-  $background: #181E24;
-  $background-invert: findColorInvert($background);
+  $background: #f3f3f3;
+  $background-second: #f8f8f8;
   // Links
   $link: $primary;
   $link-invert: $primary-invert;
@@ -44,13 +42,13 @@
   }
   /* Forum Link Colors*/
   a {
-    color: $primary-invert;
+    color: black;
   }
   a:hover {
-    color: white;
+    color: $primary;
   }
   .title {
-    color: white;
+    color: $primary;
   }
   strong {
     color: $primary;
@@ -63,22 +61,25 @@
       background-color: $background;
     }
   }
+  /* Upvote Button Front-page */
   .field.has-addons .control:last-child .button {
-    border-color: white;
+    color: $tag;
   }
-
+  .container .is-top-left .button{
+    background-color: $primary;
+  }
   /* Top Bar Navigation */
   .navbar-item img {
     max-height: 3.75rem;
   }
   #nav {
-    background-color: #002a30;
+    background-color: $background;
     background: $background;
-    color: #000000;
-    font-family: ruba, sans-serif;
+    color: $primary;
     a {
       font-weight: bold;
-      color: $primary-invert;
+      color: $primary;
+
       &.router-link-exact-active {
         color: $primary;
       }
@@ -88,44 +89,59 @@
     }
     .navbar-item {
       border-radius: 5px;
-      background-color: $background;
+      background-color: $info;
       background: $background;
     }
     .navbar-item:hover {
-      background-color: $info;
+      background-color: $primary;
       background: $background;
     }
     .button {
       color: white;
-      background-color: $background;
+      background-color: $primary;
     }
+
     .dropdown-content {
       background-color: $background;
+    }
+    a.dropdown-item {
+      padding-right: 0px !important;
+      width: 210px;
+    }
+    .dropdown-content a:hover {
+      background-color: $primary;
+      color: $background;
     }
   }
   /* Category Dropdown */
   .container .level-left .button {
     background-color: $background;
-    border-color: $primary-invert;
-    color: white;
+    border-color: $primary;
+    color: $primary;
   }
   .dropdown-content {
     background-color: $background;
   }
   .dropdown-content a {
-    color: white;
+    color: $primary;
   }
   .dropdown-content a:hover {
-    color: $info;
-    background: none;
+    color: white;
+    background: $primary;
+  }
+  a.dropdown-item {
+    padding-right: 0px !important;
+    width: 210px;
   }
   /* New Topic Button */
-  .container .level-right .button {
+  .container .level-right .level-item .topic-style .button {
     background: $primary;
     color: white;
   }
-  .level-right .button:hover {
-    color: $background;
+  .container .level-right .level-item .topic-style .button:hover {
+    background-color: $tag;
+    color: $primary;
+    transition-duration: 450ms;
   }
   /* Front-Page Table Styling */
   .table {
@@ -133,20 +149,26 @@
   }
   /* Front-Page Table Styling - Stripes Styling */
   .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-    background: $background;
+    background: $background-second;
   }
   /* Front-Page Table Styling - Head */
   .table thead th {
-    color: $primary-invert;
+    color: $primary;
   }
   /* Front-Page Table Styling - Information */
   .table td {
-    color: $primary-invert;
+    color: $info;
+    font-size: 13px;
+  }
+  .table a {
+    font-size: 16px;
   }
   /* Front-Page Table Styling - Category */
-  .tag {
-    color: white;
+  .tag:not(body).is-info {
+    background-color: $primary-second;
+    color: $info;
   }
+  background-color: white;
   /* Percentage Gauge Label */
   .percent-label {
     color: $primary;
@@ -154,11 +176,17 @@
   /*------ Pinned Post ------*/
   .b-table tr.pinned {
     margin-top: 20px;
-    td p {
-      color: white;
+    a {
+      color: $primary;
+    }
+    a:hover {
+      color: $info
     }
     .icon {
-      color: $primary-invert;
+      color: $info;
+    }
+    .dropdown-trigger {
+      background-color: white;
     }
   }
   tr.pinned td > span > a {
@@ -169,47 +197,44 @@
   }
   /*--------- Thread Content ------------*/
   article {
-    color: white;
+    color: #333;
   }
   .content h1 {
-    color: $primary-invert;
+    color: $primary;
   }
   .content h2 {
-    color: $primary-invert;
+    color: $primary;
   }
   .content h3 {
-    color: $primary-invert;
+    color: $primary;
   }
   .content h4 {
-    color: $primary-invert;
+    color: $primary;
   }
   .content h5 {
-    color: $primary-invert;
+    color: $primary;
   }
   .content h6 {
-    color: $primary-invert;
+    color: $primary;
   }
   article a {
     text-decoration: underline;
+    color: $primary;
   }
   .container.fill {
-    background-color: $background;
-    background: $background;
+    background-color: $background-second;
+    background: $background-second;
     border-radius: 25px;
     padding: 20px;
-    border-color: primary-inverted;
-  }
-  /* Timestamp Color */
-  .container .level-item {
-    color: white;
+    border-color: $primary;
   }
   .quillWrapper {
     background-color: $background;
-    color: $primary-invert;
+    color: $primary;
   }
   /* Settings Page */
   form .label {
-    color: $primary-invert;
+    color: $primary;
   }
   table tr:hover {
     background: none;
@@ -243,19 +268,6 @@
   form.new-topic ul {
     list-style: disc !important;
   }
-  /* Topic navigation buttons */
-  .topic-nav {
-    /* styles to apply to all topic navigation */
-    /* links, e.g. Jump to end, Back to top    */
-  }
-  .topic-nav-to-top {
-    /* styles to apply to topic navigation for */
-    /* Back to top only                            */
-  }  
-  .topic-nav-to-end {
-    /* styles to apply to all topic navigation for */
-    /* Jump to end only                                */
-  }   
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
