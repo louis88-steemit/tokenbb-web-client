@@ -29,5 +29,8 @@ export default {
       this.$emit( 'input', this.content );
     },
   },
+  created() {
+    this.$root.$on( 'quote-click', ( d ) => this.content += `> @${d.author.user}:\n${d.body.replace( /^/gm, '> ' )}\n---` );
+  },
 };
 </script>

@@ -2,6 +2,7 @@
   <form @submit.prevent="$emit('submit')" class="new-reply">
     <b-field>
       <TextEditor
+        ref="editor"
         :fetching="fetching"
         @input="handleTextChange">
       </TextEditor>
@@ -14,6 +15,13 @@
           :disabled="text.length == 0"
           v-bind:class="{ 'is-loading': fetching }">
           Reply
+        </button>
+        &nbsp;
+        <button role="button"
+          class="button"
+          v-bind:class="{ 'is-loading': fetching }"
+          @click="handleQuoteClick">
+          Quote Last
         </button>
       </div>
     </b-field>
@@ -30,10 +38,16 @@ export default {
   props: {
     fetching: Boolean,
     text: String,
+    quote: String,
+    quoteAuthor: String,
   },
   methods: {
     handleTextChange( value ) {
       this.$emit( 'input', value );
+    },
+    handleQuoteClick( event ) {
+      event.preventDefault();
+      this.$refs.editor.content += `> @${this.quoteAuthor}:\n${this.quote.replace( /^/gm, '> ' )}\n---`;
     },
   },
   data() {

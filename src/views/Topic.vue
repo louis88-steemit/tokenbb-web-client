@@ -40,6 +40,8 @@
         <ReplyForm
           :fetching="$store.state.replies.fetching"
           :text="replyText"
+          :quote="quote"
+          :quoteAuthor="quoteAuthor"
           @input="onReplyInput"
           @submit="onReplySubmit">
         </ReplyForm>
@@ -81,6 +83,19 @@ export default {
     ...mapState( 'categories', [
       'categoriesBySlug',
     ] ),
+    quote() {
+      const arr = this.topic.replies;
+      if ( arr && arr.length > 0 ) {
+        return arr[arr.length - 1].body.trim();
+      } else if ( this.topic.body ) {
+        return this.topic.body.trim();
+      }
+      return '';
+    },
+    quoteAuthor() {
+      const topic = this.topic;
+      return topic.lastReply.author === '' ? topic.author.user : topic.lastReply.author;
+    },
   },
   methods: {
     onReplyInput( text ) {
