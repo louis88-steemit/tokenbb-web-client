@@ -21,7 +21,7 @@
           class="button"
           v-bind:class="{ 'is-loading': fetching }"
           @click="handleQuoteClick">
-          Quote
+          Quote Last
         </button>
       </div>
     </b-field>
