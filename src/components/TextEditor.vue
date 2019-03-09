@@ -29,7 +29,7 @@ export default {
     },
   },
   created() {
-    this.$root.$on( 'quote-click', ( d ) => this.content += `> @${d.author.user}:\n${d.body.replace( /^/gm, '> ' )}\n---` );
+    this.$root.$on( 'quote-click', ( d ) => this.content += `\n> @${d.author.user}:\n${d.body.replace( /^/gm, '> ' )}\n---\n` );
   },
 };
 </script>
