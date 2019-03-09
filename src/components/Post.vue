@@ -62,10 +62,11 @@
             </a>
           </div>
           <div class="level-item">
-            <div class="mod-display">
+            <a @click="handleQuoteClick">Quote this</a>
+          </div>
+          <div class="mod-display">
             <ModActions :post="data" :isReply="isReply">
             </ModActions>
-            </div>
           </div>
           <div class="level-item">
             <p class="buttons">
@@ -155,6 +156,9 @@ export default {
 
       this.text = '';
       this.editing = false;
+    },
+    handleQuoteClick( event ) {
+      this.$root.$emit( 'quote-click', this.data );
     },
   },
   data() {
