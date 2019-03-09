@@ -1,22 +1,18 @@
 <template>
   <div class="post columns is-mobile">
-    <div class="column is-narrow">
-      <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
-    </div>
-
-    <div class="column is-8 post-body">
+    <div class="column is-12 post-body">
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <strong>{{ data.author.user | usernameDisplay(data.author.owner_id) }}</strong>
-            <br>
+            <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
+            <p class="username">{{ data.author.user | usernameDisplay(data.author.owner_id) }}</p>
           </div>
         </div>
 
         <div class="level-right">
           <p class="level-item">
             <small>
-              {{ data.createdAt | fromNow }}
+              <b-icon icon="clock" size="is-small"></b-icon>{{ data.createdAt | fromNow }}
             </small>
           </p>
         </div>
@@ -57,10 +53,10 @@
         </b-field>
       </form>
 
-      <footer class="level is-mobile">
+      <div class="level is-mobile">
         <div class="level-left"></div>
         <div class="level-right">
-          <div class="level-item">
+          <div class="level-item steemit-display">
             <a  v-bind:href="this.steemitLink" target="_blank">
               View on steemit.com
             </a>
@@ -68,7 +64,7 @@
           <div class="level-item">
             <a @click="handleQuoteClick">Quote this</a>
           </div>
-          <div class="level-item">
+          <div class="mod-display">
             <ModActions :post="data" :isReply="isReply">
             </ModActions>
           </div>
@@ -93,7 +89,7 @@
             </p>
           </div>
         </div>
-      </footer>
+      </div>
 
     </div>
   </div>
