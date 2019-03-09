@@ -161,6 +161,9 @@ export default {
       this.text = '';
       this.editing = false;
     },
+    handleQuoteClick( event ) {
+      this.$root.$emit( 'quote-click', this.data );
+    },
   },
   data() {
     return {
