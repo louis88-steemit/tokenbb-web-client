@@ -1,18 +1,15 @@
 <template>
   <div class="container fill">
-    <h2 class="title is-2">Create a New Topic</h2>
-
+    <div class="newtopic-control">
     <form @submit.prevent="onSubmit" class="new-topic">
-      <div class="level is-mobile">
-        <div class="level-left">
-          <div class="level-item">
-            <b-field label="Title">
-              <b-input v-model="title" placeholder="Type title here">
+      <div class="columns is-1-mobile is-1-tablet">
+        <div class="column is-9-desktop">
+            <b-field class="input-title" label="Title">
+              <b-input  grouped v-model="title" placeholder="Type title here" expanded>
               </b-input>
             </b-field>
-          </div>
-
-          <div class="level-item">
+            </div>
+        <div class="column">
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
@@ -20,24 +17,27 @@
                 :labelForAll="'-- Select a Category --'">
               </CategoryDropdown>
             </b-field>
-          </div>
-        </div>
-      </div>
-
+            </div>
+            </div>
+            <div class="columns">
+              <div class="column">
       <b-field label="Message">
+        <div class="texteditor-control">
         <TextEditor
           :fetching="fetching"
           :initialContent="content"
           @input="handleTextChange">
         </TextEditor>
+        </div>
       </b-field>
-
-      <div class="field">
+      </div>
+      </div>
+      <div class="field level">
         <div class="control">
           <button role="submit"
             :class="{ 'is-loading': fetching }"
-            class="button is-primary">
-            Create Topic
+            class="button">
+            Post Topic
           </button>
           &nbsp;
           <button role="cancel"
@@ -49,6 +49,7 @@
         </div>
       </div>
     </form>
+    </div>
   </div>
 </template>
 
