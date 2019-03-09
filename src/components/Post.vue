@@ -66,6 +66,9 @@
             </a>
           </div>
           <div class="level-item">
+            <a @click="handleQuoteClick">Quote this</a>
+          </div>
+          <div class="level-item">
             <ModActions :post="data" :isReply="isReply">
             </ModActions>
           </div>
