@@ -3,11 +3,10 @@
   @import "~bulma/sass/utilities/_all";
   @import "./global/variables.scss";
   // Set your colors
-  $primary: #286CB2;
-  $primary-invert: #94B3DA;
-  $twitter: #94B3DA;
-  $twitter-invert: findColorInvert($twitter);
-  $info: #CD7B2F;
+  $primary: #04F3C6;
+  $info: #272727;
+  $tag: #04F3C6;
+  $primary-second: #e0e0e0;
   // Setup $colors to use as bulma classes (e.g. 'is-twitter')
   $colors: (
           "white": ($white, $black),
@@ -19,10 +18,9 @@
           "success": ($success, $success-invert),
           "warning": ($warning, $warning-invert),
           "danger": ($danger, $danger-invert),
-          "twitter": ($twitter, $twitter-invert)
   );
-  $background: #181E24;
-  $background-invert: findColorInvert($background);
+  $background: #272727;
+  $background-second: #555555;
   // Links
   $link: $primary;
   $link-invert: $primary-invert;
@@ -36,226 +34,551 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #000000;
+    color: transparent;
   }
   /* background */
   body {
     background-color: $background;
   }
-  /* Forum Link Colors*/
+  /* General Font Styling */
+  #app {
   a {
-    color: $primary-invert;
-  }
-  a:hover {
     color: white;
   }
-  .title {
+  p,strong {
+    color: white;
+    font-size: 1em;
+    line-height: 1.375em;
+  }
+  h1,h2,h3,h4,h5,h6,th,a {
+    color: $tag;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  ul,ol,dt {
+    color: white;
+    padding-left: 15px;
+  }
+  ul li {
+    list-style-type: circle;
+  }
+  table, thead,td,th,tr {
     color: white;
   }
-  strong {
-    color: $primary;
+  table th {
+    color: $tag;
+  }
+  blockquote {
+    background-color: $background;
+    padding: 25px;
+    border-left: 4px solid $primary;
+    margin: 5px 0;
   }
   .logo {
     content: $logo;
   }
-  .content {
-    blockquote {
-      background-color: $background;
+  /* Mobile Font Size */
+  @media screen and (max-width: 520px) {
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  h5 {
+    font-size: 16px;
+  }
+}
+}
+  /* Topic List Font Styling */
+    .main-content {
+      h2 {
+        color: white;
+      }
+      h2:hover {
+        color: $tag !important;
+      }
+    }
+  /* Post  */
+  .post {
+    a {
+      text-decoration:underline;
+      color: $tag;
+    }
+    a:hover {
+      color: white;
+    }
+    .quote-this a:hover {
+      color: white;
     }
   }
-  .field.has-addons .control:last-child .button {
-    border-color: white;
+  /* Primary Button Styling */
+  .button.is-primary {
+    background-color: $background;
+    color: $tag;
+    border-color: $tag;
+    border-width: 2px;
+    border-radius: 0px;
   }
-
-  /* Top Bar Navigation */
+  .button.is-primary:hover {
+    background-color: $tag;
+    color: $background;
+    border-radius: 0px;
+  }
+  /* Secondary Button Styling */
+  .is-secondary {
+    color: $primary;
+  }
+  .is-secondary:hover {
+    color: white;
+  }
+  /* New Topic Button */
+  .is-topic {
+    color: $primary;
+    border-radius: 0px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: $background;
+    border: 1px solid $tag;
+    -webkit-box-shadow: 3px 3px 0px 0px $primary;
+    -moz-box-shadow: 3px 3px 0px 0px $primary;
+    box-shadow: 3px 3px 0px 0px $primary;
+  }
+  .is-topic:hover {
+    background-color: $primary;
+    color: $background !important;
+    border-color: none;
+    -webkit-box-shadow: 4px 4px 0px 0px black;
+    -moz-box-shadow: 4px 4px 0px 0px black;
+    box-shadow: 4px 4px 0px 0px black;
+  }
+  /* Upvote Button */
+  .mdi-36px.mdi-set, .mdi-36px.mdi:before {
+    font-size: 24px;
+    color: $tag;
+    margin-top:12px;
+  }
+  .upvote-button {
+    padding-right: 10px;
+    float: right;
+  }
+  /* Disabled Upvote Button */
+  .mdi-36px.mdi-set, .mdi-36px.is-disabled {
+    opacity: 0.2;
+  }
+  /* Logo Size */
   .navbar-item img {
     max-height: 3.75rem;
   }
+  /* Navbar */
   #nav {
-    background-color: #002a30;
+    background-color: $background;
     background: $background;
-    color: #000000;
-    font-family: ruba, sans-serif;
-    a {
-      font-weight: bold;
-      color: $primary-invert;
-      &.router-link-exact-active {
-        color: $primary;
-      }
-    }
-    a:hover {
-      color: $primary;
-    }
-    .navbar-item {
-      border-radius: 5px;
-      background-color: $background;
-      background: $background;
-    }
-    .navbar-item:hover {
-      background-color: $info;
-      background: $background;
-    }
+    color: $tag;
+  }
+  /* Dropdown Button Style */
+  .dropdown-style {
     .button {
-      color: white;
       background-color: $background;
+      color: $tag;
+      border-color: $tag;
+      border-width: 2px;
+      border-radius: 0px;
+    }
+    .icon:hover {
+      color: black;
     }
     .dropdown-content {
-      background-color: $background;
+      background-color: $background-second;
+    }
+    .dropdown-content a {
+      color: $tag;
+    }
+    .dropdown-content a:hover {
+      color: $background !important;
+      background: $primary;
+    }
+    .dropdown-item {
+      background-color: $background-second;
+    }
+    a.dropdown-item {
+      padding-right: 0px !important;
+      width: 210px;
+    }
+    .dropdown-content a .is-active{
+      color: $background;
     }
   }
-  /* Category Dropdown */
-  .container .level-left .button {
-    background-color: $background;
-    border-color: $primary-invert;
-    color: white;
+  /* Meta Info Styling */ 
+.tip {
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.tip-center {
+  padding-left: 10px;
+}
+.tip-right {
+  padding-left:10px;
+}
+/* Meta Icon Information Styling */
+.icon {
+  color: $tag;
+}
+/* Category Tag Icon Styling */
+.mdi-tag:before {
+  content: "\F4F9";
+  color:$tag;
+}
+.tag:not(body).is-info {
+  margin-right: 7px;
+  background-color: transparent;
+  padding: 3px;
+  color: white;
+  font-size: small;
+}
+.tag:not(body).is-info:hover {
+  color: $tag;
+}
+
+/* Slider CSS */
+.upvote {
+  .vertical {
+    display: flex;
+    align-items: right;
+    min-width: 3rem;
+  }
+  .popover {
+    max-width: 14rem;
+    background-color: transparent;
+  }
+  .slider {
+    margin: 0 5px;
+    width: 100%;
+    background-color: transparent;
+    min-width: 150px;
+  }
+  .percent-label {
+    margin: 20px 10p 0 10px;
+    padding-top:8px;
+    color: $tag;
   }
   .dropdown-content {
-    background-color: $background;
+    margin: 0;
+    background-color: $background-second;
+    border: 1px solid $background;
+    padding-right: 5px;
   }
-  .dropdown-content a {
-    color: white;
+  .dropdown-item {
+    background-color: transparent;
   }
-  .dropdown-content a:hover {
-    color: $info;
-    background: none;
+}
+
+/* Topic List Page Background Styling */
+ .main-content {
+  background-color: transparent;
+  padding: 0px;
+  border-radius: 5px;
+}
+tr {
+  background-color: $background;
+  border: none;
+}
+.tbody {
+  background-color: transparent;
+}
+.table {
+  background-color: transparent;
+  border-color: none !important;
+}
+/* Content Boxes (Topics, Content, etc.) */
+.box-styling {
+  -webkit-box-shadow: 5px 5px 0px 0px $tag;
+  -moz-box-shadow: 5px 5px 0px 0px $tag;
+  box-shadow: 5px 5px 0px 0px $tag;
+  border-bottom: 1px solid $background;
+}
+/* Navigation Above Topic List */
+.second-nav {
+  width: 98%;
+}
+/*  Topic List Styling */
+.content-box {
+  width: 98%;
+  background: $background-second;
+  position: relative;
+  padding: 15px 0 15px 0;
+}
+.content-box:hover {
+  background-color: $background;
+}
+.content-box h2 {
+  font-size: 16px !important;
+}
+.content-box h2:hover {
+  color: $tag !important;
   }
-  /* New Topic Button */
-  .container .level-right .button {
-    background: $primary;
-    color: white;
+/* Left Content Box */
+.content-box .content-box-left {
+  float: left;
+  width: 90px;
+  text-align: center;
+  padding: 0 0 0 0;
+  position: relative;
+  height: 60px;
+}
+.content-box .content-box-left .pinned-box {
+  padding: 0;
+  margin: 15px 20px 0;
+  color: #888;
+}
+/* Middle Box */
+.content-box .content-box-middle, .content-box .content-box-middle2 {
+  padding: 1px 10px;
+  margin: 0 125px 0 0;
+}
+/* Right Box */
+.content-box .content-box-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 285px;
+  height: 100%;
+  padding: 15px 0 0 15px;
+}
+/* TABLET VERSION TOPIC LIST PAGE */
+@media screen and (max-width: 998px) {
+.content-box {
+  padding-bottom: 35px;
+  margin: 0 5px 30px 0;
+  border-bottom: 0px solid transparent;
+}
+.content-box .content-box-left {
+  width: 70px;
+  height: 90px;
+  float: left;
+  margin-left: 0px;
+  padding-top:10px;
+}
+.content-box .content-box-middle {
+  float: none;
+  padding-top: 5px;
+  margin: 0 10px 10px 0;
+}
+.meta-box .label-success, .meta-box .label-info, .meta-box .label-warning, .meta-box .label-danger {
+  background-color: transparent;
+}
+.content-box .content-box-middle h3 {
+  margin: 10px 0;
+}
+.content-box .content-box-right {
+  position: static;
+  width: 100% !important;
+  padding: 5px;
+  border-left: none;
+}
+.content-box .content-box-right span {
+  float: left;
+  width: 25%;
+  margin: 0;
+}
+.upvote {
+  float: right;
+  padding-top: 0px;
+  margin-right: 15px;
+}
+.value-control {
+  display: inline-flex;
+  padding-top: 6px;
+}
+.mdi-36px.mdi-set, .mdi-36px.mdi:before {
+  margin-top:0px;
+}
+.tip {
+  font-size: 14px;
+}
+}
+/* MOBILE VERSION TOPIC LIST PAGE */
+@media screen and (max-width: 520px) {
+  #tiptop-control {
+    padding: 15px 0px 0px 0px;
   }
-  .level-right .button:hover {
-    color: $background;
+  .tip {
+    margin-top:5px;
   }
-  /* Front-Page Table Styling */
-  .table {
-    background-color: $background;
+  .tip-right {
+    display: block;
   }
-  /* Front-Page Table Styling - Stripes Styling */
-  .table.is-striped tbody tr:not(.is-selected):nth-child(even) {
-    background: $background;
+  .upvote-button {
+    padding-right: 0px;
   }
-  /* Front-Page Table Styling - Head */
-  .table thead th {
-    color: $primary-invert;
+  .control .control-value {
+    float: left;
   }
-  /* Front-Page Table Styling - Information */
-  .table td {
-    color: $primary-invert;
+}
+  /*--------- Thread Content ------------*/
+.post {
+  .post-body {
+    border: none;
+    width: 98%;
+    margin-bottom: 15px;
   }
-  /* Front-Page Table Styling - Category */
-  .tag {
-    color: white;
+  p.username {
+    padding-left: 20px;
   }
-  /* Percentage Gauge Label */
-  .percent-label {
+  small {
+    padding-right: 20px;
+  }
+  width: 100%;
+  padding-top: 10px;
+  padding-left: 15px;
+  background-color: $background-second;
+}
+@media screen and (max-width: 620px) {
+  .post {
+    .post-body .level .level-right {
+      display: block;
+    }
+    .steemit-display a {
+      display: none;
+    }
+    .mod-display {
+      float: left;
+      margin: 20px 0;
+    }
+  }
+}
+/* Category Page */
+.toggle-control {
+  h2 {
+    color: $tag;
+    font-size: 24px;
+  }
+}
+/* Category Page */
+.toggle-control {
+  h2 {
+    color: $primary;
+    font-size: 24px;
+  }
+  a {
     color: $primary;
   }
-  /*------ Pinned Post ------*/
-  .b-table tr.pinned {
-    margin-top: 20px;
-    td p {
-      color: white;
-    }
-    .icon {
-      color: $primary-invert;
-    }
+  .content .title h2 {
+    padding: 10px;
   }
-  tr.pinned td > span > a {
-    font-weight: bold;
+  .content .title h3 {
+    color: $primary;
+    font-size: 20px;
   }
-  tr.pinned td > span > a > span.tag {
-    font-weight: normal;
+  .subcat-title {
+    min-width: 60%;
   }
-  /*--------- Thread Content ------------*/
-  article {
+  .sub-categories {
+    background-color: $background-second;
+    background-color: $background-second;
+    border-top: 1px solid $background;
+    border-right: 1px solid $background;
+    border-bottom: 1px solid $background;
+    border-left: 5px solid $primary;
+    padding: 15px;
+    margin: 15px;
+  }
+  .subcat-info {
+    font-size: 14px;
+  }
+  .subtitle {
     color: white;
   }
-  .content h1 {
-    color: $primary-invert;
+  tr {
+    background-color: transparent;
   }
-  .content h2 {
-    color: $primary-invert;
+  .icon {
+    color: $primary;
   }
-  .content h3 {
-    color: $primary-invert;
+  -webkit-box-shadow: 5px 5px 0px 0px $primary;
+  -moz-box-shadow: 5px 5px 0px 0px $primary;
+  box-shadow: 5px 5px 0px 0px $primary;
+  background-color: $background-second;
+  border: 1px solid $background;
+}
+/* New Topic Page */
+.newtopic-control {
+  .dropdown {
+    .button {
+      background-color: $background;
+      color: $tag;
+      border-color: $tag;
+      border-width: 2px;
+      border-radius: 0px;
+    }
+    .dropdown-content {
+      background-color: $background-second;
+    }
+    .dropdown-content a {
+      color: $tag;
+    }
+    .dropdown-content a:hover {
+      color: $background;
+      background: $primary;
+    }
+    .dropdown-item {
+      background-color: $background-second;
+    }
+    a.dropdown-item {
+      padding-right: 0px !important;
+      width: 210px;
+    }
   }
-  .content h4 {
-    color: $primary-invert;
-  }
-  .content h5 {
-    color: $primary-invert;
-  }
-  .content h6 {
-    color: $primary-invert;
-  }
-  article a {
-    text-decoration: underline;
-  }
-  .container.fill {
-    background-color: $background;
-    background: $background;
-    border-radius: 25px;
-    padding: 20px;
-    border-color: primary-inverted;
-  }
-  /* Timestamp Color */
-  .container .level-item {
-    color: white;
-  }
-  .quillWrapper {
-    background-color: $background;
-    color: $primary-invert;
-  }
+  padding: 35px;
+  border: 1px solid $background-second;
+}
+.input-title {
+  width: 100%;
+}
+.category-dropdown {
+  float:right;
+}
+form label.label {
+  color: $tag;
+}
+.texteditor-control {
+  width: 100%;
+}
+form .button {
+  background-color: transparent;
+  border-color: $tag;
+  border-radius: 0px;
+  color: $tag;
+}
+
+form .button:hover {
+  background-color: $tag;
+  color:$background;
+}
+.topline-newtopic {
+  display: flex;
+}
   /* Settings Page */
-  form .label {
-    color: $primary-invert;
-  }
-  table tr:hover {
-    background: none;
-  }
-  form.new-topic {
-    width: 500px;
-  }
-  form.new-reply {
-    width: 640px;
-  }
-  .spacer {
-    height: 300px;
-  }
-  .post {
-    margin-bottom: 2rem;
-  }
-  .post-body {
-    border-bottom: 1px solid $primary;
-  }
-  .upvote {
-    .vertical {
-      display: flex;
-      align-items: center;
-      min-width: 3rem;
-    }
-    .popover {
-      width: 12rem;
-    }
-  }
-  form.new-reply ul,
-  form.new-topic ul {
-    list-style: disc !important;
-  }
-  /* Topic navigation buttons */
-  .topic-nav {
-    /* styles to apply to all topic navigation */
-    /* links, e.g. Jump to end, Back to top    */
-  }
-  .topic-nav-to-top {
-    /* styles to apply to topic navigation for */
-    /* Back to top only                            */
-  }  
-  .topic-nav-to-end {
-    /* styles to apply to all topic navigation for */
-    /* Jump to end only                                */
-  }   
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }

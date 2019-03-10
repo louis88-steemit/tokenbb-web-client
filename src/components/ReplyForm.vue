@@ -2,6 +2,7 @@
   <form @submit.prevent="$emit('submit')" class="new-reply">
     <b-field>
       <TextEditor
+        ref="editor"
         :fetching="fetching"
         @input="handleTextChange">
       </TextEditor>
@@ -10,7 +11,7 @@
     <b-field>
       <div class="control">
         <button role="submit"
-          class="button is-primary"
+          class="is-topic"
           :disabled="text.length == 0"
           v-bind:class="{ 'is-loading': fetching }">
           Reply
@@ -30,6 +31,8 @@ export default {
   props: {
     fetching: Boolean,
     text: String,
+    quote: String,
+    quoteAuthor: String,
   },
   methods: {
     handleTextChange( value ) {
