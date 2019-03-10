@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <nav class="level is-mobile">
+    <nav class="level is-mobile second-nav">
       <div class="level-left">
         <div class="level-item">
+          <div class="dropdown-style">
           <CategoryDropdown
             :selectedId="selectedCategoryId"
             @change="onSelectCategoryId"
@@ -10,78 +11,72 @@
           </CategoryDropdown>
         </div>
       </div>
-
+      </div>
       <div class="level-right">
         <div class="level-item">
-          <div class="topic-button-style">
           <router-link
             v-if="loggedIn"
             :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
-            class="button is-primary has-icon">
+            class="is-topic has-icon">
             New Topic
           </router-link>
-          </div>
         </div>
       </div>
     </nav>
-
-    <b-table
+    <div class="main-content">
+  <b-table
       :loading="fetching"
       :data="topicList"
       :row-class="getRowClass"
-      :mobile-cards="false"
-      striped>
+      :mobile-cards="false">
 
       <template slot-scope="props">
-        <b-table-column field="icon" width="0px" >
-          <div class=" has-text-center" style="width: 100%">
-          <b-icon
-            v-if="props.row.pinned"
-            icon="pin"
-            size="is-small">
-          </b-icon>
-          </div>
-        </b-table-column>
-        <b-table-column field="title" label="Topic">
-          <router-link :to="topicRoute(props.row)">
-            {{ props.row.title }}
-          </router-link>
-        </b-table-column>
-        <b-table-column field="author" label="Author">
-          <Avatar :author="props.row.author.user"
+        <div class="content-box box-styling">
+          <div class="content-box-left">
+            <div>
+              <Avatar :author="props.row.author.user"
                   :owner="props.row.author.owner_id"
-                  size="medium"></Avatar>
-        </b-table-column>
-        <b-table-column field="categoryId" label="Category">
-          <CategoryTag :categoryId="props.row.categoryId">
-          </CategoryTag>
-        </b-table-column>
-        <b-table-column field="numberOfReplies" label="Replies">
-          {{ props.row.numberOfReplies }}
-        </b-table-column>
-        <b-table-column field="numberOfViews" label="Views">
-          {{ props.row.numberOfViews }}
-        </b-table-column>
-        <b-table-column field="numberOfReplies" label="Last Activity">
-          {{ props.row.lastReply.time | fromNow }}
-        </b-table-column>
-        <b-table-column field="numberOfReplies" label="User">
-          <template v-if="props.row.numberOfReplies > 0">
-            <Avatar :author="props.row.lastReply.author"
-                    :owner="props.row.lastReply.owner"
-                    size="medium"></Avatar>
-          </template>
-        </b-table-column>
-        <b-table-column field="numberOfVotes" label="Votes">
+                  size="large"></Avatar>
+              </div>
+          </div>
+        <div class="content-box-middle">
+        <div class="break-words">
+          <router-link :to="topicRoute(props.row)">
+            <h2><strong>{{ props.row.title }}</strong></h2>
+          </router-link>
+        </div>
+        <span field="icon" width="0px" >
+                <span class=" has-text-center" style="width: 100%">
+                <b-icon
+                  v-if="props.row.pinned"
+                  icon="pin"
+                  size="is-small">
+                </b-icon>
+              </span>
+              </span>
+          <span class="meta-box">
+            <CategoryTag :categoryId="props.row.categoryId"></CategoryTag>
+          </span>
+        <span id="tiptop-control">
+          <span class="tip tip-left" title="" data-original-title="Views"><b-icon icon="eye" size="is-small"></b-icon> {{ props.row.numberOfViews }}</span>
+          <span class="tip tip-center" title="" data-original-title="Number of Replies"><b-icon icon="reply" size="is-small"></b-icon> {{ props.row.numberOfReplies }}</span>
+          <span class="tip tip-right" title="" data-original-title="Last Reply"><b-icon icon="clock" size="is-small"></b-icon> {{ props.row.lastReply.time | fromNow }}</span>
+        </span>
+        </div>
+        <div class="content-box-right">
+        <div class="upvote-button">
           <Upvote
                   :votes="[]"
                   :author="props.row.steem.author"
                   :permlink="props.row.steem.permlink">
           </Upvote>
-        </b-table-column>
+        </div>
+        </div>
+        </div>
       </template>
 
     </b-table>
+    </div>
   </div>
 </template>
 

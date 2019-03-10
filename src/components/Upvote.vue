@@ -1,32 +1,34 @@
 <template>
   <ShowIfLoggedIn :hidden="true" class="upvote">
     <div class="field has-addons">
-      <p class="control">
-        <a class="button is-small is-static has-text-black">$ {{ value }}</a>
-      </p>
-      <p class="control">
-        <a class="button is-small is-static has-text-black">{{ votes.length }}</a>
-      </p>
+      <div class="value-control">
+      <div class="control control-value">
+        <a>$ {{ value }}</a>
+      </div>
+      <div class="control control-length">
+        <a>{{ votes.length }} Votes</a>
+      </div>
+      </div>
       <b-dropdown position="is-top-left" hoverable :disabled="voted">
-        <p class="control" slot="trigger">
-          <a class="button is-primary is-small"
+        <p class="upvote-button" slot="trigger">
+          <a class="is-small"
             :class="{ 'is-loading': this.fetching }"
             :disabled="voted"
             @click="handleClick">
             <!--<span>Upvote</span>-->
-            <b-icon icon="arrow-up-drop-circle-outline" size="is-small">
+            <b-icon icon="arrow-up-drop-circle-outline" size="is-medium">
             </b-icon>
           </a>
         </p>
 
         <b-dropdown-item custom>
           <div class="container popover">
-            <div class="columns">
-              <div class="column is-3 vertical">
+            <div class="columns is-mobile">
+              <div class="column is-one-quarter vertical">
                 <span class="percent-label">{{ percent }}%</span>
               </div>
-              <div class="column is-6">
-                <input class="slider is-primary is-circle"
+              <div class="column is-three-quarter is-mobile">
+                <input orient="horizontal" class="slider is-primary is-circle"
                   ref="slider"
                   @input="handleChange"
                   step="1"

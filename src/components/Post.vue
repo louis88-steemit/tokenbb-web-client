@@ -1,22 +1,18 @@
 <template>
-  <div class="post columns is-mobile">
-    <div class="column is-narrow">
-      <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
-    </div>
-
-    <div class="column is-8 post-body">
+  <div class="post columns is-mobile box-styling">
+    <div class="column is-12 post-body">
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <strong>{{ data.author.user | usernameDisplay(data.author.owner_id) }}</strong>
-            <br>
+            <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
+            <p class="username">{{ data.author.user | usernameDisplay(data.author.owner_id) }}</p>
           </div>
         </div>
 
         <div class="level-right">
           <p class="level-item">
             <small>
-              {{ data.createdAt | fromNow }}
+              <b-icon icon="clock" size="is-small"></b-icon>{{ data.createdAt | fromNow }}
             </small>
           </p>
         </div>
@@ -56,16 +52,15 @@
           </p>
         </b-field>
       </form>
-
-      <footer class="level is-mobile">
+      <div class="level is-mobile">
         <div class="level-left"></div>
         <div class="level-right">
           <div class="level-item">
-            <a  v-bind:href="this.steemitLink" target="_blank">
-              View on steemit.com
-            </a>
+            <ShowIfLoggedIn :hidden="true" class="quote-this">
+            <a @click="handleQuoteClick">Quote this</a>
+            </ShowIfLoggedIn>
           </div>
-          <div class="level-item">
+          <div class="mod-display">
             <ModActions :post="data" :isReply="isReply">
             </ModActions>
           </div>
@@ -90,7 +85,7 @@
             </p>
           </div>
         </div>
-      </footer>
+      </div>
 
     </div>
   </div>
@@ -101,12 +96,14 @@ import Avatar from '@/components/Avatar.vue';
 import Upvote from '@/components/Upvote.vue';
 import ModActions from '@/components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
+import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
 
 export default {
   components: {
     Avatar,
     Upvote,
     ModActions,
+    ShowIfLoggedIn,
   },
   props: {
     data: Object,
@@ -157,6 +154,9 @@ export default {
 
       this.text = '';
       this.editing = false;
+    },
+    handleQuoteClick( event ) {
+      this.$root.$emit( 'quote-click', this.data );
     },
   },
   data() {
