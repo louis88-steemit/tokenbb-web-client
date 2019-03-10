@@ -16,7 +16,7 @@
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
-                :selectedId="selectedCategoryId"
+                :selectedId="selectedCategory ? selectedCategory._id : null"
                 :labelForAll="'-- Select a Category --'">
               </CategoryDropdown>
             </b-field>
@@ -66,7 +66,6 @@ export default {
   data() {
     return {
       fetching: false,
-      selectedCategoryId: null,
       selectedCategory: null,
       title: this.$route.query.title ? this.$route.query.title : '',
       content: this.$route.query.content ? this.$route.query.content : '',
@@ -80,12 +79,12 @@ export default {
   watch: {
     categoryList( value ) {
       const queryCategory = this.$route.query.category;
-      if ( this.$route.query.category && !this.selectedCategoryId ) {
-        const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+      if ( this.$route.query.category && !this.selectedCategory ) {
+        const selectedCategory = value.find( ( category ) => {
           return category.slug === queryCategory
             || category._id === queryCategory;
         } ) || {};
-        this.selectedCategoryId = selectedCategory._id;
+        this.selectedCategory = selectedCategory;
       }
     },
   },
@@ -125,13 +124,12 @@ export default {
     },
     onSelectCategory( selected ) {
       this.selectedCategory = selected;
-      this.selectedCategoryId = selected._id;
     },
     handleTextChange( text ) {
       this.content = text;
     },
-    onCancel( event ) {
-      event.preventDefault();
+    onCancel( evt ) {
+      evt.preventDefault();
       this.$router.go( -1 );
     },
   },

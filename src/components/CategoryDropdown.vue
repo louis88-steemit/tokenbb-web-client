@@ -40,7 +40,6 @@ export default {
 
         // Needed for first time initialization (passed in via query params)
         this.selected = value[this.selectedId];
-        this.onChange( this.selected );
       }
     },
   },
