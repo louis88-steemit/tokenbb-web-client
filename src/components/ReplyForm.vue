@@ -39,10 +39,6 @@ export default {
     handleTextChange( value ) {
       this.$emit( 'input', value );
     },
-    handleQuoteClick( event ) {
-      event.preventDefault();
-      this.$refs.editor.content += `\n> @${this.quoteAuthor}:\n${this.quote.replace( /^/gm, '> ' )}\n---\n`;
-    },
   },
   data() {
     return {
