@@ -1,5 +1,5 @@
 <template>
-  <div class="post columns is-mobile">
+  <div class="post columns is-mobile box-styling">
     <div class="column is-12 post-body">
       <header class="level is-mobile">
         <div class="level-left">
@@ -52,17 +52,13 @@
           </p>
         </b-field>
       </form>
-
       <div class="level is-mobile">
         <div class="level-left"></div>
         <div class="level-right">
-          <div class="level-item steemit-display">
-            <a  v-bind:href="this.steemitLink" target="_blank">
-              View on steemit.com
-            </a>
-          </div>
           <div class="level-item">
+            <ShowIfLoggedIn :hidden="true" class="quote-this">
             <a @click="handleQuoteClick">Quote this</a>
+            </ShowIfLoggedIn>
           </div>
           <div class="mod-display">
             <ModActions :post="data" :isReply="isReply">
@@ -100,14 +96,16 @@ import Avatar from '@/components/Avatar.vue';
 import Upvote from '@/components/Upvote.vue';
 import ModActions from '@/components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
+import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
 
 export default {
   components: {
     Avatar,
     Upvote,
     ModActions,
+    ShowIfLoggedIn
   },
-  props: {
+ props: {
     data: Object,
     isReply: Boolean,
   },

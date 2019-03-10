@@ -11,12 +11,11 @@
     <b-field>
       <div class="control">
         <button role="submit"
-          class="button is-primary"
+          class="is-topic"
           :disabled="text.length == 0"
           v-bind:class="{ 'is-loading': fetching }">
           Reply
         </button>
-        &nbsp;
       </div>
     </b-field>
   </form>
