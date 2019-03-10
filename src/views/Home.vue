@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <nav class="level is-mobile">
+    <nav class="level is-mobile second-nav">
       <div class="level-left">
         <div class="level-item">
+          <div class="dropdown-style">
           <CategoryDropdown
             :selectedId="selectedCategoryId"
             @change="onSelectCategoryId"
@@ -10,17 +11,15 @@
           </CategoryDropdown>
         </div>
       </div>
-
+      </div>
       <div class="level-right">
         <div class="level-item">
-          <div class="topic-button-style">
           <router-link
             v-if="loggedIn"
             to="/new"
-            class="button is-primary has-icon">
+            class="is-topic has-icon">
             New Topic
           </router-link>
-          </div>
         </div>
       </div>
     </nav>
@@ -32,7 +31,7 @@
       :mobile-cards="false">
 
       <template slot-scope="props">
-        <div class="content-box">
+        <div class="content-box box-styling">
           <div class="content-box-left">
             <div>
               <Avatar :author="props.row.author.user"
@@ -80,7 +79,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import CategoryTag from '@/components/CategoryTag.vue';
