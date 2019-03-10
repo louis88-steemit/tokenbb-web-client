@@ -9,7 +9,7 @@
               </b-input>
             </b-field>
             </div>
-        <div class="column">
+        <div class="column dropdown-style">
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
@@ -36,7 +36,7 @@
         <div class="control">
           <button role="submit"
             :class="{ 'is-loading': fetching }"
-            class="button">
+            class="is-topic">
             Post Topic
           </button>
           &nbsp;
