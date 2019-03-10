@@ -26,6 +26,36 @@
     </nav>
 
     <b-table
+      :data="categoryList"
+      mobile-cards
+      striped>
+
+      <template slot-scope="props">
+        <b-table-column field="title" label="Title">
+          {{ props.row.title }}
+        </b-table-column>
+        <b-table-column field="description" label="Description">
+          {{ props.row.description }}
+        </b-table-column>
+        <b-table-column field="last_activity" label="Last Activity">
+          {{ props.row.meta.last_action.time }}
+        </b-table-column>
+        <b-table-column field="last_user" label="Last User">
+          {{ props.row.meta.last_action.author }}
+        </b-table-column>
+        <b-table-column field="replies" label="Topics">
+          {{ props.row.meta.topics }}
+        </b-table-column>
+        <b-table-column field="replies" label="Replies">
+          {{ props.row.meta.replies }}
+        </b-table-column>
+        <b-table-column field="views" label="Views">
+          {{ props.row.meta.views }}
+        </b-table-column>
+      </template>
+    </b-table>
+
+    <b-table
       :loading="fetching"
       :data="topicList"
       :row-class="getRowClass"
