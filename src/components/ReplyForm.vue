@@ -17,12 +17,6 @@
           Reply
         </button>
         &nbsp;
-        <button role="button"
-          class="button"
-          v-bind:class="{ 'is-loading': fetching }"
-          @click="handleQuoteClick">
-          Quote Last
-        </button>
       </div>
     </b-field>
   </form>
