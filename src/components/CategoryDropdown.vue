@@ -35,13 +35,6 @@ export default {
     selectedId( value ) {
       this.selected = this.categoriesById[value];
     },
-    categoriesById( value ) {
-      if ( this.selectedId && ( !this.selected || this.selected._id != this.selectedId ) ) {
-
-        // Needed for first time initialization (passed in via query params)
-        this.selected = value[this.selectedId];
-      }
-    },
   },
   computed: {
     allCategories() {
