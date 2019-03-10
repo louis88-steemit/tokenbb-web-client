@@ -8,51 +8,6 @@
             :to="{ path: '/' }"
             exact-active-class="noop"
             class="navbar-item">
-            <h1 class="is-primary">
-              <img class="logo"/>
-            </h1>
-          </router-link>
-        </div>
-
-        <a role="button" class="navbar-burger" :class="{ 'is-active': menuActive }" aria-label="menu" aria-expanded="false" @click="toggleMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div class="navbar-menu" :class="{ 'is-active': menuActive }">
-        <div class="navbar-start">
-          <div class="navbar-item is-expanded tr">
-            <!--<p class="tr is-right">
-              <router-link
-                      v-if="auth.username"
-                      to="/create-forum"
-                      class="navbar-item is-primary">
-                Create Forum
-              </router-link>
-            </p>-->
-          <div class="nav-settings">
-            <p class="tr is-right">
-              <router-link
-                      v-if="auth.roles.admin"
-                      to="/settings"
-                      class="navbar-item is-primary">
-                Settings
-              </router-link>
-              </p>
-          </div>
-          </div>
-<template>
-  <nav  id="nav" class="navbar" role="navigation" aria-label="main navigation">
-    <div class="container">
-      <a id="topOfPage" />
-      <div class="navbar-brand">
-        <div class="nav-logo navbar-item">
-          <router-link
-            :to="{ path: '/' }"
-            exact-active-class="noop"
-            class="navbar-item">
               <img class="logo"/>
           </router-link>
         </div>
@@ -127,7 +82,6 @@
     </div>
   </nav>
 </template>
-
 
 <script>
 import { mapState } from 'vuex';
