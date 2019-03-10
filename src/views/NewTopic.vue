@@ -27,6 +27,7 @@
       <b-field label="Message">
         <TextEditor
           :fetching="fetching"
+          :initialContent="content"
           @input="handleTextChange">
         </TextEditor>
       </b-field>
@@ -66,14 +67,26 @@ export default {
     return {
       fetching: false,
       selectedCategory: null,
-      title: '',
-      content: '',
+      title: this.$route.query.title ? this.$route.query.title : '',
+      content: this.$route.query.content ? this.$route.query.content : '',
     };
   },
   computed: {
     ...mapState( 'categories', [
-      'categoriesById',
+      'categoryList',
     ] ),
+  },
+  watch: {
+    categoryList( value ) {
+      const queryCategory = this.$route.query.category;
+      if ( this.$route.query.category && !this.selectedCategory ) {
+        const selectedCategory = value.find( ( category ) => {
+          return category.slug === queryCategory
+            || category._id === queryCategory;
+        } ) || {};
+        this.selectedCategory = selectedCategory;
+      }
+    },
   },
   methods: {
     onSubmit() {
@@ -109,14 +122,14 @@ export default {
           this.fetching = false;
         } );
     },
-    onSelectCategory( selectedId ) {
-      this.selectedCategory = selectedId;
+    onSelectCategory( selected ) {
+      this.selectedCategory = selected;
     },
     handleTextChange( text ) {
       this.content = text;
     },
-    onCancel( event ) {
-      event.preventDefault();
+    onCancel( evt ) {
+      evt.preventDefault();
       this.$router.go( -1 );
     },
   },
