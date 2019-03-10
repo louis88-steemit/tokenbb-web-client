@@ -16,7 +16,7 @@
             <b-field label="Category">
               <CategoryDropdown
                 @change="onSelectCategory"
-                :selectedId="selectedCategory ? selectedCategory._id : null"
+                :selectedId="selectedCategoryId"
                 :labelForAll="'-- Select a Category --'">
               </CategoryDropdown>
             </b-field>
@@ -66,15 +66,28 @@ export default {
   data() {
     return {
       fetching: false,
-      selectedCategory: this.$route.query.categoryId ? { _id: this.$route.query.categoryId } : null,
+      selectedCategoryId: null,
+      selectedCategory: null,
       title: this.$route.query.title ? this.$route.query.title : '',
       content: this.$route.query.content ? this.$route.query.content : '',
     };
   },
   computed: {
     ...mapState( 'categories', [
-      'categoriesById',
+      'categoryList',
     ] ),
+  },
+  watch: {
+    categoryList( value ) {
+      const queryCategory = this.$route.query.category;
+      if ( this.$route.query.category && !this.selectedCategoryId ) {
+        const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+          return category.slug === queryCategory
+            || category._id === queryCategory;
+        } ) || {};
+        this.selectedCategoryId = selectedCategory._id;
+      }
+    },
   },
   methods: {
     onSubmit() {
@@ -110,8 +123,9 @@ export default {
           this.fetching = false;
         } );
     },
-    onSelectCategory( selectedId ) {
-      this.selectedCategory = selectedId;
+    onSelectCategory( selected ) {
+      this.selectedCategory = selected;
+      this.selectedCategoryId = selected._id;
     },
     handleTextChange( text ) {
       this.content = text;

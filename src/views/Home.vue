@@ -123,52 +123,30 @@ export default {
       } );
     },
   },
-  beforeRouteUpdate( to, from, next ) {
-    this.fetchCategory( to.query.category );
-
-    next();
-  },
-  mounted() {
-    this.$store.dispatch( 'categories/fetchAll' )
-      .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
-      .then( () => {
-        this.$nextTick( () => {
-          const categoryParam = this.$router.currentRoute.query.category;
-          const counter = parseInt( this.$router.currentRoute.query.i ) || 0;
-          if ( categoryParam ) {
-            this.$router.push( {
-              path: '/',
-              query: { category: categoryParam, i: counter + 1 },
-            } );
-            this.$nextTick( () => {
-              this.$router.push( {
-                path: '/',
-                query: { category: categoryParam },
-              } );
-            } );
-          }
-        } );
-      } );
-  },
   data() {
     return {
       selectedCategoryId: null,
       selected: null,
     };
   },
-  methods: {
-    fetchCategory( categoryQuery ) {
-      this.selectedCategoryId = categoryQuery || null;
-      const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
-        return category.slug === this.selectedCategoryId
-               || category._id === this.selectedCategoryId;
-      } ) || {};
-      this.selectedCategoryId = selectedCategory._id;
+  watch: {
+    categoryList( value ) {
+      const queryCategory = this.$route.query.category;
+      if ( this.$route.query.category && !this.selectedCategoryId ) {
+        const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+          return category.slug === queryCategory
+            || category._id === queryCategory;
+        } ) || {};
+        this.selectedCategoryId = selectedCategory._id;
+      }
     },
+  },
+  methods: {
     getRowClass( row ) {
       return row.pinned ? 'pinned' : '';
     },
     onSelectCategoryId( selectedCategory ) {
+      this.selectedCategoryId = selectedCategory._id;
       this.$router.push( {
         path: '/',
         query: selectedCategory

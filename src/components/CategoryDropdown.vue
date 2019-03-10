@@ -36,10 +36,12 @@ export default {
       this.selected = this.categoriesById[value];
     },
     categoriesById( value ) {
+      if ( this.selectedId && ( !this.selected || this.selected._id != this.selectedId ) ) {
 
-      // Needed for first time initialization (passed in via query params)
-      this.selected = value[this.selectedId];
-      this.onChange( this.selected );
+        // Needed for first time initialization (passed in via query params)
+        this.selected = value[this.selectedId];
+        this.onChange( this.selected );
+      }
     },
   },
   computed: {
