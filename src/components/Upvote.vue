@@ -11,7 +11,7 @@
       </div>
       <b-dropdown position="is-top-left" hoverable :disabled="voted">
         <p class="upvote-button" slot="trigger">
-          <a class="button is-primary is-small"
+          <a class="is-small"
             :class="{ 'is-loading': this.fetching }"
             :disabled="voted"
             @click="handleClick">
