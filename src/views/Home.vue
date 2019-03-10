@@ -153,6 +153,10 @@ export default {
       } );
     },
   },
+  beforeRouteUpdate( to, from, next ) {
+    this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
+    next();
+  },
   data() {
     return {
       selectedCategoryId: null,

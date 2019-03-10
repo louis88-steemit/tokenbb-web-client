@@ -34,8 +34,9 @@ export default {
 
       this.$store.commit( 'auth/init', this.$store );
 
+      const category = this.$route.query.category;
       this.$store.dispatch( 'categories/fetchAll' )
-        .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
+        .then( () => this.$store.dispatch( 'topics/fetchAll', { category } ) )
         .then( () => {
           this.loaded = true;
         } );
