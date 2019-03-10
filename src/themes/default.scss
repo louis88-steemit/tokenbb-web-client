@@ -334,6 +334,9 @@ tr {
 .content-box h2 {
   font-size: 16px !important;
 }
+.content-box h2:hover {
+  color: $tag !important;
+  }
 /* Left Content Box */
 .content-box .content-box-left {
   float: left;
