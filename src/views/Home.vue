@@ -15,7 +15,7 @@
         <div class="level-item">
           <div class="topic-button-style">
           <router-link
-            v-if="loggedIn"
+            v-if="loggedIn && selectedCategoryId"
             to="/new"
             class="button is-primary has-icon">
             New Topic
@@ -25,36 +25,42 @@
       </div>
     </nav>
 
+    <div v-show="!selectedCategoryId">
     <b-table
       :data="categoryList"
+      :loading="fetching"
       mobile-cards
       striped>
 
-      <template slot-scope="props">
+      <template slot-scope="cprops">
         <b-table-column field="title" label="Title">
-          {{ props.row.title }}
+          <a @click="onSelectCategoryId( cprops.row )">
+            {{ cprops.row.title }}
+          </a>
         </b-table-column>
         <b-table-column field="description" label="Description">
-          {{ props.row.description }}
+          {{ cprops.row.description }}
         </b-table-column>
         <b-table-column field="last_activity" label="Last Activity">
-          {{ props.row.meta.last_action.time }}
+          {{ cprops.row.meta ? cprops.row.meta.last_action.time : '' }}
         </b-table-column>
         <b-table-column field="last_user" label="Last User">
-          {{ props.row.meta.last_action.author }}
+          {{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}
         </b-table-column>
-        <b-table-column field="replies" label="Topics">
-          {{ props.row.meta.topics }}
+        <b-table-column field="topics" label="Topics">
+          {{ cprops.row.meta ? cprops.row.meta.topics : '' }}
         </b-table-column>
         <b-table-column field="replies" label="Replies">
-          {{ props.row.meta.replies }}
+          {{ cprops.row.meta ? cprops.row.meta.replies : '' }}
         </b-table-column>
         <b-table-column field="views" label="Views">
-          {{ props.row.meta.views }}
+          {{ cprops.row.meta ? cprops.row.meta.views : '' }}
         </b-table-column>
       </template>
     </b-table>
+    </div>
 
+    <div v-show="selectedCategoryId">
     <b-table
       :loading="fetching"
       :data="topicList"
@@ -110,8 +116,8 @@
           </Upvote>
         </b-table-column>
       </template>
-
     </b-table>
+    </div>
   </div>
 </template>
 
@@ -133,28 +139,35 @@ export default {
   },
   computed: {
     ...mapState( 'topics', [
-      'fetching',
-      'list',
+      'topicList',
     ] ),
     ...mapState( 'categories', [
-      'categoriesById',
       'categoryList',
     ] ),
     loggedIn() {
       return this.$store.state.auth.username;
     },
-    topicList() {
-      if ( !this.selectedCategoryId ) {
-        return this.$store.state.topics.topicList;
-      }
-
-      return this.$store.state.topics.topicList.filter( ( topic ) => {
-        return topic.categoryId === this.selectedCategoryId;
-      } );
+    fetching() {
+      return this.$store.state.topics.fetching || this.$store.state.categories.fetching;
     },
+
+    /* topicList() {
+      //if ( !this.selectedCategoryId ) {
+      console.log(this.$store.state.topics.topicList);
+        return this.$store.state.topics.topicList;
+      //}
+
+      //return this.$store.state.topics.topicList.filter( ( topic ) => {
+      //  return topic.categoryId === this.selectedCategoryId;
+      //} );
+    },*/
   },
   beforeRouteUpdate( to, from, next ) {
-    this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
+    if ( to.query.category ) {
+      this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
+    } else {
+      this.selectedCategoryId = null;
+    }
     next();
   },
   data() {
@@ -180,7 +193,7 @@ export default {
       return row.pinned ? 'pinned' : '';
     },
     onSelectCategoryId( selectedCategory ) {
-      this.selectedCategoryId = selectedCategory._id;
+      this.selectedCategoryId = selectedCategory ? selectedCategory._id : null;
       this.$router.push( {
         path: '/',
         query: selectedCategory
