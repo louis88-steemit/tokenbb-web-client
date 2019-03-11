@@ -21,9 +21,12 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       # run build!
-      - run: npm run build
+      - run: npm run ci_build
+      - run: mkdir /tmp/artifacts
+      - run: ls -al dist
+      - run: mv -t /tmp/artifacts dist/app.js.br dist/app.css.br dist/chunk-vendors.js.br dist/chunk-vendors.css.br
       - store_artifacts:
-          path: dist
+          path: /tmp/artifacts
 
   test:
     docker:
