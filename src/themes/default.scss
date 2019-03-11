@@ -204,8 +204,8 @@
       border-width: 2px;
       border-radius: 0px;
     }
-    .icon:hover {
-      color: black;
+    .icon {
+      color: white;
     }
     .dropdown-content {
       background-color: $background-second;
@@ -562,6 +562,7 @@ form .button:hover {
 .setting-page {
   border: 1px solid #333333;
 }
+
   // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
