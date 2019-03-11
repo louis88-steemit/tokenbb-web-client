@@ -1,6 +1,9 @@
 const BrotliPlugin = require( 'brotli-webpack-plugin' );
 const CompressionPlugin = require( 'compression-webpack-plugin' );
 const zopfli = require( '@gfx/zopfli' );
+const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
+
+// sometest  s
 
 module.exports = {
   pwa: {
@@ -26,10 +29,15 @@ module.exports = {
           return zopfli.gzip( input, compressionOptions, callback );
         },
       } ),
+      new BundleAnalyzerPlugin( {
+        defaultSizes: 'parsed',
+        analyzerMode: 'server',
+        openAnalyzer: false,
+      } ),
     ],
     optimization: {
       splitChunks: {
-        chunks: 'all',
+        chunks: 'async',
         minSize: 30000,
         maxSize: 0,
         minChunks: 1,
