@@ -60,7 +60,12 @@
         <span id="tiptop-control">
           <span class="tip tip-left" title="" data-original-title="Views"><b-icon icon="eye" size="is-small"></b-icon> {{ props.row.numberOfViews }}</span>
           <span class="tip tip-center" title="" data-original-title="Number of Replies"><b-icon icon="reply" size="is-small"></b-icon> {{ props.row.numberOfReplies }}</span>
-          <span class="tip tip-right" title="" data-original-title="Last Reply"><b-icon icon="clock" size="is-small"></b-icon> {{ props.row.lastReply.time | fromNow }}</span>
+          <span class="tip tip-right" title="" data-original-title="Last Reply"><b-icon icon="clock" size="is-small"></b-icon> {{ props.row.lastReply.time | fromNow }}
+                    <template v-if="props.row.numberOfReplies > 0">by
+         <Avatar :author="props.row.lastReply.author"
+                    :owner="props.row.lastReply.owner"
+                    size="small"></Avatar>
+          </template></span>
         </span>
         </div>
         <div class="content-box-right">
