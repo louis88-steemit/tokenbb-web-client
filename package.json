@@ -39,11 +39,14 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
+    "@gfx/zopfli": "^1.0.11",
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
     "@vue/cli-plugin-pwa": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
     "babel-eslint": "^10.0.1",
+    "brotli-webpack-plugin": "^1.1.0",
+    "compression-webpack-plugin": "^2.0.0",
     "eslint": "^5.13.0",
     "eslint-plugin-vue": "^5.1.0",
     "lint-staged": "^8.1.3",
