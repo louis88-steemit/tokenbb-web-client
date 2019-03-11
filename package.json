@@ -12,7 +12,8 @@
     "pretest": "vue-cli-service lint --no-fix",
     "start": "npm run serve",
     "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "ci_build": "BR=true vue-cli-service build"
   },
   "dependencies": {
     "await-timeout": "^0.3.0",
