@@ -1,18 +1,17 @@
-import Buefy from 'buefy';
-import moment from 'moment';
 
-import steemEditor from 'steem-editor';
-import 'steem-editor/dist/css/index.css';
 import Vue from 'vue';
-
-import VueAnalytics from 'vue-analytics';
 
 import App from './App.vue';
 
-import sanitize from './plugins/sanitize.js';
 import { registerSW } from './registerServiceWorker';
 import router from './router';
 import store from './store/index.js';
+
+const Buefy = import( /* webpackChunkName: "deps-buefy", webpackPreload: true */ 'buefy' );
+const steemEditor = import( /* webpackChunkName: "deps-editor", webpackPreload: true */ 'steem-editor' );
+import( /* webpackChunkName: "deps-editor", webpackPreload: true */ 'steem-editor/dist/css/index.css' );
+const moment = import( /* webpackChunkName: "deps-moment", webpackPreload: true */ 'moment' );
+const VueAnalytics = import( /* webpackChunkName: "deps-analytics", webpackPreload: true */ 'vue-analytics' );
 
 registerSW();
 
@@ -44,9 +43,10 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 
 Vue.config.productionTip = false;
+const BDropdown = import( 'buefy/dist/components/dropdown' ).default;
+Vue.component( 'b-dropdown', BDropdown );
 
 Vue.use( Buefy );
-Vue.use( sanitize );
 
 Vue.use( VueAnalytics, {
   id: process.env.VUE_APP_GA_ID,
@@ -69,24 +69,28 @@ function setGAUserID( userID ) {
 
 Vue.use( steemEditor );
 
-Vue.filter( 'formatDate', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .format( 'MMM Do YYYY' );
-  }
+
+moment.then( function ( moment ) {
+  Vue.filter( 'formatDate', ( value ) => {
+    if ( value ) {
+      return moment.utc( String( value ) )
+        .format( 'MMM Do YYYY' );
+    }
+  } );
+
+  const locale = window.navigator.userLanguage || window.navigator.language || 'en';
+  console.log( `Setting TimeZone Language to ${locale}` );
+  moment.locale( locale );
+
+  Vue.filter( 'fromNow', ( value ) => {
+    if ( value ) {
+      return moment.utc( String( value ) )
+        .add( moment().utcOffset(), 'minutes' )
+        .calendar();
+    }
+  } );
 } );
 
-const locale = window.navigator.userLanguage || window.navigator.language || 'en';
-console.log( `Setting TimeZone Language to ${locale}` );
-moment.locale( locale );
-
-Vue.filter( 'fromNow', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .add( moment().utcOffset(), 'minutes' )
-      .calendar();
-  }
-} );
 
 Vue.filter( 'usernameDisplay', ( username, owner ) => {
   if ( username === process.env.VUE_APP_ANON_USER ) {

@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Settings from './views/Settings.vue';
-import NewForum from './views/NewForum.vue';
-import NewTopic from './views/NewTopic.vue';
-import Topic from './views/Topic.vue';
-import NotFound from './views/NotFound.vue';
+
+function loadView( view ) {
+  return () => import( /* webpackChunkName: "view-[request]" */ `@/views/${view}.vue` );
+}
 
 Vue.use( Router );
 
@@ -16,32 +14,32 @@ const router = new Router( {
     {
       path: '/',
       name: 'home',
-      component: Home,
+      component: loadView( 'Home' ),
     },
     {
       path: '/settings',
       name: 'settings',
-      component: Settings,
+      component: loadView( 'Settings' ),
     },
     {
       path: '/create-forum',
       name: 'create-forum',
-      component: NewForum,
+      component: loadView( 'NewForum' ),
     },
     {
       path: '/new',
       name: 'new-topic',
-      component: NewTopic,
+      component: loadView( 'NewTopic' ),
     },
     {
       path: '/topics/:author/:permlink',
       name: 'topic',
-      component: Topic,
+      component: loadView( 'Topic' ),
     },
     {
       path: '/404',
       name: 'not-found',
-      component: NotFound,
+      component: loadView( 'NotFound' ),
     },
     {
       path: '*',
