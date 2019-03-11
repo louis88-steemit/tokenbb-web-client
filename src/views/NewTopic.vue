@@ -35,15 +35,13 @@
       <div class="field level">
         <div class="control">
           <button role="submit"
-            :class="{ 'is-loading': fetching }"
-            class="is-topic">
+            :class="{ 'is-loading': fetching }">
             Post Topic
           </button>
           &nbsp;
           <button role="cancel"
             :class="{ 'is-loading': fetching }"
-            @click="onCancel"
-            class="button">
+            @click="onCancel">
             Cancel
           </button>
         </div>
