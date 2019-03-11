@@ -1,8 +1,9 @@
 <template>
-  <steem-editor v-model="content" language="en" :toolbars="customToolbar" />
+    <steem-editor v-model="content" language="en" :toolbars="customToolbar"/>
 </template>
 
 <script>
+
 export default {
   props: {
     fetching: Boolean,
@@ -30,7 +31,11 @@ export default {
     },
   },
   created() {
-    this.$root.$on( 'quote-click', ( d ) => this.content += `\n> @${d.author.user}:\n${d.body.replace( /^/gm, '> ' )}\n---\n` );
+    this.$root.$on( 'quote-click', addQuote );
+
+    function addQuote( d ) {
+      this.content += `\n> @${ d.author.user }:\n${ d.body.replace( /^/gm, '> ' ) }\n---\n`;
+    }
   },
 };
 </script>
