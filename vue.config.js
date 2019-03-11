@@ -27,7 +27,7 @@ if ( isProd ) {
       } ),
       new BundleAnalyzerPlugin( {
         defaultSizes: 'parsed',
-        analyzerMode: 'server',
+        analyzerMode: 'static',
         openAnalyzer: false,
       } ),
     ]
@@ -42,9 +42,6 @@ module.exports = {
   },
   configureWebpack: {
     plugins: webpackPlugins,
-    devServer: {
-      compress: false,
-    },
     optimization: {
       splitChunks: {
         chunks: 'async',
