@@ -12,7 +12,8 @@
     "pretest": "vue-cli-service lint --no-fix",
     "start": "npm run serve",
     "start_production": "node -v && node --harmony --experimental-modules --no-warnings server.mjs",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "ci_build": "BR=true vue-cli-service build"
   },
   "dependencies": {
     "await-timeout": "^0.3.0",
@@ -37,6 +38,7 @@
     "xhr": "^2.5.0"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@gfx/zopfli": "^1.0.11",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
