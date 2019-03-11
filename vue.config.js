@@ -5,8 +5,8 @@ const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzer
 
 let webpackPlugins = [];
 const isProd = process.env.NODE_ENV === 'production';
-const onlyBR = process.env.NODE_BR === 'true';
-console.info( `Server is prod: ${isProd}` );
+const onlyBR = process.env.BR;
+console.info( `Server is prod: ${isProd} onlyBR: ${onlyBR}` );
 if ( isProd ) {
   if ( onlyBR ) {
     webpackPlugins.push( new BrotliPlugin( {
@@ -55,9 +55,9 @@ module.exports = {
     plugins: webpackPlugins,
     optimization: {
       splitChunks: {
-        chunks: 'async',
-        minSize: 30000,
-        maxSize: 0,
+        chunks: 'all',
+        minSize: 10000,
+        maxSize: 250000,
         minChunks: 1,
         maxAsyncRequests: 5,
         maxInitialRequests: 3,
