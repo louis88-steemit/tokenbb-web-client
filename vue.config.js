@@ -11,7 +11,7 @@ if ( isProd ) {
   if ( onlyBR ) {
     webpackPlugins.push( new BrotliPlugin( {
       asset: '[path].br[query]',
-      test: /\.(js|css|html|svg)$/,
+      test: /\.(js|css|html)$/,
       threshold: 0,
       minRatio: 0.8,
       deleteOriginalAssets: true,
@@ -78,3 +78,16 @@ module.exports = {
     },
   },
 };
+
+if ( isProd && onlyBR ) {
+  module.exports.configureWebpack.output = {
+    filename: '[name].js',
+    chunkFilename: '[name].js',
+  };
+  module.exports.css = {
+    extract: {
+      filename: '[name].css',
+      chunkFilename: '[name].css',
+    },
+  };
+}
