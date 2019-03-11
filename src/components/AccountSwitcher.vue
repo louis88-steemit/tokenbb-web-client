@@ -1,8 +1,8 @@
 <template>
-  <b-dropdown @change="onChange">
+  <b-dropdown @change="onChange" class="dropdown-style">
     <button class="button is-primary" type="button" slot="trigger">
       <Avatar :author="current" owner="id" size="small"></Avatar>&nbsp;
-      {{ current | usernameDisplay(id) }}
+      {{ current | usernameDisplay(id) }} <b-icon icon="menu-down"></b-icon>
     </button>
 
     <b-dropdown-item :value="all">

@@ -155,7 +155,7 @@ export default {
       this.text = '';
       this.editing = false;
     },
-    handleQuoteClick( event ) {
+    handleQuoteClick() {
       this.$root.$emit( 'quote-click', this.data );
     },
   },
