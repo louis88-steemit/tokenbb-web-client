@@ -43,6 +43,12 @@ if ( isProd ) {
       ]
     );
   }
+} else {
+  webpackPlugins.push( new BundleAnalyzerPlugin( {
+    defaultSizes: 'parsed',
+    analyzerMode: 'server',
+    openAnalyzer: false,
+  } ) );
 }
 
 module.exports = {
