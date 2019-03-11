@@ -6,10 +6,11 @@
 export default {
   props: {
     fetching: Boolean,
+    initialContent: String,
   },
   data() {
     return {
-      content: '',
+      content: this.initialContent,
       customToolbar: {
         header: true,
         bold: true,
