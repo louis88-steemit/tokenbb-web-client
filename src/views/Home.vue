@@ -16,7 +16,7 @@
         <div class="level-item">
           <router-link
             v-if="loggedIn"
-            to="/new"
+            :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
             class="is-topic has-icon">
             New Topic
           </router-link>
@@ -128,7 +128,7 @@ export default {
     categoryList( value ) {
       const queryCategory = this.$route.query.category;
       if ( this.$route.query.category && !this.selectedCategoryId ) {
-        const selectedCategory = this.$store.state.categories.categoryList.find( ( category ) => {
+        const selectedCategory = value.find( ( category ) => {
           return category.slug === queryCategory
             || category._id === queryCategory;
         } ) || {};

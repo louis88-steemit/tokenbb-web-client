@@ -103,9 +103,9 @@ export default {
     Avatar,
     Upvote,
     ModActions,
-    ShowIfLoggedIn
+    ShowIfLoggedIn,
   },
- props: {
+  props: {
     data: Object,
     isReply: Boolean,
   },

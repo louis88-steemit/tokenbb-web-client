@@ -79,17 +79,25 @@ export default {
   },
   watch: {
     categoryList( value ) {
+      this.setSelectedCategory( value );
+    },
+  },
+  mounted() {
+    if ( this.categoryList ) {
+      this.setSelectedCategory( this.categoryList );
+    }
+  },
+  methods: {
+    setSelectedCategory( categoryList ) {
       const queryCategory = this.$route.query.category;
       if ( this.$route.query.category && !this.selectedCategory ) {
-        const selectedCategory = value.find( ( category ) => {
+        const selectedCategory = categoryList.find( ( category ) => {
           return category.slug === queryCategory
             || category._id === queryCategory;
         } ) || {};
         this.selectedCategory = selectedCategory;
       }
     },
-  },
-  methods: {
     onSubmit() {
       if ( !this.selectedCategory ) {
         return this.$toast.open( {
