@@ -1,15 +1,14 @@
 const BrotliPlugin = require( 'brotli-webpack-plugin' );
 const CompressionPlugin = require( 'compression-webpack-plugin' );
 const zopfli = require( '@gfx/zopfli' );
+const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
 
-module.exports = {
-  pwa: {
-    workboxOptions: {
-      importScripts: [ 'skip-waiting.js' ],
-    },
-  },
-  configureWebpack: {
-    plugins: [
+let webpackPlugins = [];
+const isProd = process.env.NODE_ENV === 'production';
+console.info( `Server is prod: ${isProd}` );
+if ( isProd ) {
+  webpackPlugins = webpackPlugins.concat(
+    [
       new BrotliPlugin( {
         asset: '[path].br[query]',
         test: /\.(js|css|html|svg)$/,
@@ -26,10 +25,26 @@ module.exports = {
           return zopfli.gzip( input, compressionOptions, callback );
         },
       } ),
-    ],
+      new BundleAnalyzerPlugin( {
+        defaultSizes: 'parsed',
+        analyzerMode: 'static',
+        openAnalyzer: false,
+      } ),
+    ]
+  );
+}
+
+module.exports = {
+  pwa: {
+    workboxOptions: {
+      importScripts: [ 'skip-waiting.js' ],
+    },
+  },
+  configureWebpack: {
+    plugins: webpackPlugins,
     optimization: {
       splitChunks: {
-        chunks: 'all',
+        chunks: 'async',
         minSize: 30000,
         maxSize: 0,
         minChunks: 1,
