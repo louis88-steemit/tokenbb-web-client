@@ -50,11 +50,11 @@
                 <AccountSwitcher></AccountSwitcher>
               </p>
             </div>
-            <div class="nav-login">
+            <div>
               <p v-if="!auth.username" class="tr is-right">
-                <a class="button is-primary" @click="login">
-                  Connect
-                </a>
+                <button @click="login">
+                  Login
+                </button>
               </p>
             </div>
           </div>

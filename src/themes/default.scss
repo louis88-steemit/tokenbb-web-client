@@ -41,8 +41,10 @@
     background-color: $background;
   }
   /* General Font Styling */
-  #app {
   a {
+    color: white;
+  }
+  .title {
     color: white;
   }
   p,strong {
@@ -75,17 +77,11 @@
   ul li {
     list-style-type: circle;
   }
-  table, thead,td,th,tr {
+  .table {
     color: white;
   }
-  table th {
+  .b-table .table th {
     color: $tag;
-  }
-  blockquote {
-    background-color: $background;
-    padding: 25px;
-    border-left: 4px solid $primary;
-    margin: 5px 0;
   }
   .logo {
     content: $logo;
@@ -107,7 +103,6 @@
   h5 {
     font-size: 16px;
   }
-}
 }
   /* Topic List Font Styling */
     .main-content {
@@ -131,15 +126,32 @@
       color: white;
     }
   }
+  /* Generic Button */
+  button {
+    background-color: $background;
+    color: $tag;
+    border-color: $tag;
+    border-width: 2px;
+    border-radius: 0px;
+    padding: 15px;
+    font-size: 16px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  button:hover {
+    background-color: $primary;
+    color: $background;
+    border-color: $tag;
+  }
   /* Primary Button Styling */
-  .button.is-primary {
+  .is-primary {
     background-color: $background;
     color: $tag;
     border-color: $tag;
     border-width: 2px;
     border-radius: 0px;
   }
-  .button.is-primary:hover {
+  .is-primary:hover {
     background-color: $tag;
     color: $background;
     border-radius: 0px;
@@ -155,7 +167,7 @@
   .is-topic {
     color: $primary;
     border-radius: 0px;
-    padding: 10px;
+    padding: 15px;
     font-size: 16px;
     background-color: $background;
     border: 1px solid $tag;
@@ -165,7 +177,7 @@
   }
   .is-topic:hover {
     background-color: $primary;
-    color: $background !important;
+    color: $background;
     border-color: none;
     -webkit-box-shadow: 4px 4px 0px 0px black;
     -moz-box-shadow: 4px 4px 0px 0px black;
@@ -447,6 +459,18 @@ tr {
   }
   small {
     padding-right: 20px;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    color: $tag;
+  }
+  blockquote {
+    background-color: $background;
+    border-top: 1px solid white;
+    border-right: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 4px solid $primary;
+    padding: 25px;
+    margin: 5px 0;
   }
   width: 100%;
   padding-top: 10px;
