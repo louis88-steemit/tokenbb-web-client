@@ -77,7 +77,7 @@
             class="button"
             :class="{ 'is-loading': fetching }"
             :disabled="fetching">
-            Add
+            Add Category
           </button>
         </form>
       </div>

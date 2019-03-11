@@ -17,7 +17,7 @@
           <router-link
             v-if="loggedIn"
             :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
-            class="is-topic has-icon">
+            class="is-topic">
             New Topic
           </router-link>
         </div>
