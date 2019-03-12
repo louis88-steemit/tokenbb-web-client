@@ -184,7 +184,10 @@ export default {
     },
     handleQuoteClick() {
       this.$root.$emit( 'quote-click', this.data );
-      window.scrollTo(endOfTopic);
+      this.scrollTo( 'endOfTopic' );
+    },
+    scrollTo( id ) {
+      window.scrollTo( 0, document.getElementById( id ).offsetTop );
     },
   },
 };
