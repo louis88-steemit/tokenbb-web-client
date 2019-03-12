@@ -1,8 +1,13 @@
 <template>
   <router-link :to="categoryRoute(categoryId)">
-    <b-icon icon="tag" size="is-small"></b-icon>
-    <span class="tag is-info" v-html="category">
-    </span>
+    <b-icon
+      icon="tag"
+      size="is-small"
+    />
+    <span
+      class="tag is-info"
+      v-html="category"
+    />
   </router-link>
 </template>
 

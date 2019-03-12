@@ -1,5 +1,9 @@
 <template>
-    <steem-editor v-model="content" language="en" :toolbars="customToolbar"/>
+  <steem-editor
+    v-model="content"
+    language="en"
+    :toolbars="customToolbar"
+  />
 </template>
 
 <script>
@@ -25,17 +29,18 @@ export default {
       },
     };
   },
+  methods: {
+    addQuote( quote ) {
+      this.content += `\n> @${ quote.author.user }:\n${ quote.body.replace( /^/gm, '> ' ) }\n---\n`;
+    }
+  },
   watch: {
     content() {
       this.$emit( 'input', this.content );
     },
   },
   created() {
-    this.$root.$on( 'quote-click', addQuote );
-
-    function addQuote( d ) {
-      this.content += `\n> @${ d.author.user }:\n${ d.body.replace( /^/gm, '> ' ) }\n---\n`;
-    }
+    this.$root.$on( 'quote-click', this.addQuote );
   },
 };
 </script>
