@@ -1,4 +1,4 @@
-import Toast from 'buefy/src/components/toast/Toast';
+import { Toast } from 'buefy/dist/components/toast';
 
 import { addCategory, listCategories, removeCategory } from '../services/api.service';
 import { errorAlertOptions } from '../utils/notifications.js';
