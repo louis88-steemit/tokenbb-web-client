@@ -25,8 +25,8 @@ jobs:
       - run: mkdir /tmp/artifacts
       - run: ls -al dist
       - run: rm dist/precache-manifest*
-      - run: cat dist/*.js.br >> all.js.br
-      - run: cat dist/*.css.br >> all.css.br
+      - run: cat dist/*.js.br >> dist/all.js.br
+      - run: cat dist/*.css.br >> dist/all.css.br
       - run: mv -t /tmp/artifacts dist/*.js.br dist/*.css.br
       - store_artifacts:
           path: /tmp/artifacts
