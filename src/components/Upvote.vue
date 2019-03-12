@@ -1,23 +1,37 @@
 <template>
-  <ShowIfLoggedIn :hidden="true" class="upvote">
+  <ShowIfLoggedIn
+    :hidden="true"
+    class="upvote"
+  >
     <div class="field has-addons">
       <div class="value-control">
-      <div class="control control-value">
-        <a>$ {{ value }}</a>
+        <div class="control control-value">
+          <a>$ {{ value }}</a>
+        </div>
+        <div class="control control-length">
+          <a>{{ votes.length }} Votes</a>
+        </div>
       </div>
-      <div class="control control-length">
-        <a>{{ votes.length }} Votes</a>
-      </div>
-      </div>
-      <b-dropdown position="is-top-left" hoverable :disabled="voted">
-        <p class="upvote-button" slot="trigger">
-          <a class="is-small"
+      <b-dropdown
+        position="is-top-left"
+        hoverable
+        :disabled="voted"
+      >
+        <p
+          slot="trigger"
+          class="upvote-button"
+        >
+          <a
+            class="is-small"
             :class="{ 'is-loading': this.fetching }"
             :disabled="voted"
-            @click="handleClick">
+            @click="handleClick"
+          >
             <!--<span>Upvote</span>-->
-            <b-icon icon="arrow-up-drop-circle-outline" size="is-medium">
-            </b-icon>
+            <b-icon
+              icon="arrow-up-drop-circle-outline"
+              size="is-medium"
+            />
           </a>
         </p>
 
@@ -28,14 +42,17 @@
                 <span class="percent-label">{{ percent }}%</span>
               </div>
               <div class="column is-three-quarter is-mobile">
-                <input orient="horizontal" class="slider is-primary is-circle"
+                <input
                   ref="slider"
-                  @input="handleChange"
+                  orient="horizontal"
+                  class="slider is-primary is-circle"
                   step="1"
                   min="0"
                   max="100"
                   :value="percent"
-                  type="range">
+                  type="range"
+                  @input="handleChange"
+                >
               </div>
             </div>
           </div>

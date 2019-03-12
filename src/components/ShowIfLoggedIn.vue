@@ -5,7 +5,7 @@
         {{ text || 'Login to reply' }}
       </button>
     </div>
-    <slot v-if="loggedIn"></slot>
+    <slot v-if="loggedIn" />
   </div>
 </template>
 

@@ -1,7 +1,13 @@
 <template>
   <div class="container fill">
-    <div v-if="fetching" class="spacer">
-      <b-loading :is-full-page="false" :active="fetching"></b-loading>
+    <div
+      v-if="fetching"
+      class="spacer"
+    >
+      <b-loading
+        :is-full-page="false"
+        :active="fetching"
+      />
     </div>
 
     <div v-if="!fetching">
@@ -10,10 +16,12 @@
           {{ topic.title }}
         </h1>
 
-        <CategoryTag :categoryId="topic.categoryId">
-        </CategoryTag>
+        <CategoryTag :category-id="topic.categoryId" />
         &nbsp;
-        <a class="topic-nav topic-nav-to-end" @click="scrollTo('endOfTopic')">
+        <a
+          class="topic-nav topic-nav-to-end"
+          @click="scrollTo('endOfTopic')"
+        >
           Jump to end
         </a>
       </header>
@@ -21,15 +29,18 @@
       <br>
 
       <main ref="posts">
-        <Post :data="topic"></Post>
+        <Post :data="topic" />
 
-        <Post v-for="(reply, index) in topic.replies"
-          :data="reply"
-          :isReply="true"
+        <Post
+          v-for="(reply, index) in topic.replies"
           :key="index"
+          :data="reply"
+          :is-reply="true"
+        />
+        <a
+          class="topic-nav topic-nav-to-top"
+          @click="scrollTo('topOfPage')"
         >
-        </Post>
-        <a class="topic-nav topic-nav-to-top" @click="scrollTo('topOfPage')">
           Back to Top
         </a>
       </main>
@@ -41,13 +52,12 @@
           :fetching="$store.state.replies.fetching"
           :text="replyText"
           :quote="quote"
-          :quoteAuthor="quoteAuthor"
+          :quote-author="quoteAuthor"
           @input="onReplyInput"
-          @submit="onReplySubmit">
-        </ReplyForm>
+          @submit="onReplySubmit"
+        />
       </ShowIfLoggedIn>
     </div>
-
   </div>
 </template>
 
@@ -62,15 +72,12 @@ import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
 export default {
-  name: 'topic',
+  name: 'Topic',
   components: {
     Post,
     ReplyForm,
     ShowIfLoggedIn,
     CategoryTag,
-  },
-  created() {
-    this.fetchTopic();
   },
   data() {
     return {
@@ -78,6 +85,9 @@ export default {
       topic: {},
       replyText: '',
     };
+  },
+  created() {
+    this.fetchTopic();
   },
   computed: {
     ...mapState( 'categories', [

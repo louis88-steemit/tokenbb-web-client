@@ -1,14 +1,21 @@
 <template>
   <div class="container fill">
-    <h2 class="title is-2">Create a New Forum</h2>
+    <h2 class="title is-2">
+      Create a New Forum
+    </h2>
 
-    <form @submit.prevent="onSubmit" class="new-forum">
+    <form
+      class="new-forum"
+      @submit.prevent="onSubmit"
+    >
       <div class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
             <b-field label="Name">
-              <b-input v-model="name" placeholder="Type name here">
-              </b-input>
+              <b-input
+                v-model="name"
+                placeholder="Type name here"
+              />
             </b-field>
           </div>
         </div>
@@ -16,9 +23,11 @@
 
       <div class="field">
         <div class="control">
-          <button role="submit"
+          <button
+            role="submit"
             :class="{ 'is-loading': fetching }"
-            class="button is-primary">
+            class="button is-primary"
+          >
             Create Forum
           </button>
         </div>
@@ -31,7 +40,7 @@
 import { createForum } from '../services/api.service.js';
 
 export default {
-  name: 'new-forum',
+  name: 'NewForum',
   components: {
   },
   data() {
