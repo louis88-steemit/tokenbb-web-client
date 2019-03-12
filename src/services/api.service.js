@@ -99,7 +99,7 @@ export function createForum( forumName ) {
   return requestAsync( opts );
 }
 
-export function addCategory( categoryName, title, description ) {
+export function addCategory( categoryName, title, description, breadcrumb ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -109,6 +109,7 @@ export function addCategory( categoryName, title, description ) {
       name: categoryName,
       title,
       description,
+      breadcrumb,
     },
   };
 

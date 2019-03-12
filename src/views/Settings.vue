@@ -23,6 +23,9 @@
         <b-table-column field="description" label="Description">
           {{ props.row.description }}
         </b-table-column>
+        <b-table-column field="breadcrumb" label="Breadcrumb">
+          {{ props.row.breadcrumb.join(',') }}
+        </b-table-column>
         <!--
         <b-table-column label="Delete" centered>
 
@@ -73,6 +76,16 @@
             </b-input>
           </b-field>
 
+          <b-field label="Breadcrumb (comma-separated, e.g. Sports,Baseball)">
+            <b-input
+                    v-model="breadcrumb"
+                    :maxlength="320"
+                    :has-counter="false"
+                    :disabled="fetching">
+            </b-input>
+          </b-field>
+
+
           <button role="submit"
             class="button"
             :class="{ 'is-loading': fetching }"
@@ -99,6 +112,7 @@ export default {
       name: '',
       title: '',
       description: '',
+      breadcrumb: '',
     };
   },
   computed: {
@@ -109,11 +123,17 @@ export default {
   },
   methods: {
     add() {
-      this.$store.dispatch( 'categories/add', { name: this.name, title: this.title, description: this.description } )
+      this.$store.dispatch( 'categories/add', {
+        name: this.name,
+        title: this.title,
+        description: this.description,
+        breadcrumb: this.breadcrumb.split( ',' ).map( ( s ) => s.trim() ),
+      } )
         .then( () => {
           this.name = '';
           this.title = '';
           this.description = '';
+          this.breadcrumb = '';
         } )
         .catch( ( err ) => {
           console.error( err );

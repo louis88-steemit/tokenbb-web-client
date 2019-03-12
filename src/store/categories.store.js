@@ -9,6 +9,7 @@ export default {
     fetching: true,
     categoryList: [],
     categoriesById: {},
+    categoriesByBreadcrumb: { '__entries': [] },
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -28,15 +29,36 @@ export default {
         state.categoriesById[category._id] = category;
       } );
 
+      // map category by breadcrumb
+      categories.forEach( ( category ) => {
+        if ( category.breadcrumb && category.breadcrumb.length > 0 ) {
+          let categoryGroup = state.categoriesByBreadcrumb;
+          for ( let idx = 0; idx < category.breadcrumb.length; idx++ ) {
+            const crumb = category.breadcrumb[idx];
+            if ( !categoryGroup[crumb] ) {
+              categoryGroup[crumb] = { '__entries': [] };
+            }
+            categoryGroup = categoryGroup[crumb];
+            if ( idx == category.breadcrumb.length - 1 ) {
+              categoryGroup.__entries.push( category );
+            }
+          }
+        } else {
+          state.categoriesByBreadcrumb.__entries.push( category );
+        }
+      } );
+      console.log( state.categoriesByBreadcrumb );
+
       // For Vue Reactivity.
+      state.categoriesByBreadcrumb = { ...state.categoriesByBreadcrumb };
       state.categoriesById = { ...state.categoriesById };
     },
   },
   actions: {
-    add( { commit }, { name: categoryName, title, description } ) {
+    add( { commit }, { name: categoryName, title, description, breadcrumb } ) {
       commit( 'setFetching', true );
 
-      addCategory( categoryName, title, description )
+      addCategory( categoryName, title, description, breadcrumb )
         .then( ( category ) => {
           commit( 'add', category.data );
           commit( 'setFetching', false );

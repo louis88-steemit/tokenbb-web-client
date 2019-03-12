@@ -25,38 +25,8 @@
     </nav>
 
     <div v-show="!selectedCategoryId">
-    <b-table
-      :data="categoryList"
-      :loading="fetching"
-      mobile-cards
-      striped>
-
-      <template slot-scope="cprops">
-        <b-table-column field="title" label="Title">
-          <a @click="onSelectCategoryId( cprops.row )">
-            {{ cprops.row.title }}
-          </a>
-        </b-table-column>
-        <b-table-column field="description" label="Description">
-          {{ cprops.row.description }}
-        </b-table-column>
-        <b-table-column field="last_activity" label="Last Activity">
-          {{ cprops.row.meta ? cprops.row.meta.last_action.time : '' }}
-        </b-table-column>
-        <b-table-column field="last_user" label="Last User">
-          {{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}
-        </b-table-column>
-        <b-table-column field="topics" label="Topics">
-          {{ cprops.row.meta ? cprops.row.meta.topics : '' }}
-        </b-table-column>
-        <b-table-column field="replies" label="Replies">
-          {{ cprops.row.meta ? cprops.row.meta.replies : '' }}
-        </b-table-column>
-        <b-table-column field="views" label="Views">
-          {{ cprops.row.meta ? cprops.row.meta.views : '' }}
-        </b-table-column>
-      </template>
-    </b-table>
+    <CategoryList :categoriesByBreadcrumb="categoriesByBreadcrumb">
+    </CategoryList>
     </div>
 
     <div v-show="selectedCategoryId">
@@ -120,6 +90,7 @@ import CategoryTag from '@/components/CategoryTag.vue';
 import { mapState } from 'vuex';
 
 import CategoryDropdown from '@/components/CategoryDropdown.vue';
+import CategoryList from '@/components/CategoryList.vue';
 import Upvote from '@/components/Upvote.vue';
 import Avatar from '@/components/Avatar.vue';
 
@@ -127,6 +98,7 @@ export default {
   name: 'home',
   components: {
     CategoryDropdown,
+    CategoryList,
     Upvote,
     Avatar,
     CategoryTag,
@@ -137,6 +109,7 @@ export default {
     ] ),
     ...mapState( 'categories', [
       'categoryList',
+      'categoriesByBreadcrumb',
     ] ),
     loggedIn() {
       return this.$store.state.auth.username;
