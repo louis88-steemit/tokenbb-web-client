@@ -1,52 +1,66 @@
 <template>
   <div class="container fill">
     <div class="newtopic-control">
-    <form @submit.prevent="onSubmit" class="new-topic">
-      <div class="columns is-1-mobile is-1-tablet">
-        <div class="column is-9-desktop">
-            <b-field class="input-title" label="Title">
-              <b-input  grouped v-model="title" placeholder="Type title here" expanded>
-              </b-input>
+      <form
+        class="new-topic"
+        @submit.prevent="onSubmit"
+      >
+        <div class="columns is-1-mobile is-1-tablet">
+          <div class="column is-9-desktop">
+            <b-field
+              class="input-title"
+              label="Title"
+            >
+              <b-input
+                v-model="title"
+                grouped
+                placeholder="Type title here"
+                expanded
+              />
             </b-field>
-            </div>
-        <div class="column dropdown-style">
+          </div>
+          <div class="column dropdown-style">
             <b-field label="Category">
               <CategoryDropdown
+                :selected-id="selectedCategory ? selectedCategory._id : null"
+                :label-for-all="'-- Select a Category --'"
                 @change="onSelectCategory"
-                :selectedId="selectedCategory ? selectedCategory._id : null"
-                :labelForAll="'-- Select a Category --'">
-              </CategoryDropdown>
+              />
             </b-field>
-            </div>
-            </div>
-            <div class="columns">
-              <div class="column">
-      <b-field label="Message">
-        <div class="texteditor-control">
-        <TextEditor
-          :fetching="fetching"
-          :initialContent="content"
-          @input="handleTextChange">
-        </TextEditor>
+          </div>
         </div>
-      </b-field>
-      </div>
-      </div>
-      <div class="field level">
-        <div class="control">
-          <button role="submit"
-            :class="{ 'is-loading': fetching }">
-            Post Topic
-          </button>
+        <div class="columns">
+          <div class="column">
+            <b-field label="Message">
+              <div class="texteditor-control">
+                <TextEditor
+                  :fetching="fetching"
+                  :initial-content="content"
+                  @input="handleTextChange"
+                />
+              </div>
+            </b-field>
+          </div>
+        </div>
+        <div class="field level">
+          <div class="control">
+            <button
+              role="submit"
+              :class="{ 'is-loading': fetching }"
+            >
+              Post Topic
+            </button>
           &nbsp;
-          <button role="cancel"
-            :class="{ 'is-loading': fetching }"
-            @click="onCancel">
-            Cancel
-          </button>
+            <button
+              role="cancel"
+              :class="{ 'is-loading': fetching }"
+              @click="onCancel"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
   </div>
 </template>
@@ -57,7 +71,7 @@ import CategoryDropdown from '@/components/CategoryDropdown.vue';
 import { mapState } from 'vuex';
 
 export default {
-  name: 'new-topic',
+  name: 'NewTopic',
   components: {
     TextEditor,
     CategoryDropdown,
