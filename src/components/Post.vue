@@ -76,7 +76,7 @@
         :hidden="true"
         class="quote-this"
       >
-        <a @click="handleQuoteClick"><span @click="scrollTo('endOfTopic')">Quote this</span></a>
+        <a @click="handleQuoteClick">Quote this</a>
       </ShowIfLoggedIn>
       <div class="upvote-module">
         <!--
@@ -184,9 +184,7 @@ export default {
     },
     handleQuoteClick() {
       this.$root.$emit( 'quote-click', this.data );
-    },
-     scrollTo( id ) {
-     window.scrollTo( 0, document.getElementById( id ).offsetTop );
+      window.scrollTo(endOfTopic);
     },
   },
 };
