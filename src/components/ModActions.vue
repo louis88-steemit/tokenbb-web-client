@@ -24,6 +24,8 @@ import Select from 'buefy/src/components/select/Select';
 
 import { hide, pin, unpin } from '../services/api.service.js';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 function noop() {}
 
 export default {
@@ -95,14 +97,14 @@ export default {
 
             this.$store.commit( 'topics/pin', this.post );
 
-            this.$toast.open( {
+            Toast.open( {
               message: 'The topic has been pinned.',
               type: 'is-primary',
             } );
             this.$router.push( { name: 'home' } );
           } catch ( err ) {
             const result = err.error.message;
-            this.$toast.open( {
+            Toast.open( {
               message: `Failed to pin the topic: ${result}`,
               type: 'is-danger',
             } );
@@ -124,14 +126,14 @@ export default {
 
             this.$store.commit( 'topics/unpin', this.post );
 
-            this.$toast.open( {
+            Toast.open( {
               message: 'The topic has been unpinned.',
               type: 'is-primary',
             } );
             this.$router.push( { name: 'home' } );
           } catch ( err ) {
             const result = err.error.message;
-            this.$toast.open( {
+            Toast.open( {
               message: `Failed to unpin the topic: ${result}`,
               type: 'is-danger',
             } );
@@ -151,14 +153,14 @@ export default {
           try {
             await hide( this.post );
 
-            this.$toast.open( {
+            Toast.open( {
               message: 'The post has been hidden.',
               type: 'is-primary',
             } );
             this.$router.push( { name: 'home' } );
           } catch ( err ) {
             const result = err.error.message;
-            this.$toast.open( {
+            Toast.open( {
               message: `Failed to hide the post: ${result}`,
               type: 'is-danger',
             } );

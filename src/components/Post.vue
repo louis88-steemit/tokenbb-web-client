@@ -122,6 +122,8 @@ import ModActions from '../components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 export default {
   components: {
     BField: Field,
@@ -177,7 +179,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.error( err );
-          this.$toast.open( errorAlertOptions( 'Oops! Could not edit your post at this moment' ) );
+          Toast.open( errorAlertOptions( 'Oops! Could not edit your post at this moment' ) );
           this.fetching = false;
         } );
     },

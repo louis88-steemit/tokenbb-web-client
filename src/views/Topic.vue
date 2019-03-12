@@ -73,6 +73,8 @@ import CategoryTag from '../components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 export default {
   name: 'Topic',
   components: {
@@ -129,7 +131,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.log( err );
-          this.$toast.open( errorAlertOptions( 'Oops! Could not submit reply at this moment', err ) );
+          Toast.open( errorAlertOptions( 'Oops! Could not submit reply at this moment', err ) );
           this.$ga.exception( err );
         } );
     },

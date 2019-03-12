@@ -75,6 +75,8 @@ import Input from 'buefy/src/components/input/Input';
 import TextEditor from '../components/TextEditor.vue';
 import CategoryDropdown from '../components/CategoryDropdown.vue';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 export default {
   name: 'NewTopic',
   components: {
@@ -119,7 +121,7 @@ export default {
     },
     onSubmit() {
       if ( !this.selectedCategory ) {
-        return this.$toast.open( {
+        return Toast.open( {
           type: 'is-danger',
           message: 'Please select a category',
         } );
@@ -136,14 +138,14 @@ export default {
       this.$store.dispatch( 'topics/createTopic', payload )
         .then( () => {
           this.$router.push( '/' );
-          this.$toast.open( {
+          Toast.open( {
             message: 'Your topic has been posted.',
             type: 'is-primary',
           } );
         } )
         .catch( ( err ) => {
           console.error( err );
-          this.$toast.open( {
+          Toast.open( {
             message: 'Oops! Could not create your topic at this moment. ' + err.error.message,
             type: 'is-danger',
           } );

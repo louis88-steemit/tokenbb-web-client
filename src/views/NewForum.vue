@@ -43,6 +43,8 @@ import Input from 'buefy/src/components/input/Input';
 
 import { createForum } from '../services/api.service.js';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 export default {
   name: 'NewForum',
   components: {
@@ -58,7 +60,7 @@ export default {
   methods: {
     onSubmit() {
       if ( this.name.length < 1 ) {
-        return this.$toast.open( {
+        return Toast.open( {
           type: 'is-danger',
           message: 'Please write a forum name',
         } );
@@ -72,7 +74,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.error( err );
-          this.$toast.open( {
+          Toast.open( {
             message: 'Oops! Could not create your forum at this moment. ' + err,
             type: 'is-danger',
           } );
