@@ -1,17 +1,21 @@
 <template>
   <div v-if="isAdmin()">
     <b-select
-      placeholder="Moderator actions"
       v-model="selected"
-      @input="onSelect"
+      placeholder="Moderator actions"
       size="is-small"
-      :loading="loading">
-      <option v-for="(option, index) in options" :value="option" :key="index">
+      :loading="loading"
+      @input="onSelect"
+    >
+      <option
+        v-for="(option, index) in options"
+        :key="index"
+        :value="option"
+      >
         {{ option.name }}
       </option>
     </b-select>
   </div>
-
 </template>
 
 <script>
@@ -23,6 +27,44 @@ export default {
   props: {
     post: Object,
     isReply: Boolean,
+  },
+  data() {
+    return {
+      loading: false,
+      options: [
+        {
+          name: '-- Moderator actions --',
+          callback: noop,
+        },
+        {
+          name: 'Hide this post',
+          callback: this.hideTopic,
+        },
+      ],
+      selected: null,
+      isComponentModalActive: false,
+      actions: {
+        'pin': {
+          name: 'Pin this topic',
+          callback: this.pinTopic,
+        },
+        'unpin': {
+          name: 'Unpin this topic',
+          callback: this.unpinTopic,
+        },
+      },
+    };
+  },
+  mounted() {
+    this.selected = this.options[0];
+
+    if ( !this.isReply ) {
+      const action = this.post.pinned
+        ? this.actions.unpin
+        : this.actions.pin;
+
+      this.options.push( action );
+    }
   },
   methods: {
     isAdmin() {
@@ -120,44 +162,6 @@ export default {
         },
       } );
     },
-  },
-  data() {
-    return {
-      loading: false,
-      options: [
-        {
-          name: '-- Moderator actions --',
-          callback: noop,
-        },
-        {
-          name: 'Hide this post',
-          callback: this.hideTopic,
-        },
-      ],
-      selected: null,
-      isComponentModalActive: false,
-      actions: {
-        'pin': {
-          name: 'Pin this topic',
-          callback: this.pinTopic,
-        },
-        'unpin': {
-          name: 'Unpin this topic',
-          callback: this.unpinTopic,
-        },
-      },
-    };
-  },
-  mounted() {
-    this.selected = this.options[0];
-
-    if ( !this.isReply ) {
-      const action = this.post.pinned
-        ? this.actions.unpin
-        : this.actions.pin;
-
-      this.options.push( action );
-    }
   },
 };
 </script>

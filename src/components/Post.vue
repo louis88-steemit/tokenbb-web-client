@@ -4,15 +4,24 @@
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
-            <p class="username">{{ data.author.user | usernameDisplay(data.author.owner_id) }}</p>
+            <Avatar
+              :author="data.author.user"
+              :owner="data.author.owner_id"
+              size="large"
+            />
+            <p class="username">
+              {{ data.author.user | usernameDisplay(data.author.owner_id) }}
+            </p>
           </div>
         </div>
 
         <div class="level-right">
           <p class="level-item">
             <small>
-              <b-icon icon="clock" size="is-small"></b-icon>{{ data.createdAt | fromNow }}
+              <b-icon
+                icon="clock"
+                size="is-small"
+              />{{ data.createdAt | fromNow }}
             </small>
           </p>
         </div>
@@ -21,48 +30,58 @@
       <article
         v-if="!editing"
         class="content has-text-left"
-        v-html="$renderMD(data.body)">
-      </article>
+        v-html="$renderMD(data.body)"
+      />
 
       <form v-if="editing">
         <b-field>
-          <b-input type="textarea"
+          <b-input
+            v-model="text"
+            type="textarea"
             :loading="fetching"
             :disabled="fetching"
-            v-model="text"
-            placeholder="Type here.">
-          </b-input>
+            placeholder="Type here."
+          />
         </b-field>
 
         <b-field>
           <p class="control">
-            <a class="button is-primary"
+            <a
+              class="button is-primary"
               :class="{ 'is-loading': this.fetching }"
-              @click="onSave">
+              @click="onSave"
+            >
               Save
             </a>
           </p>
 
           <p class="control">
-            <a class="button"
+            <a
+              class="button"
               :disabled="this.fetching"
-              @click="onCancel">
+              @click="onCancel"
+            >
               Cancel
             </a>
           </p>
         </b-field>
       </form>
       <div class="level is-mobile">
-        <div class="level-left"></div>
+        <div class="level-left" />
         <div class="level-right">
           <div class="level-item">
-            <ShowIfLoggedIn :hidden="true" class="quote-this">
-            <a @click="handleQuoteClick">Quote this</a>
+            <ShowIfLoggedIn
+              :hidden="true"
+              class="quote-this"
+            >
+              <a @click="handleQuoteClick">Quote this</a>
             </ShowIfLoggedIn>
           </div>
           <div class="mod-display">
-            <ModActions :post="data" :isReply="isReply">
-            </ModActions>
+            <ModActions
+              :post="data"
+              :is-reply="isReply"
+            />
           </div>
           <div class="level-item">
             <p class="buttons">
@@ -80,13 +99,12 @@
               <Upvote
                 :votes="[]"
                 :author="data.steem.author"
-                :permlink="data.steem.permlink">
-              </Upvote>
+                :permlink="data.steem.permlink"
+              />
             </p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -108,6 +126,13 @@ export default {
   props: {
     data: Object,
     isReply: Boolean,
+  },
+  data() {
+    return {
+      fetching: false,
+      editing: false,
+      text: '',
+    };
   },
   computed: {
     editable() {
@@ -158,13 +183,6 @@ export default {
     handleQuoteClick() {
       this.$root.$emit( 'quote-click', this.data );
     },
-  },
-  data() {
-    return {
-      fetching: false,
-      editing: false,
-      text: '',
-    };
   },
 };
 </script>

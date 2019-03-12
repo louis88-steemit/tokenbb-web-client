@@ -1,19 +1,24 @@
 <template>
-  <form @submit.prevent="$emit('submit')" class="new-reply">
+  <form
+    class="new-reply"
+    @submit.prevent="$emit('submit')"
+  >
     <b-field>
       <TextEditor
         ref="editor"
         :fetching="fetching"
-        @input="handleTextChange">
-      </TextEditor>
+        @input="handleTextChange"
+      />
     </b-field>
 
     <b-field>
       <div class="control">
-        <button role="submit"
+        <button
+          role="submit"
           class="is-topic"
           :disabled="text.length == 0"
-          v-bind:class="{ 'is-loading': fetching }">
+          :class="{ 'is-loading': fetching }"
+        >
           Reply
         </button>
       </div>
@@ -34,11 +39,6 @@ export default {
     quote: String,
     quoteAuthor: String,
   },
-  methods: {
-    handleTextChange( value ) {
-      this.$emit( 'input', value );
-    },
-  },
   data() {
     return {
       content: '',
@@ -49,6 +49,11 @@ export default {
         [ 'code-block' ],
       ],
     };
+  },
+  methods: {
+    handleTextChange( value ) {
+      this.$emit( 'input', value );
+    },
   },
 };
 </script>
