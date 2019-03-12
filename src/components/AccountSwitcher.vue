@@ -51,14 +51,20 @@
 
 <script>
 import { mapState } from 'vuex';
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
 
-import Avatar from '@/components/Avatar.vue';
+import Avatar from './Avatar.vue';
 
 const ALL = { account: process.env.VUE_APP_ANON_USER, 'authority': { 'posting': true } };
 
 export default {
   components: {
     Avatar,
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
   },
   data() {
     return {

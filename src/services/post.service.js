@@ -1,4 +1,9 @@
-import { getValidTopic, listValidTopics, publishReply, publishTopic } from './api.service.js';
+import {
+  getValidTopic,
+  listValidTopics,
+  publishReply,
+  publishTopic,
+} from './api.service.js';
 
 
 export async function listTopics( category ) {

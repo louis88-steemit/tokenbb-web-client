@@ -14,7 +14,12 @@
 <script>
 import { mapState } from 'vuex';
 
+import Icon from 'buefy/src/components/icon/Icon';
+
 export default {
+  components: {
+    BIcon: Icon,
+  },
   props: {
     categoryId: String,
   },

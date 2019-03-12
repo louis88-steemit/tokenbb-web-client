@@ -1,8 +1,10 @@
-import steem from '@/services/steem.service';
 import jwtdecode from 'jwt-decode';
+
+import Toast from 'buefy/src/components/toast/Toast';
+
+import steem from '../services/steem.service';
 import { listRoles } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
-import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,

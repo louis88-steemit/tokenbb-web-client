@@ -1,6 +1,7 @@
+import Toast from 'buefy/src/components/toast/Toast';
+
 import { createTopic, listTopics } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
-import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,

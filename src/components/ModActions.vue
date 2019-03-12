@@ -19,11 +19,17 @@
 </template>
 
 <script>
+
+import Select from 'buefy/src/components/select/Select';
+
 import { hide, pin, unpin } from '../services/api.service.js';
 
 function noop() {}
 
 export default {
+  components: {
+    BSelect: Select,
+  },
   props: {
     post: Object,
     isReply: Boolean,

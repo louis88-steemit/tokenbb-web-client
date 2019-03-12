@@ -7,7 +7,6 @@ import { registerSW } from './registerServiceWorker';
 import router from './router';
 import store from './store/index.js';
 
-import Buefy from 'buefy';
 import steemEditor from 'steem-editor';
 import 'steem-editor/dist/css/index.css';
 import moment from 'moment';
@@ -43,8 +42,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 
 Vue.config.productionTip = false;
-
-Vue.use( Buefy );
 
 Vue.use( VueAnalytics, {
   id: process.env.VUE_APP_GA_ID,

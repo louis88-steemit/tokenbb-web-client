@@ -129,16 +129,19 @@
 <script>
 import { mapState } from 'vuex';
 
-import AccountSwitcher from '@/components/AccountSwitcher.vue';
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
 
-// import Avatar from '@/components/Avatar.vue';
+import AccountSwitcher from './AccountSwitcher.vue';
 
 export default {
   name: 'Navbar',
   components: {
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
     AccountSwitcher,
-
-    // Avatar,
   },
   data() {
     return {

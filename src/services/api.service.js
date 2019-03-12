@@ -1,5 +1,6 @@
-import steem from '@/services/steem.service';
 import requestAsync from 'request-promise';
+
+import steem from './steem.service';
 
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
