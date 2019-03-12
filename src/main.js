@@ -9,7 +9,8 @@ import store from './store/index.js';
 
 import steemEditor from 'steem-editor';
 import 'steem-editor/dist/css/index.css';
-import moment from 'moment';
+import moment from 'moment/moment';
+import 'moment/locale/en-au';
 import VueAnalytics from 'vue-analytics';
 
 registerSW();
@@ -72,9 +73,12 @@ Vue.filter( 'formatDate', ( value ) => {
   }
 } );
 
+/*
 const locale = window.navigator.userLanguage || window.navigator.language || 'en';
 console.log( `Setting TimeZone Language to ${locale}` );
-moment.locale( locale );
+moment.lang('en-AU')
+*/
+moment.locale( 'en-AU' );
 
 Vue.filter( 'fromNow', ( value ) => {
   if ( value ) {

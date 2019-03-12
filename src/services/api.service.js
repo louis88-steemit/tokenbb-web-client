@@ -1,6 +1,17 @@
-import requestAsync from 'request-promise';
+import * as request from 'request';
 
 import steem from './steem.service';
+
+function requestAsync( opts ) {
+  return new Promise( function ( resolve, reject ) {
+    request( opts.url, opts, function ( error, response, body ) {
+      if ( error !== undefined ) {
+        return reject( error );
+      }
+      return resolve( body );
+    } );
+  } );
+}
 
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
