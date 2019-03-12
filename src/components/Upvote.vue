@@ -66,6 +66,7 @@
 
 import Dropdown from 'buefy/src/components/dropdown/Dropdown';
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
 
 import { Client } from 'dsteem';
 
@@ -80,6 +81,7 @@ export default {
   components: {
     BDropdown: Dropdown,
     BDropdownItem: DropdownItem,
+    BIcon: Icon,
     ShowIfLoggedIn,
   },
   props: {
