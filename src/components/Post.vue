@@ -110,14 +110,23 @@
 </template>
 
 <script>
-import Avatar from '@/components/Avatar.vue';
-import Upvote from '@/components/Upvote.vue';
-import ModActions from '@/components/ModActions.vue';
+
+
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
+import Icon from 'buefy/src/components/icon/Icon';
+
+import Avatar from '../components/Avatar.vue';
+import Upvote from '../components/Upvote.vue';
+import ModActions from '../components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
+import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
 
 export default {
   components: {
+    BField: Field,
+    BInput: Input,
+    BIcon: Icon,
     Avatar,
     Upvote,
     ModActions,

@@ -63,10 +63,15 @@
 </template>
 
 <script>
-import { vote } from '../services/api.service.js';
+
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
+
 import { Client } from 'dsteem';
 
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
+import { vote } from '../services/api.service.js';
+import ShowIfLoggedIn from './ShowIfLoggedIn.vue';
 
 import Timeout from 'await-timeout';
 
@@ -74,6 +79,9 @@ const client = new Client( 'https://api.steemit.com' );
 
 export default {
   components: {
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
     ShowIfLoggedIn,
   },
   props: {

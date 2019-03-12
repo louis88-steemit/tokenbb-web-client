@@ -110,8 +110,19 @@
 <script>
 import { mapState } from 'vuex';
 
+import Table from 'buefy/src/components/table/Table';
+import TableColumn from 'buefy/src/components/table/TableColumn';
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
+
 export default {
   name: 'Settings',
+  components: {
+    BTable: Table,
+    BTableColumn: TableColumn,
+    BField: Field,
+    BInput: Input,
+  },
   data() {
     return {
       name: '',

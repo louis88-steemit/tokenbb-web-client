@@ -27,15 +27,11 @@
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "request": "^2.88.0",
-    "request-promise": "^4.2.4",
     "steem-editor": "^1.0.9",
     "vue": "^2.6.8",
     "vue-analytics": "^5.16.4",
     "vue-router": "^3.0.2",
-    "vue-sanitize": "^0.2.0",
-    "vue2-editor": "^2.6.6",
-    "vuex": "^3.1.0",
-    "xhr": "^2.5.0"
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",

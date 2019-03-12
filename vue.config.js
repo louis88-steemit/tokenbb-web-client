@@ -1,9 +1,12 @@
+const webpack = require( 'webpack' );
 const BrotliPlugin = require( 'brotli-webpack-plugin' );
 const CompressionPlugin = require( 'compression-webpack-plugin' );
 const zopfli = require( '@gfx/zopfli' );
 const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin;
 
-let webpackPlugins = [];
+let webpackPlugins = [
+  new webpack.IgnorePlugin( /^\.\/locale$/, /moment$/ ),
+];
 const isProd = process.env.NODE_ENV === 'production';
 const onlyBR = process.env.BR;
 console.info( `Server is prod: ${isProd} onlyBR: ${onlyBR}` );
@@ -67,7 +70,7 @@ module.exports = {
         minChunks: 1,
         maxAsyncRequests: 5,
         maxInitialRequests: 3,
-        automaticNameDelimiter: '~',
+        automaticNameDelimiter: '_',
         name: true,
         cacheGroups: {
           vendors: {
@@ -75,7 +78,7 @@ module.exports = {
             priority: -10,
           },
           default: {
-            minChunks: 2,
+            minChunks: 1,
             priority: -20,
             reuseExistingChunk: true,
           },

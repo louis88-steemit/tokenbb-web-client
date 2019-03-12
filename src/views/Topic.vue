@@ -64,16 +64,19 @@
 <script>
 import { mapState } from 'vuex';
 
-import Post from '@/components/Post.vue';
-import ReplyForm from '@/components/ReplyForm.vue';
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
-import CategoryTag from '@/components/CategoryTag.vue';
+import Loading from 'buefy/src/components/loading/Loading';
+
+import Post from '../components/Post.vue';
+import ReplyForm from '../components/ReplyForm.vue';
+import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
+import CategoryTag from '../components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
 export default {
   name: 'Topic',
   components: {
+    BLoading: Loading,
     Post,
     ReplyForm,
     ShowIfLoggedIn,

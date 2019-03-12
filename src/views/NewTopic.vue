@@ -66,13 +66,20 @@
 </template>
 
 <script>
-import TextEditor from '@/components/TextEditor.vue';
-import CategoryDropdown from '@/components/CategoryDropdown.vue';
+
 import { mapState } from 'vuex';
+
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
+
+import TextEditor from '../components/TextEditor.vue';
+import CategoryDropdown from '../components/CategoryDropdown.vue';
 
 export default {
   name: 'NewTopic',
   components: {
+    BField: Field,
+    BInput: Input,
     TextEditor,
     CategoryDropdown,
   },

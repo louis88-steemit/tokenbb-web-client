@@ -18,6 +18,9 @@
 </template>
 
 <script>
+
+import Tooltip from 'buefy/src/components/tooltip/Tooltip';
+
 const SIZES = {
   small: 'is-16x16',
   medium: 'is-32x32',
@@ -25,6 +28,9 @@ const SIZES = {
 };
 
 export default {
+  components: {
+    BTooltip: Tooltip,
+  },
   props: {
     author: String,
     owner: String,

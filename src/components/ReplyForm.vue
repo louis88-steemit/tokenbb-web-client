@@ -27,10 +27,14 @@
 </template>
 
 <script>
-import TextEditor from '@/components/TextEditor.vue';
+
+import Field from 'buefy/src/components/field/Field';
+
+import TextEditor from './TextEditor.vue';
 
 export default {
   components: {
+    BField: Field,
     TextEditor,
   },
   props: {

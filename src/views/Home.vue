@@ -119,16 +119,23 @@
 </template>
 
 <script>
-import CategoryTag from '@/components/CategoryTag.vue';
+
+import Icon from 'buefy/src/components/icon/Icon';
+import Table from 'buefy/src/components/table/Table';
+
+
 import { mapState } from 'vuex';
 
-import CategoryDropdown from '@/components/CategoryDropdown.vue';
-import Upvote from '@/components/Upvote.vue';
-import Avatar from '@/components/Avatar.vue';
+import CategoryTag from '../components/CategoryTag.vue';
+import CategoryDropdown from '../components/CategoryDropdown.vue';
+import Upvote from '../components/Upvote.vue';
+import Avatar from '../components/Avatar.vue';
 
 export default {
   name: 'Home',
   components: {
+    BIcon: Icon,
+    BTable: Table,
     CategoryDropdown,
     Upvote,
     Avatar,

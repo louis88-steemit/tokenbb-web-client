@@ -1,9 +1,11 @@
-import auth from '@/store/auth.store';
-import categories from '@/store/categories.store';
-import replies from '@/store/replies.store';
-import topics from '@/store/topics.store';
 import Vue from 'vue';
 import Vuex from 'vuex';
+
+import auth from './auth.store';
+import categories from './categories.store';
+import replies from './replies.store';
+import topics from './topics.store';
+
 
 Vue.use( Vuex );
 

@@ -37,11 +37,17 @@
 </template>
 
 <script>
+
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
+
 import { createForum } from '../services/api.service.js';
 
 export default {
   name: 'NewForum',
   components: {
+    BField: Field,
+    BInput: Input,
   },
   data() {
     return {

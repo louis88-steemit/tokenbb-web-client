@@ -1,18 +1,17 @@
-import Buefy from 'buefy';
-import moment from 'moment';
 
-import steemEditor from 'steem-editor';
-import 'steem-editor/dist/css/index.css';
 import Vue from 'vue';
-
-import VueAnalytics from 'vue-analytics';
 
 import App from './App.vue';
 
-import sanitize from './plugins/sanitize.js';
 import { registerSW } from './registerServiceWorker';
 import router from './router';
 import store from './store/index.js';
+
+import steemEditor from 'steem-editor';
+import 'steem-editor/dist/css/index.css';
+import moment from 'moment/moment';
+import 'moment/locale/en-au';
+import VueAnalytics from 'vue-analytics';
 
 registerSW();
 
@@ -45,9 +44,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 Vue.config.productionTip = false;
 
-Vue.use( Buefy );
-Vue.use( sanitize );
-
 Vue.use( VueAnalytics, {
   id: process.env.VUE_APP_GA_ID,
   router,
@@ -69,6 +65,7 @@ function setGAUserID( userID ) {
 
 Vue.use( steemEditor );
 
+
 Vue.filter( 'formatDate', ( value ) => {
   if ( value ) {
     return moment.utc( String( value ) )
@@ -76,9 +73,12 @@ Vue.filter( 'formatDate', ( value ) => {
   }
 } );
 
+/*
 const locale = window.navigator.userLanguage || window.navigator.language || 'en';
 console.log( `Setting TimeZone Language to ${locale}` );
-moment.locale( locale );
+moment.lang('en-AU')
+*/
+moment.locale( 'en-AU' );
 
 Vue.filter( 'fromNow', ( value ) => {
   if ( value ) {
@@ -87,6 +87,7 @@ Vue.filter( 'fromNow', ( value ) => {
       .calendar();
   }
 } );
+
 
 Vue.filter( 'usernameDisplay', ( username, owner ) => {
   if ( username === process.env.VUE_APP_ANON_USER ) {

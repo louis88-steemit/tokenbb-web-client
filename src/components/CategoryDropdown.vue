@@ -26,9 +26,18 @@
 <script>
 import { mapState } from 'vuex';
 
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
+
 const ALL = { name: 'All Categories' };
 
 export default {
+  components: {
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
+  },
   props: [
     'selectedId',
     'labelForAll',
