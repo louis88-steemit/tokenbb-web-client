@@ -12,6 +12,12 @@
             <p class="username">
               {{ data.author.user | usernameDisplay(data.author.owner_id) }}
             </p>
+            <div class="mod-display">
+              <ModActions
+                :post="data"
+                :is-reply="isReply"
+              />
+            </div>
           </div>
         </div>
 
@@ -66,26 +72,14 @@
           </p>
         </b-field>
       </form>
-      <div class="level is-mobile">
-        <div class="level-left" />
-        <div class="level-right">
-          <div class="level-item">
-            <ShowIfLoggedIn
-              :hidden="true"
-              class="quote-this"
-            >
-              <a @click="handleQuoteClick">Quote this</a>
-            </ShowIfLoggedIn>
-          </div>
-          <div class="mod-display">
-            <ModActions
-              :post="data"
-              :is-reply="isReply"
-            />
-          </div>
-          <div class="level-item">
-            <p class="buttons">
-              <!--
+      <ShowIfLoggedIn
+        :hidden="true"
+        class="quote-this"
+      >
+        <a @click="handleQuoteClick">Quote this</a>
+      </ShowIfLoggedIn>
+      <div class="upvote-module">
+        <!--
               <a v-if="editable && !editing"
                 @click="onStartEditing"
                 class="button is-small has-icon">
@@ -96,14 +90,11 @@
                 <span>Edit</span>
               </a>
               -->
-              <Upvote
-                :votes="[]"
-                :author="data.steem.author"
-                :permlink="data.steem.permlink"
-              />
-            </p>
-          </div>
-        </div>
+        <Upvote
+          :votes="[]"
+          :author="data.steem.author"
+          :permlink="data.steem.permlink"
+        />
       </div>
     </div>
   </div>

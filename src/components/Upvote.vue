@@ -1,47 +1,41 @@
 <template>
-  <ShowIfLoggedIn
-    :hidden="true"
-    class="upvote"
-  >
-    <div class="field has-addons">
-      <div class="value-control">
-        <div class="control control-value">
-          <a>$ {{ value }}</a>
-        </div>
-        <div class="control control-length">
-          <a>{{ votes.length }} Votes</a>
-        </div>
-      </div>
-      <b-dropdown
-        position="is-top-left"
-        hoverable
-        :disabled="voted"
-      >
-        <p
-          slot="trigger"
-          class="upvote-button"
+  <ShowIfLoggedIn :hidden="true">
+    <div class="columns upvote-module">
+      <span class="column upvote-stats">
+        <span>$ {{ value }}</span>
+      </span>
+      <span class="column upvote-stats">
+        <span>{{ votes.length }} Votes</span>
+      </span>
+      <span class="column upvote-button">
+        <b-dropdown
+          position="is-top-left"
+          hoverable
+          :disabled="voted"
         >
-          <a
-            class="is-small"
-            :class="{ 'is-loading': this.fetching }"
-            :disabled="voted"
-            @click="handleClick"
+          <span
+            slot="trigger"
+            class="upvote-slider"
           >
-            <!--<span>Upvote</span>-->
-            <b-icon
-              icon="arrow-up-drop-circle-outline"
-              size="is-medium"
-            />
-          </a>
-        </p>
-
-        <b-dropdown-item custom>
-          <div class="container popover">
-            <div class="columns is-mobile">
-              <div class="column is-one-quarter vertical">
-                <span class="percent-label">{{ percent }}%</span>
+            <a
+              class="is-small"
+              :class="{ 'is-loading': this.fetching }"
+              :disabled="voted"
+              @click="handleClick"
+            >
+              <!--<span>Upvote</span>-->
+              <b-icon
+                icon="arrow-up-drop-circle-outline"
+                size="is-medium"
+              />
+            </a>
+          </span>
+          <b-dropdown-item custom>
+            <div class="columns popup-upvote">
+              <div class="column is-1 percent-label">
+                <span>{{ percent }}%</span>
               </div>
-              <div class="column is-three-quarter is-mobile">
+              <div class="column is-4">
                 <input
                   ref="slider"
                   orient="horizontal"
@@ -54,10 +48,24 @@
                   @input="handleChange"
                 >
               </div>
+              <div class="column is-1">
+                <a
+                  class="is-small upvote-dropdownbutton"
+                  :class="{ 'is-loading': this.fetching }"
+                  :disabled="voted"
+                  @click="handleClick"
+                >
+                  <!--<span>Upvote</span>-->
+                  <b-icon
+                    icon="arrow-up-drop-circle-outline"
+                    size="is-medium"
+                  />
+                </a>
+              </div>
             </div>
-          </div>
-        </b-dropdown-item>
-      </b-dropdown>
+          </b-dropdown-item>
+        </b-dropdown>
+      </span>
     </div>
   </ShowIfLoggedIn>
 </template>
