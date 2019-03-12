@@ -7,11 +7,11 @@ import { registerSW } from './registerServiceWorker';
 import router from './router';
 import store from './store/index.js';
 
-const Buefy = import( /* webpackChunkName: "deps-buefy", webpackPreload: true */ 'buefy' );
-const steemEditor = import( /* webpackChunkName: "deps-editor", webpackPreload: true */ 'steem-editor' );
-import( /* webpackChunkName: "deps-editor", webpackPreload: true */ 'steem-editor/dist/css/index.css' );
-const moment = import( /* webpackChunkName: "deps-moment", webpackPreload: true */ 'moment' );
-const VueAnalytics = import( /* webpackChunkName: "deps-analytics", webpackPreload: true */ 'vue-analytics' );
+import Buefy from 'buefy';
+import steemEditor from 'steem-editor';
+import 'steem-editor/dist/css/index.css';
+import moment from 'moment';
+import VueAnalytics from 'vue-analytics';
 
 registerSW();
 
@@ -43,8 +43,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 
 Vue.config.productionTip = false;
-const BDropdown = import( 'buefy/dist/components/dropdown' ).default;
-Vue.component( 'b-dropdown', BDropdown );
 
 Vue.use( Buefy );
 
@@ -70,25 +68,23 @@ function setGAUserID( userID ) {
 Vue.use( steemEditor );
 
 
-moment.then( function ( moment ) {
-  Vue.filter( 'formatDate', ( value ) => {
-    if ( value ) {
-      return moment.utc( String( value ) )
-        .format( 'MMM Do YYYY' );
-    }
-  } );
+Vue.filter( 'formatDate', ( value ) => {
+  if ( value ) {
+    return moment.utc( String( value ) )
+      .format( 'MMM Do YYYY' );
+  }
+} );
 
-  const locale = window.navigator.userLanguage || window.navigator.language || 'en';
-  console.log( `Setting TimeZone Language to ${locale}` );
-  moment.locale( locale );
+const locale = window.navigator.userLanguage || window.navigator.language || 'en';
+console.log( `Setting TimeZone Language to ${locale}` );
+moment.locale( locale );
 
-  Vue.filter( 'fromNow', ( value ) => {
-    if ( value ) {
-      return moment.utc( String( value ) )
-        .add( moment().utcOffset(), 'minutes' )
-        .calendar();
-    }
-  } );
+Vue.filter( 'fromNow', ( value ) => {
+  if ( value ) {
+    return moment.utc( String( value ) )
+      .add( moment().utcOffset(), 'minutes' )
+      .calendar();
+  }
 } );
 
 

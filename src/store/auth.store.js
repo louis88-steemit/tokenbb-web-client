@@ -57,8 +57,20 @@ export default {
       window.BTSSO.modal();
     },
     setUser( state, user ) {
+      if ( !user ) {
+        state.user = '';
+        state.username = '';
+        state.accounts = [];
+        return;
+      }
       state.user = user;
-      state.id = jwtdecode( user ).user_id;
+      try {
+        state.id = jwtdecode( user ).user_id;
+      } catch ( decodeError ) {
+        console.error( 'Could not decode auth token, logging out!', decodeError );
+        window.BTSSO.logout();
+        return;
+      }
       if ( !user ) {
         state.accounts = [];
         state.current = 'anon';
