@@ -261,7 +261,7 @@
   font-size: 14px;
   text-align: right;
   padding-top: 25px;
-  width:60px;
+  width:75px;
 }
 .upvote-button {
   padding-top: 12px;
@@ -592,6 +592,10 @@ tr {
   box-shadow: 5px 5px 0px 0px $primary;
   background-color: $background-second;
   border: 1px solid $background;
+}
+/* Steem Editor */
+.v-note-wrapper .v-note-panel .v-note-show .v-show-content {
+  background-color: $background-second;
 }
 /* New Topic Page */
 .newtopic-control {
