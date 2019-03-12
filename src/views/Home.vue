@@ -103,13 +103,11 @@
               </span>
             </div>
             <div class="content-box-right">
-              <div class="upvote-button">
-                <Upvote
-                  :votes="[]"
-                  :author="props.row.steem.author"
-                  :permlink="props.row.steem.permlink"
-                />
-              </div>
+              <Upvote
+                :votes="[]"
+                :author="props.row.steem.author"
+                :permlink="props.row.steem.permlink"
+              />
             </div>
           </div>
         </template>
