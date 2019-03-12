@@ -24,7 +24,10 @@ jobs:
       - run: npm run ci_build
       - run: mkdir /tmp/artifacts
       - run: ls -al dist
-      - run: mv -t /tmp/artifacts dist/app.js.br dist/app.css.br dist/chunk-vendors.js.br dist/chunk-vendors.css.br
+      - run: rm dist/precache-manifest*
+      - run: cat dist/*.js.br >> all.js.br
+      - run: cat dist/*.css.br >> all.css.br
+      - run: mv -t /tmp/artifacts dist/*.js.br dist/*.css.br
       - store_artifacts:
           path: /tmp/artifacts
 
