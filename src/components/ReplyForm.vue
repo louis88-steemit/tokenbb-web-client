@@ -15,7 +15,6 @@
       <div class="control">
         <button
           role="submit"
-          class="is-topic"
           :disabled="text.length == 0"
           :class="{ 'is-loading': fetching }"
         >

@@ -2,7 +2,7 @@
   <b-dropdown @change="onChange">
     <button
       slot="trigger"
-      class="button"
+      class="button is-small"
       type="button"
     >
       <span v-html="selected ? selected.name : allCategories.name" />

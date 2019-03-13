@@ -1,7 +1,7 @@
 <template>
-  <div class="post columns is-mobile box-styling">
-    <div class="column is-12 post-body">
-      <header class="level is-mobile">
+  <div class="container post">
+    <div class="box is-mobile">
+      <div class="level is-tablet">
         <div class="level-left">
           <div class="level-item">
             <Avatar
@@ -9,36 +9,39 @@
               :owner="data.author.owner_id"
               size="large"
             />
+          </div>
+          <div class="level-item">
             <p class="username">
               {{ data.author.user | usernameDisplay(data.author.owner_id) }}
             </p>
-            <div class="mod-display">
-              <ModActions
-                :post="data"
-                :is-reply="isReply"
-              />
-            </div>
+          </div>
+          <div class="level-item is-tablet">
+            <ModActions
+              :post="data"
+              :is-reply="isReply"
+            />
           </div>
         </div>
-
         <div class="level-right">
-          <p class="level-item">
-            <small>
-              <b-icon
-                icon="clock"
-                size="is-small"
-              />{{ data.createdAt | fromNow }}
-            </small>
-          </p>
+          <div class="level-item">
+            <p>
+              <small>
+                <b-icon
+                  icon="clock"
+                  size="is-small"
+                />{{ data.createdAt | fromNow }}
+              </small>
+            </p>
+          </div>
         </div>
-      </header>
-
-      <article
-        v-if="!editing"
-        class="content has-text-left"
-        v-html="$renderMD(data.body)"
-      />
-
+      </div>
+      <div class="media-content">
+        <article
+          v-if="!editing"
+          class="content"
+          v-html="$renderMD(data.body)"
+        />
+      </div>
       <form v-if="editing">
         <b-field>
           <b-input
@@ -51,17 +54,14 @@
         </b-field>
 
         <b-field>
-          <p class="control">
-            <a
-              class="button is-primary"
-              :class="{ 'is-loading': this.fetching }"
-              @click="onSave"
-            >
-              Save
-            </a>
-          </p>
+          <a
+            :class="{ 'is-loading': this.fetching }"
+            @click="onSave"
+          >
+            Save
+          </a>
 
-          <p class="control">
+          <p>
             <a
               class="button"
               :disabled="this.fetching"
@@ -78,8 +78,8 @@
       >
         <a @click="handleQuoteClick">Quote this</a>
       </ShowIfLoggedIn>
-      <div class="upvote-module">
-        <!--
+
+      <!--
               <a v-if="editable && !editing"
                 @click="onStartEditing"
                 class="button is-small has-icon">
@@ -90,11 +90,17 @@
                 <span>Edit</span>
               </a>
               -->
-        <Upvote
-          :votes="[]"
-          :author="data.steem.author"
-          :permlink="data.steem.permlink"
-        />
+      <div class="level">
+        <div class="level-left" />
+        <div class="level-right">
+          <div class="level-item">
+            <Upvote
+              :votes="[]"
+              :author="data.steem.author"
+              :permlink="data.steem.permlink"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>

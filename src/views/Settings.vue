@@ -1,8 +1,6 @@
 <template>
-  <div class="container fill">
-    <h2 class="title is-4">
-      Settings
-    </h2>
+  <div class="container">
+    <p>Settings</p>
 
     <h3 class="title is-5">
       Categories
@@ -62,48 +60,43 @@
       Add a category
     </h3>
 
-    <div class="columns">
-      <div class="column">
-        <form @submit.prevent="add">
-          <b-field label="Category Name">
-            <b-input
-              v-model="name"
-              :maxlength="32"
-              :has-counter="false"
-              :disabled="fetching"
-            />
-          </b-field>
+    <form @submit.prevent="add">
+      <b-field label="Category Name">
+        <b-input
+          v-model="name"
+          :maxlength="32"
+          :has-counter="false"
+          :disabled="fetching"
+        />
+      </b-field>
 
-          <b-field label="Category Title">
-            <b-input
-              v-model="title"
-              :maxlength="32"
-              :has-counter="false"
-              :disabled="fetching"
-            />
-          </b-field>
+      <b-field label="Category Title">
+        <b-input
+          v-model="title"
+          :maxlength="32"
+          :has-counter="false"
+          :disabled="fetching"
+        />
+      </b-field>
 
-          <b-field label="Category Description">
-            <b-input
-              v-model="description"
-              :maxlength="320"
-              :has-counter="false"
-              :disabled="fetching"
-            />
-          </b-field>
+      <b-field label="Category Description">
+        <b-input
+          v-model="description"
+          :maxlength="320"
+          :has-counter="false"
+          :disabled="fetching"
+        />
+      </b-field>
 
-          <button
-            role="submit"
-            class="button"
-            :class="{ 'is-loading': fetching }"
-            :disabled="fetching"
-          >
-            Add Category
-          </button>
-        </form>
-      </div>
-      <div class="column" />
-    </div>
+      <button
+        role="submit"
+        class="button is-small"
+        :class="{ 'is-loading': fetching }"
+        :disabled="fetching"
+      >
+        Add Category
+      </button>
+    </form>
   </div>
 </template>
 
