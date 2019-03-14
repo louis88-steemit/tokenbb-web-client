@@ -50,15 +50,16 @@
 
         <b-field>
           <a
+            class="button is-small is-topic save"
             :class="{ 'is-loading': this.fetching }"
             @click="onSave"
           >
             Save
           </a>
-
+          <span />
           <p>
             <a
-              class="button"
+              class="button is-small"
               :disabled="this.fetching"
               @click="onCancel"
             >

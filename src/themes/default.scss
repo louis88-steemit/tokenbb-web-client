@@ -87,6 +87,7 @@ a:hover {
   .button.is-small.is-topic:hover {
     background-color: $background;
     color: $primary;
+    border-color: $tag;
   }
 // Upvote Button Color
   .mdi-36px.mdi-set, .mdi-36px.mdi:before {
@@ -120,9 +121,6 @@ a:hover {
   .percent-label {
     color: $primary;
   }
-}
-input:focus {
-  color: $primary;
 }
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";

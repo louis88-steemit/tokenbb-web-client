@@ -42,14 +42,14 @@
               </router-link>
             </p>-->
           <div>
-            <p>
+            <a>
               <router-link
                 v-if="auth.roles.admin"
                 to="/settings"
               >
                 Settings
               </router-link>
-            </p>
+            </a>
           </div>
         </div>
       </div>
