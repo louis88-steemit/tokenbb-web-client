@@ -61,6 +61,13 @@
                     </span>
                   </span>
                   <span class="level-item">
+                    <Upvote
+                      :votes="[]"
+                      :author="props.row.steem.author"
+                      :permlink="props.row.steem.permlink"
+                    />
+                  </span>
+                  <span class="level-item">
                     <span
                       class=""
                       title="View Count"
@@ -81,13 +88,6 @@
                         size="is-small"
                       /> {{ props.row.numberOfReplies }}
                     </span>
-                  </span>
-                  <span class="level-item">
-                    <Upvote
-                      :votes="[]"
-                      :author="props.row.steem.author"
-                      :permlink="props.row.steem.permlink"
-                    />
                   </span>
                   <span class="level-item">
                     <DateTimeTag
