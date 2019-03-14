@@ -8,6 +8,8 @@
 
 <script>
 
+import { quoteText } from '../utils/content';
+
 export default {
   props: {
     fetching: Boolean,
@@ -29,11 +31,6 @@ export default {
       },
     };
   },
-  methods: {
-    addQuote( quote ) {
-      this.content += `\n> @${ quote.author.user }:\n${ quote.body.replace( /^/gm, '> ' ) }\n---\n`;
-    }
-  },
   watch: {
     content() {
       this.$emit( 'input', this.content );
@@ -41,6 +38,11 @@ export default {
   },
   created() {
     this.$root.$on( 'quote-click', this.addQuote );
+  },
+  methods: {
+    addQuote( quote ) {
+      this.content += quoteText( quote );
+    },
   },
 };
 </script>

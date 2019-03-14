@@ -10,7 +10,7 @@
     >
       <Avatar
         :author="current"
-        owner="id"
+        :owner="id"
         size="small"
       />&nbsp;
       {{ current | usernameDisplay(id) }} <b-icon icon="menu-down" />
@@ -19,7 +19,7 @@
     <b-dropdown-item :value="all">
       <Avatar
         :author="all.account"
-        owner="id"
+        :owner="id"
         size="small"
       />&nbsp;
       {{ all.account | usernameDisplay(id) }}
