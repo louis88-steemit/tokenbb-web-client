@@ -58,13 +58,11 @@
                   </b-tag>
                 </b-tag-list>
                 <CategoryTag :category-id="props.row.categoryId" />
-                <b-tag-list attached>
-                  <Upvote
-                    :votes="[]"
-                    :author="props.row.steem.author"
-                    :permlink="props.row.steem.permlink"
-                  />
-                </b-tag-list>
+                <Upvote
+                  :votes="[]"
+                  :author="props.row.steem.author"
+                  :permlink="props.row.steem.permlink"
+                />
                 <b-tag-list attached>
                   <b-tag type="is-secondary">
                     <b-icon
@@ -116,7 +114,6 @@ import CategoryDropdown from '../components/CategoryDropdown.vue';
 import Upvote from '../components/Upvote.vue';
 import Avatar from '../components/Avatar.vue';
 import DateTimeTag from '../components/DateTimeTag';
-import { vote } from '../services/api.service.js';
 
 export default {
   name: 'Home',
