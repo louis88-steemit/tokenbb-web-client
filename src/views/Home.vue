@@ -41,57 +41,62 @@
               <div class="content">
                 <router-link :to="topicRoute(props.row)">
                   <h2 class="title is-6">
+                    <span
+                      v-if="props.row.pinned"
+                      type="is-secondary"
+                    >
+                      <b-icon
+                        icon="pin"
+                        size="is-small"
+                      /></span>
                     {{ props.row.title }}
                   </h2>
                 </router-link>
               </div>
-              <b-field grouped>
-                <b-tag-list attached>
-                  <b-tag
-                    v-if="props.row.pinned"
-                    type="is-secondary"
-                  >
-                    <b-icon
-                      icon="pin"
-                      size="is-small"
+              <nav class="level is-tablet">
+                <div class="level-left post-stats">
+                  <span class="level-item">
+                    <span class="tag is-small">
+                      <CategoryTag :category-id="props.row.categoryId" />
+                    </span>
+                  </span>
+                  <span class="level-item">
+                    <span
+                      class=""
+                      title="View Count"
+                      data-original-title="Number of Views"
+                    >
+                      <b-icon
+                        icon="eye"
+                        size="is-small"
+                      /> {{ props.row.numberOfViews }}
+                    </span>
+                    <span
+                      class=""
+                      title="Reply Count"
+                      data-original-title="Number of Replies"
+                    >
+                      <b-icon
+                        icon="reply"
+                        size="is-small"
+                      /> {{ props.row.numberOfReplies }}
+                    </span>
+                  </span>
+                  <span class="level-item">
+                    <Upvote
+                      :votes="[]"
+                      :author="props.row.steem.author"
+                      :permlink="props.row.steem.permlink"
                     />
-                  </b-tag>
-                </b-tag-list>
-                <CategoryTag :category-id="props.row.categoryId" />
-                <Upvote
-                  :votes="[]"
-                  :author="props.row.steem.author"
-                  :permlink="props.row.steem.permlink"
-                />
-                <b-tag-list attached>
-                  <b-tag type="is-secondary">
-                    <b-icon
-                      icon="eye"
-                      size="is-small"
+                  </span>
+                  <span class="level-item">
+                    <DateTimeTag
+                      :last-reply="props.row.lastReply"
+                      :number-of-replies="props.row.numberOfReplies"
                     />
-                  </b-tag>
-                  <b-tag type="is-dark">
-                    {{ props.row.numberOfViews }}
-                  </b-tag>
-                </b-tag-list>
-                <b-tag-list attached>
-                  <b-tag type="is-secondary">
-                    <b-icon
-                      icon="reply"
-                      size="is-small"
-                    />
-                  </b-tag>
-                  <b-tag type="is-dark">
-                    {{ props.row.numberOfReplies }}
-                  </b-tag>
-                </b-tag-list>
-                <DateTimeTag
-                  :last-reply="props.row.lastReply"
-                  :number-of-replies="props.row.numberOfReplies"
-                />
-                <!-- Hotfix for css bug of last tag breaking down, invisible last tag -->
-                <b-tag-list attached />
-              </b-field>
+                  </span>
+                </div>
+              </nav>
             </div>
           </article>
         </div>
@@ -106,9 +111,6 @@ import { mapState } from 'vuex';
 
 import Icon from 'buefy/src/components/icon/Icon';
 import Table from 'buefy/src/components/table/Table';
-import Tag from 'buefy/src/components/tag/Tag';
-import TagList from 'buefy/src/components/tag/Taglist';
-import Field from 'buefy/src/components/field/Field';
 import CategoryTag from '../components/CategoryTag.vue';
 import CategoryDropdown from '../components/CategoryDropdown.vue';
 import Upvote from '../components/Upvote.vue';
@@ -120,9 +122,6 @@ export default {
   components: {
     DateTimeTag,
     BIcon: Icon,
-    BTag: Tag,
-    BTagList: TagList,
-    BField: Field,
     BTable: Table,
     CategoryDropdown,
     Upvote,

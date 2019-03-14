@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar"
+    class="navbar navstyle is-desktop"
     role="navigation"
     aria-label="main navigation"
   >
@@ -121,8 +121,6 @@
       </div>
     </div>
   </nav>
-
-
 </template>
 
 <script>

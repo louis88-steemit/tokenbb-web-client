@@ -1,87 +1,76 @@
 <template class="upvote">
   <ShowIfLoggedIn :hidden="true">
-    <b-tag-list attached>
-      <b-tag
-        type="is-dark"
-        class="upvote-control"
-      >
-        <span class="upvote-value">${{ value }}</span>
-      </b-tag>
-      <b-tag
-        type="is-dark"
-        class="upvote-lenght"
-      >
-        <b-icon
-          icon="arrow-up-drop-circle-outline"
-          size="is-small"
-        />
-        {{ votes.length }}
-      </b-tag>
+    <span class="upvote-control">
+      <span class="upvote-value">${{ value }}</span>
+      <span class="upvote-lenght"><b-icon
+        icon="arrow-up-drop-circle-outline"
+        size="is-small"
+      />{{ votes.length }}</span>
+    </span>
 
-      <b-dropdown
-        v-if="!disabled"
-        position="is-top-left"
-        hoverable
-        :disabled="voted"
-        class="upvote-drop-control"
+    <b-dropdown
+      v-if="!disabled"
+      position="is-top-left"
+      hoverable
+      :disabled="voted"
+      class="upvote-drop-control"
+    >
+      <span
+        slot="trigger"
+        class="upvote-slider"
       >
-        <span
-          slot="trigger"
-          class="upvote-slider"
+        <a
+          class="is-small"
+          :class="{ 'is-loading': this.fetching }"
+          :disabled="voted"
+          @click="handleClick"
         >
-          <a
-            class="is-small"
-            :class="{ 'is-loading': this.fetching }"
-            :disabled="voted"
-            @click="handleClick"
-          >
-            <!--<span>Upvote</span>-->
-            <b-icon
-              icon="arrow-up-drop-circle-outline"
-              size="is-medium"
-            />
-          </a>
-        </span>
-        <b-dropdown-item custom>
-          <div class="level is-mobile">
-            <div class="level-left">
-              <div class="level-item percent-label">
-                {{ percent }}%
-              </div>
-              <div class="level-item">
-                <input
-                  ref="slider"
-                  orient="horizontal"
-                  class="slider is-primary is-circle"
-                  step="1"
-                  min="0"
-                  max="100"
-                  :value="percent"
-                  type="range"
-                  @input="handleChange"
-                >
-              </div>
+          <!--<span>Upvote</span>-->
+          <b-icon
+            icon="arrow-up-drop-circle-outline"
+            size="is-medium"
+          />
+        </a>
+      </span>
+      <b-dropdown-item custom>
+        <div class="level is-mobile">
+          <div class="level-left">
+            <div class="level-item percent-label">
+              {{ percent }}%
             </div>
-            <div class="level-right">
-              <div class="level-item">
-                <a
-                  class="is-small upvote-dropdownbutton"
-                  :class="{ 'is-loading': this.fetching }"
-                  :disabled="voted"
-                  @click="handleClick"
-                >
-                  <!--<span>Upvote</span>-->
-                  <b-icon
-                    icon="arrow-up-drop-circle-outline"
-                    size="is-medium"
-                  />
-                </a>
-              </div>
+            <div class="level-item">
+              <input
+                ref="slider"
+                orient="horizontal"
+                class="slider is-primary is-circle"
+                step="1"
+                min="0"
+                max="100"
+                :value="percent"
+                type="range"
+                @input="handleChange"
+              >
             </div>
           </div>
-        </b-dropdown-item>
-      </b-dropdown>
-    </b-tag-list>
+          <div class="level-right">
+            <div class="level-item">
+              <a
+                class="is-small upvote-dropdownbutton"
+                :class="{ 'is-loading': this.fetching }"
+                :disabled="voted"
+                @click="handleClick"
+              >
+                <!--<span>Upvote</span>-->
+                <b-icon
+                  icon="arrow-up-drop-circle-outline"
+                  size="is-medium"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </b-dropdown-item>
+    </b-dropdown>
   </ShowIfLoggedIn>
 </template>
 
@@ -90,8 +79,6 @@
 import Dropdown from 'buefy/src/components/dropdown/Dropdown';
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
 import Icon from 'buefy/src/components/icon/Icon';
-import Tag from 'buefy/src/components/tag/Tag';
-import TagList from 'buefy/src/components/tag/Taglist';
 
 
 import { Client } from 'dsteem';
@@ -110,8 +97,6 @@ export default {
     BDropdown: Dropdown,
     BDropdownItem: DropdownItem,
     BIcon: Icon,
-    BTag: Tag,
-    BTagList: TagList,
     ShowIfLoggedIn,
   },
   props: {

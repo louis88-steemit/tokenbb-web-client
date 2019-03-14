@@ -21,8 +21,27 @@
 $family-sans-serif: 'Avenir', Helvetica, Arial, sans-serif;
 
 // Set your colors
-  $background-one: white;
-  $background-two: #f2f2f2;
+  $background-one: #FCFCFC;
+  $background-two: #f4f4f4;
+
+// Background Colors //
+section {
+  background-color: $background-one;
+}
+.box {
+  background-color: $background-one;
+}
+.navstyle {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+}
+.dropdown-content {
+  background-color: white;
+}
+.dropdown-content.dropdown-item:hover {
+  background-color: $background;
+  color: $primary;
+}
+// Navbar Style
 
 // Set Fonts
 .post-page h1,h2,h3,h4,h5,h6,p {
@@ -32,9 +51,6 @@ a {
   color: $primary;
 }
 a:hover {
-  color: $tag;
-}
-a:active {
   color: $tag;
 }
 // Tag Color
@@ -48,27 +64,29 @@ a:active {
   border: 1px solid lightgrey;
 }
 // Regular Button Styling
-  .button {
+  .button.is-small {
     border-color: $primary;
-    font-size: 1rem;
-    padding: 8px 12px;
-    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 5px 13px;
+    font-weight: 400;
     border-radius: 0px;
     border-width: 2px;
   }
   .button:hover {
     border-color: $tag;
   }
-  .button:active {
+  .button:focus {
     border-color: $tag;
   }
 // New Topic Button 
-  .button .is-topic {
-    background-color: $primary !important;
-    color: white;
-    -webkit-box-shadow: 2px 2px 0px 0px $background-two;
-    -moz-box-shadow: 2px 2px 0px 0px $background-two;
-    box-shadow: 2px 2px 0px 0px $background-two;
+  .button.is-small.is-topic {
+    background-color: $primary;
+    color: $background;
+    border-color: $primary;
+  }
+  .button.is-small.is-topic:hover {
+    background-color: $background;
+    color: $primary;
   }
 // Upvote Button Color
   .mdi-36px.mdi-set, .mdi-36px.mdi:before {
@@ -103,7 +121,12 @@ a:active {
     color: $primary;
   }
 }
-
+input:focus {
+  color: $primary;
+}
+.quote-this {
+  text-decoration: underline;
+}
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
