@@ -25,6 +25,7 @@ import Select from 'buefy/src/components/select/Select';
 import { hide, pin, unpin } from '../services/api.service.js';
 
 import { Toast } from 'buefy/dist/components/toast';
+import { Dialog } from 'buefy/dist/components/dialog';
 
 function noop() {}
 
@@ -86,7 +87,7 @@ export default {
       } );
     },
     pinTopic() {
-      this.$dialog.confirm( {
+      Dialog.confirm( {
         message: 'This will pin the topic to the top of the category. '
           + 'Are you sure you want to do this?',
         onConfirm: async () => {
@@ -115,7 +116,7 @@ export default {
       } );
     },
     unpinTopic() {
-      this.$dialog.confirm( {
+      Dialog.confirm( {
         message: 'This will unpin the topic. '
           + 'Are you sure you want to do this?',
         onConfirm: async () => {
@@ -144,7 +145,7 @@ export default {
       } );
     },
     hideTopic() {
-      this.$dialog.confirm( {
+      Dialog.confirm( {
         message: 'This will hide the post from users. '
                 + 'Are you sure you want to do this?',
         onConfirm: async () => {
