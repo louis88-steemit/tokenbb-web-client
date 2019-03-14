@@ -9,9 +9,9 @@ import store from './store/index.js';
 
 import steemEditor from 'steem-editor';
 import 'steem-editor/dist/css/index.css';
-import moment from 'moment/moment';
-import 'moment/locale/en-au';
 import VueAnalytics from 'vue-analytics';
+
+import { formatDate, formatDateTimeFromNow } from './utils/content';
 
 registerSW();
 
@@ -65,29 +65,8 @@ function setGAUserID( userID ) {
 
 Vue.use( steemEditor );
 
-
-Vue.filter( 'formatDate', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .format( 'MMM Do YYYY' );
-  }
-} );
-
-/*
-const locale = window.navigator.userLanguage || window.navigator.language || 'en';
-console.log( `Setting TimeZone Language to ${locale}` );
-moment.lang('en-AU')
-*/
-moment.locale( 'en-AU' );
-
-Vue.filter( 'fromNow', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .add( moment().utcOffset(), 'minutes' )
-      .calendar();
-  }
-} );
-
+Vue.filter( 'formatDate', formatDate );
+Vue.filter( 'fromNow', formatDateTimeFromNow );
 
 Vue.filter( 'usernameDisplay', ( username, owner ) => {
   if ( username === process.env.VUE_APP_ANON_USER ) {
