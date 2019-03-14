@@ -73,7 +73,7 @@ width: auto;
     position: relative;
   }
   .upvote-control span {
-    padding-right: 1rem;
+    padding-right: 0.5rem;
   }
   .content {
     padding-bottom: 20px;
@@ -112,4 +112,7 @@ width: auto;
   .popup-upvote {
     display:flex;
   }
+}
+.quote-this,.edit-this {
+  padding: 0px 3px 5px 3px;
 }

@@ -200,6 +200,23 @@ export function publishReply( parentComment, message ) {
   return requestAsync( opts );
 }
 
+export function publishEdit( post, message ) {
+  const { content, title } = message;
+
+  const opts = {
+    method: 'POST',
+    url: apiURL() + `/topics/${post.steem.author}/${post.steem.permlink}/edit`,
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    body: {
+      title,
+      body: content,
+    },
+  };
+
+  return requestAsync( opts );
+}
+
 export function getValidTopic( author, permlink ) {
   const opts = {
     method: 'GET',

@@ -69,22 +69,33 @@
       </form>
       <ShowIfLoggedIn
         :hidden="true"
-        class="quote-this"
       >
-        <a @click="handleQuoteClick">Quote this</a>
-      </ShowIfLoggedIn>
-
-      <!--
-              <a v-if="editable && !editing"
+        <div class="level is-tablet">
+          <div class="level-left" />
+          <div class="level-right">
+            <div class="level-item edit-this">
+              <a
+                v-if="editable && !editing"
+                class="has-icon"
                 @click="onStartEditing"
-                class="button is-small has-icon">
+              >
                 <b-icon
                   icon="square-edit-outline"
-                  size="is-small">
-                </b-icon>
+                  size="is-small"
+                />
                 <span>Edit</span>
               </a>
-              -->
+            </div>
+            <div class="level-item quote-this">
+              <a @click="handleQuoteClick">
+                <b-icon
+                  icon="comment"
+                  size="is-small"
+                />Quote this</a>
+            </div>
+          </div>
+        </div>
+      </ShowIfLoggedIn>
       <div class="level">
         <div class="level-left" />
         <div class="level-right">
@@ -106,10 +117,12 @@
 
 import Field from 'buefy/src/components/field/Field';
 import Input from 'buefy/src/components/input/Input';
+import Icon from 'buefy/src/components/icon/Icon';
 
 import Avatar from '../components/Avatar.vue';
 import Upvote from '../components/Upvote.vue';
 import ModActions from '../components/ModActions.vue';
+import { publishEdit } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
 import DateTimeTag from '../components/DateTimeTag';
@@ -120,6 +133,7 @@ export default {
   components: {
     BField: Field,
     BInput: Input,
+    BIcon: Icon,
     Avatar,
     Upvote,
     ModActions,
@@ -139,7 +153,7 @@ export default {
   },
   computed: {
     editable() {
-      return this.$store.state.auth.accounts.includes( this.data.author );
+      return this.$store.state.auth.accounts.find( ( account ) => account.user_id === this.data.author.owner_id );
     },
     steemitLink() {
       return `https://steemit.com/@${this.data.steem.author}/${this.data.steem.permlink}`;
@@ -158,12 +172,7 @@ export default {
     onSave() {
       this.fetching = true;
 
-      const payload = {
-        post: this.data,
-        content: this.text,
-      };
-
-      this.$store.dispatch( 'posts/editPost', payload )
+      publishEdit( this.data, { content: this.text } )
         .then( ( post ) => {
           this.data.body = post.body;
           this.editing = false;
