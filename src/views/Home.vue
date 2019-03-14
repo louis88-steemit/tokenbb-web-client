@@ -45,61 +45,55 @@
                   </h2>
                 </router-link>
               </div>
-              <nav class="level is-tablet">
-                <div class="level-left post-stats">
-                  <span class="level-item">
-                    <span class="tag is-small">
-                      <CategoryTag :category-id="props.row.categoryId" />
-                    </span>
-                  </span>
-                  <span class="level-item">
-                    <span
-                      class=""
-                      title="View Count"
-                      data-original-title="Number of Views"
-                    >
-                      <b-icon
-                        icon="eye"
-                        size="is-small"
-                      /> {{ props.row.numberOfViews }}
-                    </span>
-                    <span
-                      class=""
-                      title="Reply Count"
-                      data-original-title="Number of Replies"
-                    >
-                      <b-icon
-                        icon="reply"
-                        size="is-small"
-                      /> {{ props.row.numberOfReplies }}
-                    </span>
-                  </span>
-                  <span class="level-item">
-                    <Upvote
-                      :votes="[]"
-                      :author="props.row.steem.author"
-                      :permlink="props.row.steem.permlink"
+              <b-field grouped>
+                <b-tag-list attached>
+                  <b-tag
+                    v-if="props.row.pinned"
+                    type="is-secondary"
+                  >
+                    <b-icon
+                      icon="pin"
+                      size="is-small"
                     />
-                  </span>
-                  <span class="level-item">
-                    <span
-                      class="mini-avatar"
-                      title="Last Reply"
-                      data-original-title="Last Reply"
-                    >
-                      Last Reply: {{ props.row.lastReply.time | fromNow }}
-                      <template v-if="props.row.numberOfReplies > 0">by
-                        <Avatar
-                          :author="props.row.lastReply.author"
-                          :owner="props.row.lastReply.owner"
-                          size="small"
-                          class="last-reply-avatar"
-                        />
-                      </template>
-                    </span>
-                  </span>
-                </div>
-              </nav>
+                  </b-tag>
+                </b-tag-list>
+                <CategoryTag :category-id="props.row.categoryId" />
+                <b-tag-list attached>
+                  <Upvote
+                    :votes="[]"
+                    :author="props.row.steem.author"
+                    :permlink="props.row.steem.permlink"
+                  />
+                </b-tag-list>
+                <b-tag-list attached>
+                  <b-tag type="is-secondary">
+                    <b-icon
+                      icon="eye"
+                      size="is-small"
+                    />
+                  </b-tag>
+                  <b-tag type="is-dark">
+                    {{ props.row.numberOfViews }}
+                  </b-tag>
+                </b-tag-list>
+                <b-tag-list attached>
+                  <b-tag type="is-secondary">
+                    <b-icon
+                      icon="reply"
+                      size="is-small"
+                    />
+                  </b-tag>
+                  <b-tag type="is-dark">
+                    {{ props.row.numberOfReplies }}
+                  </b-tag>
+                </b-tag-list>
+                <DateTimeTag
+                  :last-reply="props.row.lastReply"
+                  :number-of-replies="props.row.numberOfReplies"
+                />
+                <!-- Hotfix for css bug of last tag breaking down, invisible last tag -->
+                <b-tag-list attached />
+              </b-field>
             </div>
           </article>
         </div>
@@ -110,22 +104,28 @@
 
 <script>
 
-import Icon from 'buefy/src/components/icon/Icon';
-import Table from 'buefy/src/components/table/Table';
-
-
 import { mapState } from 'vuex';
 
+import Icon from 'buefy/src/components/icon/Icon';
+import Table from 'buefy/src/components/table/Table';
+import Tag from 'buefy/src/components/tag/Tag';
+import TagList from 'buefy/src/components/tag/Taglist';
+import Field from 'buefy/src/components/field/Field';
 import CategoryTag from '../components/CategoryTag.vue';
 import CategoryDropdown from '../components/CategoryDropdown.vue';
 import Upvote from '../components/Upvote.vue';
 import Avatar from '../components/Avatar.vue';
+import DateTimeTag from '../components/DateTimeTag';
 import { vote } from '../services/api.service.js';
 
 export default {
   name: 'Home',
   components: {
+    DateTimeTag,
     BIcon: Icon,
+    BTag: Tag,
+    BTagList: TagList,
+    BField: Field,
     BTable: Table,
     CategoryDropdown,
     Upvote,

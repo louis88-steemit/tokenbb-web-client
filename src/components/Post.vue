@@ -23,16 +23,11 @@
           </div>
         </div>
         <div class="level-right">
-          <div class="level-item">
-            <p>
-              <small>
-                <b-icon
-                  icon="clock"
-                  size="is-small"
-                />{{ data.createdAt | fromNow }}
-              </small>
-            </p>
-          </div>
+          <p class="level-item">
+            <small>
+              <DateTimeTag :time="data.createdAt" />
+            </small>
+          </p>
         </div>
       </div>
       <div class="media-content">
@@ -111,13 +106,13 @@
 
 import Field from 'buefy/src/components/field/Field';
 import Input from 'buefy/src/components/input/Input';
-import Icon from 'buefy/src/components/icon/Icon';
 
 import Avatar from '../components/Avatar.vue';
 import Upvote from '../components/Upvote.vue';
 import ModActions from '../components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
+import DateTimeTag from '../components/DateTimeTag';
 
 import { Toast } from 'buefy/dist/components/toast';
 
@@ -125,11 +120,11 @@ export default {
   components: {
     BField: Field,
     BInput: Input,
-    BIcon: Icon,
     Avatar,
     Upvote,
     ModActions,
     ShowIfLoggedIn,
+    DateTimeTag,
   },
   props: {
     data: Object,
