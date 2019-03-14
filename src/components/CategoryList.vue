@@ -4,13 +4,11 @@
     :data="subCategories"
     mobile-cards>
     <template slot-scope="scprops">
-      <b-table-column field="subcat" label="Name">
-        {{ scprops.row.name }}
-      </b-table-column>
-      <b-table-column field="subcat" label="Subcategory">
+      <div class="content-box box-styling">
+        <h2><strong>{{ scprops.row.name }}</strong></h2>
         <category-group :categoriesByBreadcrumb="scprops.row.subCategory">
         </category-group>
-      </b-table-column>
+      </div>
     </template>
   </b-table>
 
@@ -19,29 +17,33 @@
     mobile-cards>
 
     <template slot-scope="cprops">
-      <b-table-column field="title" label="Title">
-        <a @click="onSelectCategoryId( cprops.row )">
-          {{ cprops.row.title }}
-        </a>
-      </b-table-column>
-      <b-table-column field="description" label="Description">
-        {{ cprops.row.description }}
-      </b-table-column>
-      <b-table-column field="last_activity" label="Last Activity">
-        {{ cprops.row.meta ? cprops.row.meta.last_action.time : '' }}
-      </b-table-column>
-      <b-table-column field="last_user" label="Last User">
-        {{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}
-      </b-table-column>
-      <b-table-column field="topics" label="Topics">
-        {{ cprops.row.meta ? cprops.row.meta.topics : '' }}
-      </b-table-column>
-      <b-table-column field="replies" label="Replies">
-        {{ cprops.row.meta ? cprops.row.meta.replies : '' }}
-      </b-table-column>
-      <b-table-column field="views" label="Views">
-        {{ cprops.row.meta ? cprops.row.meta.views : '' }}
-      </b-table-column>
+      <div class="content-box box-styling">
+        <div class="content-box-middle">
+          <div class="break-words">
+            <router-link :to="{ path: '', query: { category : cprops.row.slug } }">
+              <h2><strong>{{ cprops.row.title }}</strong></h2>
+            </router-link>
+          </div>
+          {{ cprops.row.description }}
+          <div>
+            # of topics: {{ cprops.row.meta ? cprops.row.meta.topics : '' }}
+          </div>
+          <div>
+            # of replies: {{ cprops.row.meta ? cprops.row.meta.replies : '' }}
+          </div>
+          <div>
+            # of views: {{ cprops.row.meta ? cprops.row.meta.views : '' }}
+          </div>
+        </div>
+        <div class="content-box-right">
+          <div>
+            Last post by {{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}
+          </div>
+          <div>
+            on {{ cprops.row.meta ? cprops.row.meta.last_action.time : '' | fromNow }}
+          </div>
+        </div>
+      </div>
     </template>
   </b-table>
   </div>
@@ -61,8 +63,6 @@ export default {
       const subCategories = [];
       if ( this.categoriesByBreadcrumb ) {
         Object.keys( this.categoriesByBreadcrumb ).forEach( ( key ) => {
-          console.log( key );
-          console.log( this.categoriesByBreadcrumb[key] );
           if ( key !== '__entries' ) {
             subCategories.push( {
               name: key,
@@ -71,7 +71,6 @@ export default {
           }
         } );
       }
-      console.log( subCategories );
       return subCategories;
     },
   },

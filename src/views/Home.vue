@@ -117,17 +117,6 @@ export default {
     fetching() {
       return this.$store.state.topics.fetching || this.$store.state.categories.fetching;
     },
-
-    /* topicList() {
-      //if ( !this.selectedCategoryId ) {
-      console.log(this.$store.state.topics.topicList);
-        return this.$store.state.topics.topicList;
-      //}
-
-      //return this.$store.state.topics.topicList.filter( ( topic ) => {
-      //  return topic.categoryId === this.selectedCategoryId;
-      //} );
-    },*/
   },
   beforeRouteUpdate( to, from, next ) {
     if ( to.query.category ) {
@@ -145,17 +134,25 @@ export default {
   },
   watch: {
     categoryList( value ) {
+      this.setSelectedCategoryId( value );
+    },
+  },
+  updated() {
+    if ( this.categoryList ) {
+      this.setSelectedCategoryId( this.categoryList );
+    }
+  },
+  methods: {
+    setSelectedCategoryId( categoryList ) {
       const queryCategory = this.$route.query.category;
       if ( this.$route.query.category && !this.selectedCategoryId ) {
-        const selectedCategory = value.find( ( category ) => {
+        const selectedCategory = categoryList.find( ( category ) => {
           return category.slug === queryCategory
             || category._id === queryCategory;
         } ) || {};
         this.selectedCategoryId = selectedCategory._id;
       }
     },
-  },
-  methods: {
     getRowClass( row ) {
       return row.pinned ? 'pinned' : '';
     },

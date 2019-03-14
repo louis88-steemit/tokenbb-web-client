@@ -47,7 +47,6 @@ export default {
           state.categoriesByBreadcrumb.__entries.push( category );
         }
       } );
-      console.log( state.categoriesByBreadcrumb );
 
       // For Vue Reactivity.
       state.categoriesByBreadcrumb = { ...state.categoriesByBreadcrumb };
