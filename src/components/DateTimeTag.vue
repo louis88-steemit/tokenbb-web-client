@@ -45,10 +45,22 @@ export default {
     },
     numberOfReplies: Number,
   },
+  data() {
+    return {
+      ticker: 0,
+    };
+  },
   computed: {
     timeFromNow() {
+      const dummyTicker = this.$data.ticker;
       return formatDateTimeFromNow( this.time || this.lastReply.time );
     },
+  },
+  mounted() {
+    const self = this;
+    setInterval( function () {
+      self.$data.ticker += 1;
+    }, 1000 );
   },
 };
 </script>
