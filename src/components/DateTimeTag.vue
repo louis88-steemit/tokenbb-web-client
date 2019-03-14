@@ -9,7 +9,7 @@
     <b-tag type="is-dark">
       {{ this.timeFromNow }}
     </b-tag>
-    <template v-if="this.numberOfReplies > 0">
+    <template v-if="!this.time && this.numberOfReplies > 0">
       <b-tag type="is-black">
         <Avatar
           :author="this.lastReply.author"
@@ -37,6 +37,7 @@ export default {
     Avatar,
   },
   props: {
+    time: String,
     lastReply: {
       time: String,
       author: String,
@@ -46,7 +47,7 @@ export default {
   },
   computed: {
     timeFromNow() {
-      return formatDateTimeFromNow( this.lastReply.time );
+      return formatDateTimeFromNow( this.time || this.lastReply.time );
     },
   },
 };
