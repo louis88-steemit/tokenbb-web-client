@@ -7,5 +7,5 @@ export function quoteText( quote ) {
   console.log( quote );
   const timeOfQuote = moment.utc( String( quote.updatedAt ) )
     .format( 'DD.MM.YYYY kk:mm:ss' ) + ' UTC';
-  return `\n> User @${ user } wrote at ${ timeOfQuote }:\n${ textToQuote.replace( /^/gm, '> ' ) }\n> \n`;
+  return `\n> User @${ user } wrote at ${ timeOfQuote }:\n> \n${ textToQuote.replace( /^/gm, '> ' ) }\n> \n`;
 }
