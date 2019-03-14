@@ -50,57 +50,48 @@
                   <h2><strong>{{ props.row.title }}</strong></h2>
                 </router-link>
               </div>
-              <span
-                field="icon"
-                width="0px"
-              >
-                <span
-                  class=" has-text-center"
-                  style="width: 100%"
-                >
-                  <b-icon
+              <b-field grouped>
+                <b-tag-list attached>
+                  <b-tag
                     v-if="props.row.pinned"
-                    icon="pin"
-                    size="is-small"
-                  />
-                </span>
-              </span>
-              <span class="meta-box">
-                <CategoryTag :category-id="props.row.categoryId" />
-              </span>
-              <span id="tiptop-control">
-                <span
-                  class="tip tip-left"
-                  title=""
-                  data-original-title="Views"
-                ><b-icon
-                  icon="eye"
-                  size="is-small"
-                /> {{ props.row.numberOfViews }}</span>
-                <span
-                  class="tip tip-center"
-                  title=""
-                  data-original-title="Number of Replies"
-                ><b-icon
-                  icon="reply"
-                  size="is-small"
-                /> {{ props.row.numberOfReplies }}</span>
-                <span
-                  class="tip tip-right"
-                  title=""
-                  data-original-title="Last Reply"
-                ><b-icon
-                   icon="clock"
-                   size="is-small"
-                 /> {{ props.row.lastReply.time | fromNow }}
-                  <template v-if="props.row.numberOfReplies > 0">by
-                    <Avatar
-                      :author="props.row.lastReply.author"
-                      :owner="props.row.lastReply.owner"
-                      size="small"
+                    type="is-secondary"
+                  >
+                    <b-icon
+                      icon="pin"
+                      size="is-small"
                     />
-                  </template></span>
-              </span>
+                  </b-tag>
+                </b-tag-list>
+                <CategoryTag :category-id="props.row.categoryId" />
+                <b-tag-list attached>
+                  <b-tag type="is-secondary">
+                    <b-icon
+                      icon="eye"
+                      size="is-small"
+                    />
+                  </b-tag>
+                  <b-tag type="is-dark">
+                    {{ props.row.numberOfViews }}
+                  </b-tag>
+                </b-tag-list>
+                <b-tag-list attached>
+                  <b-tag type="is-secondary">
+                    <b-icon
+                      icon="reply"
+                      size="is-small"
+                    />
+                  </b-tag>
+                  <b-tag type="is-dark">
+                    {{ props.row.numberOfReplies }}
+                  </b-tag>
+                </b-tag-list>
+                <DateTimeTag
+                  :last-reply="props.row.lastReply"
+                  :number-of-replies="props.row.numberOfReplies"
+                />
+                <!-- Hotfix for css bug of last tag breaking down, invisible last tag -->
+                <b-tag-list attached />
+              </b-field>
             </div>
             <div class="content-box-right">
               <Upvote
@@ -118,21 +109,27 @@
 
 <script>
 
-import Icon from 'buefy/src/components/icon/Icon';
-import Table from 'buefy/src/components/table/Table';
-
-
 import { mapState } from 'vuex';
 
+import Icon from 'buefy/src/components/icon/Icon';
+import Table from 'buefy/src/components/table/Table';
+import Tag from 'buefy/src/components/tag/Tag';
+import TagList from 'buefy/src/components/tag/Taglist';
+import Field from 'buefy/src/components/field/Field';
 import CategoryTag from '../components/CategoryTag.vue';
 import CategoryDropdown from '../components/CategoryDropdown.vue';
 import Upvote from '../components/Upvote.vue';
 import Avatar from '../components/Avatar.vue';
+import DateTimeTag from '../components/DateTimeTag';
 
 export default {
   name: 'Home',
   components: {
+    DateTimeTag,
     BIcon: Icon,
+    BTag: Tag,
+    BTagList: TagList,
+    BField: Field,
     BTable: Table,
     CategoryDropdown,
     Upvote,
