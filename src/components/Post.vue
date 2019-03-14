@@ -174,7 +174,8 @@ export default {
 
       publishEdit( this.data, { content: this.text } )
         .then( ( post ) => {
-          this.data.body = post.body;
+          console.log( post );
+          this.data.body = post.data.body;
           this.editing = false;
           this.fetching = false;
         } )
