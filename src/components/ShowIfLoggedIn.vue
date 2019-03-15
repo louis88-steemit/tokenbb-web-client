@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="!loggedIn && !hidden">
-      <a class="button is-primary is-outlined" @click="login">
+      <button @click="login">
         {{ text || 'Login to reply' }}
-      </a>
+      </button>
     </div>
-    <slot v-if="loggedIn"></slot>
+    <slot v-if="loggedIn" />
   </div>
 </template>
 

@@ -1,7 +1,8 @@
-import {} from '@/services/api.service';
-import { addCategory, listCategories, removeCategory } from '../services/api.service.js';
-import { errorAlertOptions } from '../utils/notifications.js';
 import { Toast } from 'buefy/dist/components/toast';
+
+import { addCategory, listCategories, removeCategory } from '../services/api.service';
+import { errorAlertOptions } from '../utils/notifications.js';
+
 
 export default {
   namespaced: true,

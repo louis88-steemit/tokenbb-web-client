@@ -1,125 +1,40 @@
 <template>
   <div v-if="isAdmin()">
     <b-select
-      placeholder="Moderator actions"
       v-model="selected"
-      @input="onSelect"
+      placeholder="Moderator actions"
       size="is-small"
-      :loading="loading">
-      <option v-for="(option, index) in options" :value="option" :key="index">
+      :loading="loading"
+      @input="onSelect"
+    >
+      <option
+        v-for="(option, index) in options"
+        :key="index"
+        :value="option"
+      >
         {{ option.name }}
       </option>
     </b-select>
   </div>
-
 </template>
 
 <script>
+
+import Select from 'buefy/src/components/select/Select';
+
 import { hide, pin, unpin } from '../services/api.service.js';
+
+import { Toast } from 'buefy/dist/components/toast';
 
 function noop() {}
 
 export default {
+  components: {
+    BSelect: Select,
+  },
   props: {
     post: Object,
     isReply: Boolean,
-  },
-  methods: {
-    isAdmin() {
-      return this.$store.state.auth.roles.admin;
-    },
-    onSelect( item ) {
-      item.callback();
-      this.$nextTick( () => {
-        this.selected = this.options[0];
-        this.isComponentModalActive = true;
-      } );
-    },
-    pinTopic() {
-      this.$dialog.confirm( {
-        message: 'This will pin the topic to the top of the category. '
-          + 'Are you sure you want to do this?',
-        onConfirm: async () => {
-          this.loading = true;
-
-          try {
-            await pin( this.post );
-
-            this.$store.commit( 'topics/pin', this.post );
-
-            this.$toast.open( {
-              message: 'The topic has been pinned.',
-              type: 'is-primary',
-            } );
-            this.$router.push( { name: 'home' } );
-          } catch ( err ) {
-            const result = err.error.message;
-            this.$toast.open( {
-              message: `Failed to pin the topic: ${result}`,
-              type: 'is-danger',
-            } );
-          }
-
-          this.loading = false;
-        },
-      } );
-    },
-    unpinTopic() {
-      this.$dialog.confirm( {
-        message: 'This will unpin the topic. '
-          + 'Are you sure you want to do this?',
-        onConfirm: async () => {
-          this.loading = true;
-
-          try {
-            await unpin( this.post );
-
-            this.$store.commit( 'topics/unpin', this.post );
-
-            this.$toast.open( {
-              message: 'The topic has been unpinned.',
-              type: 'is-primary',
-            } );
-            this.$router.push( { name: 'home' } );
-          } catch ( err ) {
-            const result = err.error.message;
-            this.$toast.open( {
-              message: `Failed to unpin the topic: ${result}`,
-              type: 'is-danger',
-            } );
-          }
-
-          this.loading = false;
-        },
-      } );
-    },
-    hideTopic() {
-      this.$dialog.confirm( {
-        message: 'This will hide the post from users. '
-                + 'Are you sure you want to do this?',
-        onConfirm: async () => {
-          this.loading = true;
-
-          try {
-            await hide( this.post );
-
-            this.$toast.open( {
-              message: 'The post has been hidden.',
-              type: 'is-primary',
-            } );
-            this.$router.push( { name: 'home' } );
-          } catch ( err ) {
-            const result = err.error.message;
-            this.$toast.open( {
-              message: `Failed to hide the post: ${result}`,
-              type: 'is-danger',
-            } );
-          }
-
-          this.loading = false;
-        },
-      } );
-    },
   },
   data() {
     return {
@@ -158,6 +73,103 @@ export default {
 
       this.options.push( action );
     }
+  },
+  methods: {
+    isAdmin() {
+      return this.$store.state.auth.roles.admin;
+    },
+    onSelect( item ) {
+      item.callback();
+      this.$nextTick( () => {
+        this.selected = this.options[0];
+        this.isComponentModalActive = true;
+      } );
+    },
+    pinTopic() {
+      this.$dialog.confirm( {
+        message: 'This will pin the topic to the top of the category. '
+          + 'Are you sure you want to do this?',
+        onConfirm: async () => {
+          this.loading = true;
+
+          try {
+            await pin( this.post );
+
+            this.$store.commit( 'topics/pin', this.post );
+
+            Toast.open( {
+              message: 'The topic has been pinned.',
+              type: 'is-primary',
+            } );
+            this.$router.push( { name: 'home' } );
+          } catch ( err ) {
+            const result = err.error.message;
+            Toast.open( {
+              message: `Failed to pin the topic: ${result}`,
+              type: 'is-danger',
+            } );
+          }
+
+          this.loading = false;
+        },
+      } );
+    },
+    unpinTopic() {
+      this.$dialog.confirm( {
+        message: 'This will unpin the topic. '
+          + 'Are you sure you want to do this?',
+        onConfirm: async () => {
+          this.loading = true;
+
+          try {
+            await unpin( this.post );
+
+            this.$store.commit( 'topics/unpin', this.post );
+
+            Toast.open( {
+              message: 'The topic has been unpinned.',
+              type: 'is-primary',
+            } );
+            this.$router.push( { name: 'home' } );
+          } catch ( err ) {
+            const result = err.error.message;
+            Toast.open( {
+              message: `Failed to unpin the topic: ${result}`,
+              type: 'is-danger',
+            } );
+          }
+
+          this.loading = false;
+        },
+      } );
+    },
+    hideTopic() {
+      this.$dialog.confirm( {
+        message: 'This will hide the post from users. '
+                + 'Are you sure you want to do this?',
+        onConfirm: async () => {
+          this.loading = true;
+
+          try {
+            await hide( this.post );
+
+            Toast.open( {
+              message: 'The post has been hidden.',
+              type: 'is-primary',
+            } );
+            this.$router.push( { name: 'home' } );
+          } catch ( err ) {
+            const result = err.error.message;
+            Toast.open( {
+              message: `Failed to hide the post: ${result}`,
+              type: 'is-danger',
+            } );
+          }
+
+          this.loading = false;
+        },
+      } );
+    },
   },
 };
 </script>

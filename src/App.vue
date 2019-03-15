@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
-    <section class="section" v-if="loaded">
+    <Navbar />
+    <section
+      v-if="loaded"
+      class="section"
+    >
       <router-view />
     </section>
   </div>

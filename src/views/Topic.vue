@@ -1,7 +1,13 @@
 <template>
   <div class="container fill">
-    <div v-if="fetching" class="spacer">
-      <b-loading :is-full-page="false" :active="fetching"></b-loading>
+    <div
+      v-if="fetching"
+      class="spacer"
+    >
+      <b-loading
+        :is-full-page="false"
+        :active="fetching"
+      />
     </div>
 
     <div v-if="!fetching">
@@ -10,10 +16,12 @@
           {{ topic.title }}
         </h1>
 
-        <CategoryTag :categoryId="topic.categoryId">
-        </CategoryTag>
+        <CategoryTag :category-id="topic.categoryId" />
         &nbsp;
-        <a class="topic-nav topic-nav-to-end" @click="scrollTo('endOfTopic')">
+        <a
+          class="topic-nav topic-nav-to-end"
+          @click="scrollTo('endOfTopic')"
+        >
           Jump to end
         </a>
       </header>
@@ -21,15 +29,18 @@
       <br>
 
       <main ref="posts">
-        <Post :data="topic"></Post>
+        <Post :data="topic" />
 
-        <Post v-for="(reply, index) in topic.replies"
-          :data="reply"
-          :isReply="true"
+        <Post
+          v-for="(reply, index) in topic.replies"
           :key="index"
+          :data="reply"
+          :is-reply="true"
+        />
+        <a
+          class="topic-nav topic-nav-to-top"
+          @click="scrollTo('topOfPage')"
         >
-        </Post>
-        <a class="topic-nav topic-nav-to-top" @click="scrollTo('topOfPage')">
           Back to Top
         </a>
       </main>
@@ -41,36 +52,37 @@
           :fetching="$store.state.replies.fetching"
           :text="replyText"
           :quote="quote"
-          :quoteAuthor="quoteAuthor"
+          :quote-author="quoteAuthor"
           @input="onReplyInput"
-          @submit="onReplySubmit">
-        </ReplyForm>
+          @submit="onReplySubmit"
+        />
       </ShowIfLoggedIn>
     </div>
-
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 
-import Post from '@/components/Post.vue';
-import ReplyForm from '@/components/ReplyForm.vue';
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
-import CategoryTag from '@/components/CategoryTag.vue';
+import Loading from 'buefy/src/components/loading/Loading';
+
+import Post from '../components/Post.vue';
+import ReplyForm from '../components/ReplyForm.vue';
+import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
+import CategoryTag from '../components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
+import { Toast } from 'buefy/dist/components/toast';
+
 export default {
-  name: 'topic',
+  name: 'Topic',
   components: {
+    BLoading: Loading,
     Post,
     ReplyForm,
     ShowIfLoggedIn,
     CategoryTag,
-  },
-  created() {
-    this.fetchTopic();
   },
   data() {
     return {
@@ -78,6 +90,9 @@ export default {
       topic: {},
       replyText: '',
     };
+  },
+  created() {
+    this.fetchTopic();
   },
   computed: {
     ...mapState( 'categories', [
@@ -116,7 +131,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.log( err );
-          this.$toast.open( errorAlertOptions( 'Oops! Could not submit reply at this moment', err ) );
+          Toast.open( errorAlertOptions( 'Oops! Could not submit reply at this moment', err ) );
           this.$ga.exception( err );
         } );
     },

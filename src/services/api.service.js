@@ -1,5 +1,17 @@
-import steem from '@/services/steem.service';
-import requestAsync from 'request-promise';
+import steem from './steem.service';
+
+function requestAsync( opts ) {
+  if ( opts.body ) {
+    opts.body = JSON.stringify( opts.body );
+  }
+  if ( !opts.headers ) {
+    opts.headers = {};
+  }
+  opts.headers.accept = 'application/json';
+  opts.headers['content-type'] = 'application/json';
+  return fetch( opts.url, opts )
+    .then( ( response ) => response.json() );
+}
 
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;

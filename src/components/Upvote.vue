@@ -1,62 +1,97 @@
 <template>
-  <ShowIfLoggedIn :hidden="true" class="upvote">
-    <div class="field has-addons">
-      <div class="value-control">
-      <div class="control control-value">
-        <a>$ {{ value }}</a>
-      </div>
-      <div class="control control-length">
-        <a>{{ votes.length }} Votes</a>
-      </div>
-      </div>
-      <b-dropdown position="is-top-left" hoverable :disabled="voted">
-        <p class="upvote-button" slot="trigger">
-          <a class="is-small"
-            :class="{ 'is-loading': this.fetching }"
-            :disabled="voted"
-            @click="handleClick">
-            <!--<span>Upvote</span>-->
-            <b-icon icon="arrow-up-drop-circle-outline" size="is-medium">
-            </b-icon>
-          </a>
-        </p>
-
-        <b-dropdown-item custom>
-          <div class="container popover">
-            <div class="columns is-mobile">
-              <div class="column is-one-quarter vertical">
-                <span class="percent-label">{{ percent }}%</span>
+  <ShowIfLoggedIn :hidden="true">
+    <div class="columns upvote-module">
+      <span class="column upvote-stats">
+        <span>$ {{ value }}</span>
+      </span>
+      <span class="column upvote-stats">
+        <span>{{ votes.length }} Votes</span>
+      </span>
+      <span class="column upvote-button">
+        <b-dropdown
+          position="is-top-left"
+          hoverable
+          :disabled="voted"
+        >
+          <span
+            slot="trigger"
+            class="upvote-slider"
+          >
+            <a
+              class="is-small"
+              :class="{ 'is-loading': this.fetching }"
+              :disabled="voted"
+              @click="handleClick"
+            >
+              <!--<span>Upvote</span>-->
+              <b-icon
+                icon="arrow-up-drop-circle-outline"
+                size="is-medium"
+              />
+            </a>
+          </span>
+          <b-dropdown-item custom>
+            <div class="columns popup-upvote">
+              <div class="column is-1 percent-label">
+                <span>{{ percent }}%</span>
               </div>
-              <div class="column is-three-quarter is-mobile">
-                <input orient="horizontal" class="slider is-primary is-circle"
+              <div class="column is-4">
+                <input
                   ref="slider"
-                  @input="handleChange"
+                  orient="horizontal"
+                  class="slider is-primary is-circle"
                   step="1"
                   min="0"
                   max="100"
                   :value="percent"
-                  type="range">
+                  type="range"
+                  @input="handleChange"
+                >
+              </div>
+              <div class="column is-1">
+                <a
+                  class="is-small upvote-dropdownbutton"
+                  :class="{ 'is-loading': this.fetching }"
+                  :disabled="voted"
+                  @click="handleClick"
+                >
+                  <!--<span>Upvote</span>-->
+                  <b-icon
+                    icon="arrow-up-drop-circle-outline"
+                    size="is-medium"
+                  />
+                </a>
               </div>
             </div>
-          </div>
-        </b-dropdown-item>
-      </b-dropdown>
+          </b-dropdown-item>
+        </b-dropdown>
+      </span>
     </div>
   </ShowIfLoggedIn>
 </template>
 
 <script>
-import { vote } from '../services/api.service.js';
+
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
+
 import { Client } from 'dsteem';
 
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
+import { vote } from '../services/api.service.js';
+import ShowIfLoggedIn from './ShowIfLoggedIn.vue';
 
 import Timeout from 'await-timeout';
+
+import { Toast } from 'buefy/dist/components/toast';
 
 const client = new Client( 'https://api.steemit.com' );
 
 export default {
   components: {
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
     ShowIfLoggedIn,
   },
   props: {
@@ -95,7 +130,7 @@ export default {
     },
     async handleClick() {
       if ( this.voted ) {
-        return this.$toast.open( {
+        return Toast.open( {
           message: 'Oops! Already voted!.',
           type: 'is-danger',
         } );
@@ -104,7 +139,7 @@ export default {
 
       try {
         await vote( this.author, this.permlink, this.$store.state.auth.current, this.percent );
-        this.$toast.open( {
+        Toast.open( {
           message: 'Upvoted!',
           type: 'is-primary',
         } );
@@ -112,7 +147,7 @@ export default {
         await this.updateValue();
       } catch ( err ) {
         console.error( 'oops!', err );
-        this.$toast.open( {
+        Toast.open( {
           message: 'Oops! Could not upvote at this time. ' + err,
           type: 'is-danger',
         } );

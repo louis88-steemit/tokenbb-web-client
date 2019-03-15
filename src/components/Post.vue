@@ -4,15 +4,30 @@
       <header class="level is-mobile">
         <div class="level-left">
           <div class="level-item">
-            <Avatar :author="data.author.user" :owner="data.author.owner_id" size="large"></Avatar>
-            <p class="username">{{ data.author.user | usernameDisplay(data.author.owner_id) }}</p>
+            <Avatar
+              :author="data.author.user"
+              :owner="data.author.owner_id"
+              size="large"
+            />
+            <p class="username">
+              {{ data.author.user | usernameDisplay(data.author.owner_id) }}
+            </p>
+            <div class="mod-display">
+              <ModActions
+                :post="data"
+                :is-reply="isReply"
+              />
+            </div>
           </div>
         </div>
 
         <div class="level-right">
           <p class="level-item">
             <small>
-              <b-icon icon="clock" size="is-small"></b-icon>{{ data.createdAt | fromNow }}
+              <b-icon
+                icon="clock"
+                size="is-small"
+              />{{ data.createdAt | fromNow }}
             </small>
           </p>
         </div>
@@ -21,52 +36,50 @@
       <article
         v-if="!editing"
         class="content has-text-left"
-        v-html="$renderMD(data.body)">
-      </article>
+        v-html="$renderMD(data.body)"
+      />
 
       <form v-if="editing">
         <b-field>
-          <b-input type="textarea"
+          <b-input
+            v-model="text"
+            type="textarea"
             :loading="fetching"
             :disabled="fetching"
-            v-model="text"
-            placeholder="Type here.">
-          </b-input>
+            placeholder="Type here."
+          />
         </b-field>
 
         <b-field>
           <p class="control">
-            <a class="button is-primary"
+            <a
+              class="button is-primary"
               :class="{ 'is-loading': this.fetching }"
-              @click="onSave">
+              @click="onSave"
+            >
               Save
             </a>
           </p>
 
           <p class="control">
-            <a class="button"
+            <a
+              class="button"
               :disabled="this.fetching"
-              @click="onCancel">
+              @click="onCancel"
+            >
               Cancel
             </a>
           </p>
         </b-field>
       </form>
-      <div class="level is-mobile">
-        <div class="level-left"></div>
-        <div class="level-right">
-          <div class="level-item">
-            <ShowIfLoggedIn :hidden="true" class="quote-this">
-            <a @click="handleQuoteClick">Quote this</a>
-            </ShowIfLoggedIn>
-          </div>
-          <div class="mod-display">
-            <ModActions :post="data" :isReply="isReply">
-            </ModActions>
-          </div>
-          <div class="level-item">
-            <p class="buttons">
-              <!--
+      <ShowIfLoggedIn
+        :hidden="true"
+        class="quote-this"
+      >
+        <a @click="handleQuoteClick">Quote this</a>
+      </ShowIfLoggedIn>
+      <div class="upvote-module">
+        <!--
               <a v-if="editable && !editing"
                 @click="onStartEditing"
                 class="button is-small has-icon">
@@ -77,29 +90,36 @@
                 <span>Edit</span>
               </a>
               -->
-              <Upvote
-                :votes="[]"
-                :author="data.steem.author"
-                :permlink="data.steem.permlink">
-              </Upvote>
-            </p>
-          </div>
-        </div>
+        <Upvote
+          :votes="[]"
+          :author="data.steem.author"
+          :permlink="data.steem.permlink"
+        />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import Avatar from '@/components/Avatar.vue';
-import Upvote from '@/components/Upvote.vue';
-import ModActions from '@/components/ModActions.vue';
+
+
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
+import Icon from 'buefy/src/components/icon/Icon';
+
+import Avatar from '../components/Avatar.vue';
+import Upvote from '../components/Upvote.vue';
+import ModActions from '../components/ModActions.vue';
 import { errorAlertOptions } from '../utils/notifications.js';
-import ShowIfLoggedIn from '@/components/ShowIfLoggedIn.vue';
+import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
+
+import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   components: {
+    BField: Field,
+    BInput: Input,
+    BIcon: Icon,
     Avatar,
     Upvote,
     ModActions,
@@ -108,6 +128,13 @@ export default {
   props: {
     data: Object,
     isReply: Boolean,
+  },
+  data() {
+    return {
+      fetching: false,
+      editing: false,
+      text: '',
+    };
   },
   computed: {
     editable() {
@@ -143,7 +170,7 @@ export default {
         } )
         .catch( ( err ) => {
           console.error( err );
-          this.$toast.open( errorAlertOptions( 'Oops! Could not edit your post at this moment' ) );
+          Toast.open( errorAlertOptions( 'Oops! Could not edit your post at this moment' ) );
           this.fetching = false;
         } );
     },
@@ -155,16 +182,13 @@ export default {
       this.text = '';
       this.editing = false;
     },
-    handleQuoteClick( event ) {
+    handleQuoteClick() {
       this.$root.$emit( 'quote-click', this.data );
+      this.scrollTo( 'endOfTopic' );
     },
-  },
-  data() {
-    return {
-      fetching: false,
-      editing: false,
-      text: '',
-    };
+    scrollTo( id ) {
+      window.scrollTo( 0, document.getElementById( id ).offsetTop );
+    },
   },
 };
 </script>

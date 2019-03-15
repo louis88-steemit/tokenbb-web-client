@@ -1,5 +1,10 @@
 <template>
-  <nav  id="nav" class="navbar" role="navigation" aria-label="main navigation">
+  <nav
+    id="nav"
+    class="navbar"
+    role="navigation"
+    aria-label="main navigation"
+  >
     <div class="container">
       <a id="topOfPage" />
       <div class="navbar-brand">
@@ -7,19 +12,30 @@
           <router-link
             :to="{ path: '/' }"
             exact-active-class="noop"
-            class="navbar-item">
-              <img class="logo"/>
+            class="navbar-item"
+          >
+            <img class="logo">
           </router-link>
         </div>
 
-        <a role="button" class="navbar-burger" :class="{ 'is-active': menuActive }" aria-label="menu" aria-expanded="false" @click="toggleMenu">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
+        <a
+          role="button"
+          class="navbar-burger"
+          :class="{ 'is-active': menuActive }"
+          aria-label="menu"
+          aria-expanded="false"
+          @click="toggleMenu"
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
         </a>
       </div>
 
-      <div class="navbar-menu" :class="{ 'is-active': menuActive }">
+      <div
+        class="navbar-menu"
+        :class="{ 'is-active': menuActive }"
+      >
         <div class="navbar-start">
           <div class="navbar-item is-expanded tr">
             <!--<p class="tr is-right">
@@ -30,51 +46,78 @@
                 Create Forum
               </router-link>
             </p>-->
-          <div>
-            <p>
-              <router-link
-                      v-if="auth.roles.admin"
-                      to="/settings"
-                      class="is-secondary">
-                Settings
-              </router-link>
+            <div>
+              <p>
+                <router-link
+                  v-if="auth.roles.admin"
+                  to="/settings"
+                  class="is-secondary"
+                >
+                  Settings
+                </router-link>
               </p>
-          </div>
+            </div>
           </div>
         </div>
 
         <div class="navbar-end">
           <div class="navbar-item is-expanded tr">
             <div class="nav-account">
-              <p v-if="auth.username" class="tr is-right">
-                <AccountSwitcher></AccountSwitcher>
+              <p
+                v-if="auth.username"
+                class="tr is-right"
+              >
+                <AccountSwitcher />
               </p>
             </div>
-            <div class="nav-login">
-              <p v-if="!auth.username" class="tr is-right">
-                <a class="button is-primary" @click="login">
-                  Connect
-                </a>
+            <div>
+              <p
+                v-if="!auth.username"
+                class="tr is-right"
+              >
+                <button @click="login">
+                  Login
+                </button>
               </p>
             </div>
           </div>
-          <b-dropdown v-if="auth.username" class="navbar-item dropdown-style">
-            <button class="button is-primary" type="button" slot="trigger">
+          <b-dropdown
+            v-if="auth.username"
+            class="navbar-item dropdown-style"
+          >
+            <button
+              slot="trigger"
+              class="button is-primary"
+              type="button"
+            >
               <span>Account</span>
-              <b-icon icon="menu-down"></b-icon>
+              <b-icon icon="menu-down" />
             </button>
 
-            <b-dropdown-item class="is-right" @click="auth.addLink">
-                Add Steem Account
+            <b-dropdown-item
+              class="is-right"
+              @click="auth.addLink"
+            >
+              Add Steem Account
             </b-dropdown-item>
-            <b-dropdown-item class="is-right" @click="auth.autoMode">
-                Enable MB Auto Mode
+            <b-dropdown-item
+              class="is-right"
+              @click="auth.autoMode"
+            >
+              Enable MB Auto Mode
             </b-dropdown-item>
-            <b-dropdown-item class="is-right" @click="logout">
-                Logout
+            <b-dropdown-item
+              class="is-right"
+              @click="logout"
+            >
+              Logout
             </b-dropdown-item>
-            <b-dropdown-item class="is-right" target="_blank" v-bind:href="auth.manageLink">
-                Manage
+            <b-dropdown-item
+              class="is-right"
+              target="_blank"
+              :href="auth.manageLink"
+            >
+              Manage
             </b-dropdown-item>
           </b-dropdown>
         </div>
@@ -86,16 +129,19 @@
 <script>
 import { mapState } from 'vuex';
 
-import AccountSwitcher from '@/components/AccountSwitcher.vue';
+import Dropdown from 'buefy/src/components/dropdown/Dropdown';
+import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
+import Icon from 'buefy/src/components/icon/Icon';
 
-// import Avatar from '@/components/Avatar.vue';
+import AccountSwitcher from './AccountSwitcher.vue';
 
 export default {
   name: 'Navbar',
   components: {
+    BDropdown: Dropdown,
+    BDropdownItem: DropdownItem,
+    BIcon: Icon,
     AccountSwitcher,
-
-    // Avatar,
   },
   data() {
     return {

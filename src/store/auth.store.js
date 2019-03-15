@@ -1,8 +1,10 @@
-import steem from '@/services/steem.service';
 import jwtdecode from 'jwt-decode';
+
+import { Toast } from 'buefy/dist/components/toast';
+
+import steem from '../services/steem.service';
 import { listRoles } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
-import { Toast } from 'buefy/dist/components/toast';
 
 export default {
   namespaced: true,
@@ -57,8 +59,20 @@ export default {
       window.BTSSO.modal();
     },
     setUser( state, user ) {
+      if ( !user ) {
+        state.user = '';
+        state.username = '';
+        state.accounts = [];
+        return;
+      }
       state.user = user;
-      state.id = jwtdecode( user ).user_id;
+      try {
+        state.id = jwtdecode( user ).user_id;
+      } catch ( decodeError ) {
+        console.error( 'Could not decode auth token, logging out!', decodeError );
+        window.BTSSO.logout();
+        return;
+      }
       if ( !user ) {
         state.accounts = [];
         state.current = 'anon';
