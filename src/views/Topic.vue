@@ -32,7 +32,15 @@
 
         <main ref="posts">
           <Post :data="topic" />
-
+          <b-pagination
+            :total="topic.replies.length"
+            :current.sync="current"
+            order="is-centered"
+            size="is-large"
+            :simple="false"
+            :rounded="false"
+            :per-page="perPage"
+          />
           <Post
             v-for="(reply, index) in currentPage"
             :key="index"
