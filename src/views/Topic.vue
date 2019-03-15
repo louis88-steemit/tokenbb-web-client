@@ -1,5 +1,5 @@
 <template>
-  <div class="container fill">
+  <div class="container">
     <div
       v-if="fetching"
       class="spacer"
@@ -11,52 +11,55 @@
     </div>
 
     <div v-if="!fetching">
-      <header class="has-text-left">
-        <h1 class="title is-3">
-          {{ topic.title }}
-        </h1>
-
-        <CategoryTag :category-id="topic.categoryId" />
+      <div class="post-page">
+        <header class="has-text-left">
+          <h1 class="title is-3">
+            {{ topic.title }}
+          </h1>
+          <span class="tag is-small">
+            <CategoryTag :category-id="topic.categoryId" />
+          </span>
         &nbsp;
-        <a
-          class="topic-nav topic-nav-to-end"
-          @click="scrollTo('endOfTopic')"
-        >
-          Jump to end
-        </a>
-      </header>
+          <a
+            class="topic-nav topic-nav-to-end"
+            @click="scrollTo('endOfTopic')"
+          >
+            Jump to end
+          </a>
+        </header>
 
-      <br>
+        <br>
 
-      <main ref="posts">
-        <Post :data="topic" />
+        <main ref="posts">
+          <Post :data="topic" />
 
-        <Post
-          v-for="(reply, index) in topic.replies"
-          :key="index"
-          :data="reply"
-          :is-reply="true"
-        />
-        <a
-          class="topic-nav topic-nav-to-top"
-          @click="scrollTo('topOfPage')"
-        >
-          Back to Top
-        </a>
-      </main>
+          <Post
+            v-for="(reply, index) in topic.replies"
+            :key="index"
+            :data="reply"
+            :is-reply="true"
+          />
+          <a
+            class="topic-nav topic-nav-to-top"
+            @click="scrollTo('topOfPage')"
+          >
+            Back to Top
+          </a>
+        </main>
 
-      <br>
-      <a id="endOfTopic" />
-      <ShowIfLoggedIn>
-        <ReplyForm
-          :fetching="$store.state.replies.fetching"
-          :text="replyText"
-          :quote="quote"
-          :quote-author="quoteAuthor"
-          @input="onReplyInput"
-          @submit="onReplySubmit"
-        />
-      </ShowIfLoggedIn>
+        <br>
+        <a id="endOfTopic" />
+        <ShowIfLoggedIn>
+          <ReplyForm
+            :fetching="$store.state.replies.fetching"
+            :text="replyText"
+            :quote="quote"
+            :quote-author="quoteAuthor"
+            @input="onReplyInput"
+            @submit="onReplySubmit"
+          />
+        </ShowIfLoggedIn>
+      </div>
     </div>
   </div>
 </template>

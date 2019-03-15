@@ -1,7 +1,7 @@
 <template>
-  <div class="post columns is-mobile box-styling">
-    <div class="column is-12 post-body">
-      <header class="level is-mobile">
+  <div class="container post">
+    <div class="box is-mobile">
+      <div class="level is-tablet">
         <div class="level-left">
           <div class="level-item">
             <Avatar
@@ -9,15 +9,17 @@
               :owner="data.author.owner_id"
               size="large"
             />
+          </div>
+          <div class="level-item">
             <p class="username">
               {{ data.author.user | usernameDisplay(data.author.owner_id) }}
             </p>
-            <div class="mod-display">
-              <ModActions
-                :post="data"
-                :is-reply="isReply"
-              />
-            </div>
+          </div>
+          <div class="level-item is-tablet">
+            <ModActions
+              :post="data"
+              :is-reply="isReply"
+            />
           </div>
         </div>
         <div class="level-right">
@@ -27,14 +29,14 @@
             </small>
           </p>
         </div>
-      </header>
-
-      <article
-        v-if="!editing"
-        class="content has-text-left"
-        v-html="$renderMD(data.body)"
-      />
-
+      </div>
+      <div class="media-content">
+        <article
+          v-if="!editing"
+          class="content"
+          v-html="$renderMD(data.body)"
+        />
+      </div>
       <form v-if="editing">
         <b-field>
           <b-input
@@ -47,19 +49,17 @@
         </b-field>
 
         <b-field>
-          <p class="control">
+          <a
+            class="button is-small is-topic save"
+            :class="{ 'is-loading': this.fetching }"
+            @click="onSave"
+          >
+            Save
+          </a>
+          <span />
+          <p>
             <a
-              class="button is-primary"
-              :class="{ 'is-loading': this.fetching }"
-              @click="onSave"
-            >
-              Save
-            </a>
-          </p>
-
-          <p class="control">
-            <a
-              class="button"
+              class="button is-small"
               :disabled="this.fetching"
               @click="onCancel"
             >
@@ -70,20 +70,32 @@
       </form>
       <ShowIfLoggedIn
         :hidden="true"
-        class="quote-this"
       >
-        <a @click="handleQuoteClick">Quote this</a>
-        <a
-          v-if="editable && !editing"
-          class="button is-small has-icon"
-          @click="onStartEditing"
-        >
-          <b-icon
-            icon="square-edit-outline"
-            size="is-small"
-          />
-          <span>Edit</span>
-        </a>
+        <div class="level is-tablet">
+          <div class="level-left" />
+          <div class="level-right">
+            <div class="level-item edit-this">
+              <a
+                v-if="editable && !editing"
+                class="has-icon"
+                @click="onStartEditing"
+              >
+                <b-icon
+                  icon="square-edit-outline"
+                  size="is-small"
+                />
+                <span>Edit</span>
+              </a>
+            </div>
+            <div class="level-item quote-this">
+              <a @click="handleQuoteClick">
+                <b-icon
+                  icon="comment"
+                  size="is-small"
+                />Quote this</a>
+            </div>
+          </div>
+        </div>
       </ShowIfLoggedIn>
       <div class="level">
         <div class="level-left" />
@@ -95,13 +107,6 @@
               :permlink="data.steem.permlink"
             />
           </div>
-        </div>
-        <div class="upvote-module">
-          <Upvote
-            :votes="[]"
-            :author="data.steem.author"
-            :permlink="data.steem.permlink"
-          />
         </div>
       </div>
     </div>
@@ -170,7 +175,8 @@ export default {
 
       publishEdit( this.data, { content: this.text } )
         .then( ( post ) => {
-          this.data.body = post.body;
+          console.log( post );
+          this.data.body = post.data.body;
           this.editing = false;
           this.fetching = false;
         } )

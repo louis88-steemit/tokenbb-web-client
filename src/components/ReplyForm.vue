@@ -12,10 +12,10 @@
     </b-field>
 
     <b-field>
-      <div class="control">
+      <div>
         <button
+          class="button is-small is-topic"
           role="submit"
-          class="is-topic"
           :disabled="text.length == 0"
           :class="{ 'is-loading': fetching }"
         >
