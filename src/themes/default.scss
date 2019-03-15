@@ -112,6 +112,20 @@ a:hover {
   background-color: $background-two;
 }
 }
+.box-style {
+  -webkit-box-shadow: 2px 2px 0px 0px $primary;
+  -moz-box-shadow: 2px 2px 0px 0px $primary;
+  box-shadow: 2px 2px 0px 0px $primary;
+  border: 1px solid lightgrey;
+}
+.category-table {
+  .box-style:hover {
+    h4 {
+      color: $tag;
+    }
+  background-color: $background-one;
+}
+}
 // Upvote Dropdown Colors
 .upvote-drop-control {
   .dropdown-content {
@@ -141,6 +155,9 @@ a.pagination-link.is-current {
   border: 1px solid white;
   color: white;
   font-size: 0.9rem;
+}
+.category-table tr {
+  border-color: $primary;
 }
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
