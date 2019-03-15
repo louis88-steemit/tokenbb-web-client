@@ -120,6 +120,7 @@ export default {
   },
   created() {
     this.fetchTopic();
+    this.$root.$on( 'topicRefresh', this.fetchTopic );
   },
   computed: {
     ...mapState( 'categories', [

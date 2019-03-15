@@ -158,7 +158,11 @@ export default {
               message: 'The post has been hidden.',
               type: 'is-primary',
             } );
-            this.$router.push( { name: 'home' } );
+            if ( this.post.replies ) {
+              this.$router.push( { name: 'home' } );
+            } else {
+              this.$emit( 'topicRefresh' );
+            }
           } catch ( err ) {
             const result = err.error.message;
             Toast.open( {
