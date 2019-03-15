@@ -128,11 +128,10 @@ export default {
               type: 'is-primary',
             } );
           } );
-        } )
-        .catch( ( err ) => {
+        }, ( err ) => {
           console.error( err );
           Toast.open( {
-            message: 'Oops! Could not create your topic at this moment. ' + err.error.message,
+            message: 'Oops! Could not create your topic at this moment. ' + err.message,
             type: 'is-danger',
           } );
           this.fetching = false;

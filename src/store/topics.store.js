@@ -46,6 +46,9 @@ export default {
       return createTopic( author, category, title, content )
         .then( ( topic ) => {
           console.log( topic );
+          if ( !topic.success ) {
+            throw new Error( topic.message );
+          }
           commit( 'addTopic', topic.data );
 
           return topic.data;
