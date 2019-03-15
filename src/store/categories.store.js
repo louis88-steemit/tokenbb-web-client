@@ -10,7 +10,7 @@ export default {
     fetching: true,
     categoryList: [],
     categoriesById: {},
-    categoriesByBreadcrumb: { '__entries': [] },
+    categoriesByBreadcrumb: { title: 'Home', groups: [], categories: [] },
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -32,21 +32,17 @@ export default {
 
       // map category by breadcrumb
       categories.forEach( ( category ) => {
-        if ( category.breadcrumb && category.breadcrumb.length > 0 ) {
-          let categoryGroup = state.categoriesByBreadcrumb;
-          for ( let idx = 0; idx < category.breadcrumb.length; idx++ ) {
-            const crumb = category.breadcrumb[idx];
-            if ( !categoryGroup[crumb] ) {
-              categoryGroup[crumb] = { '__entries': [] };
-            }
-            categoryGroup = categoryGroup[crumb];
-            if ( idx == category.breadcrumb.length - 1 ) {
-              categoryGroup.__entries.push( category );
-            }
+        let categoryGroup = state.categoriesByBreadcrumb;
+        for ( let idx = 0; idx < category.breadcrumb.length; idx++ ) {
+          const crumb = category.breadcrumb[idx];
+          let group = categoryGroup.groups.find( ( g ) => g.title === crumb );
+          if ( !group ) {
+            group = { title: crumb, groups: [], categories: [] };
+            categoryGroup.groups.push( group );
           }
-        } else {
-          state.categoriesByBreadcrumb.__entries.push( category );
+          categoryGroup = group;
         }
+        categoryGroup.categories.push( category );
       } );
 
       // For Vue Reactivity.

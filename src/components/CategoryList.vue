@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-table
-      v-if="subCategories.length > 0"
-      :data="subCategories"
+      v-if="categoryGroups.length > 0"
+      :data="categoryGroups"
       mobile-cards
     >
-      <template slot-scope="scprops">
+      <template slot-scope="cgprops">
         <b-collapse
           class="card box-style"
           aria-id="contentIdForA11y3"
@@ -17,17 +17,17 @@
             aria-controls="contentIdForA11y3"
           >
             <h2 class="card-header-title">
-              {{ scprops.row.name }}
+              {{ cgprops.row.title }}
             </h2>
             <a class="card-header-icon">
               <b-icon
-                :icon="scprops.open ? 'menu-down' : 'menu-up'"
+                :icon="cgprops.open ? 'menu-down' : 'menu-up'"
               />
             </a>
           </div>
           <div class="card-content">
             <div class="content">
-              <CategoryGroup :categories-by-breadcrumb="scprops.row.subCategory" />
+              <CategoryGroup :categories-by-breadcrumb="cgprops.row" />
             </div>
           </div>
         </b-collapse>
@@ -35,8 +35,7 @@
     </b-table>
 
     <b-table
-      :data="categoryList"
-      :columns="columns"
+      :data="categories"
       mobile-cards
       striped
     >
@@ -92,22 +91,11 @@ export default {
     },
   },
   computed: {
-    categoryList() {
-      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.__entries : [];
+    categories() {
+      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.categories : [];
     },
-    subCategories() {
-      const subCategories = [];
-      if ( this.categoriesByBreadcrumb ) {
-        Object.keys( this.categoriesByBreadcrumb ).forEach( ( key ) => {
-          if ( key !== '__entries' ) {
-            subCategories.push( {
-              name: key,
-              subCategory: this.categoriesByBreadcrumb[key],
-            } );
-          }
-        } );
-      }
-      return subCategories;
+    categoryGroups() {
+      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.groups : [];
     },
   },
 };
