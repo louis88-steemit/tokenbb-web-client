@@ -16,6 +16,22 @@ export function formatDate( dateValue ) {
     .toFormat( 'dd.LL.yyyy' );
 }
 
+export function formatDateTimeRelative( dateValue ) {
+  if ( !dateValue ) {
+    return 'invalid datetime!';
+  }
+  const time = DateTime.fromISO( String( dateValue ) );
+  return time .toRelative();
+}
+
+export function formatDateTimeAbsolute( dateValue ) {
+  if ( !dateValue ) {
+    return 'invalid datetime!';
+  }
+  const time = DateTime.fromISO( String( dateValue ) );
+  return time.toFormat( 'dd.LL.yyyy HH:mm:ss' );
+}
+
 export function formatDateTimeFromNow( dateValue ) {
   if ( !dateValue ) {
     return 'invalid datetime!';

@@ -121,16 +121,17 @@ export default {
 
       this.$store.dispatch( 'topics/createTopic', payload )
         .then( () => {
-          this.$router.push( '/' );
-          Toast.open( {
-            message: 'Your topic has been posted.',
-            type: 'is-primary',
+          this.$store.dispatch( 'topics/fetchAll' ).then( () => {
+            this.$router.push( '/' );
+            Toast.open( {
+              message: 'Your topic has been posted.',
+              type: 'is-primary',
+            } );
           } );
-        } )
-        .catch( ( err ) => {
+        }, ( err ) => {
           console.error( err );
           Toast.open( {
-            message: 'Oops! Could not create your topic at this moment. ' + err.error.message,
+            message: 'Oops! Could not create your topic at this moment. ' + err.message,
             type: 'is-danger',
           } );
           this.fetching = false;

@@ -21,7 +21,7 @@
     </div>
     <b-table
       :loading="fetching"
-      :data="topicList"
+      :data="currentPage"
       :row-class="getRowClass"
       :mobile-cards="false"
     >
@@ -102,6 +102,16 @@
         </div>
       </template>
     </b-table>
+    <b-pagination
+      v-if="topicList.length > perPage"
+      :total="topicList.length"
+      :current.sync="current"
+      order="is-centered"
+      size="is-small"
+      :simple="false"
+      :rounded="false"
+      :per-page="perPage"
+    />
   </div>
 </template>
 
@@ -111,6 +121,8 @@ import { mapState } from 'vuex';
 
 import Icon from 'buefy/src/components/icon/Icon';
 import Table from 'buefy/src/components/table/Table';
+import Pagination from 'buefy/src/components/pagination/Pagination';
+
 import CategoryTag from '../components/CategoryTag.vue';
 import CategoryDropdown from '../components/CategoryDropdown.vue';
 import Upvote from '../components/Upvote.vue';
@@ -123,6 +135,7 @@ export default {
     DateTimeTag,
     BIcon: Icon,
     BTable: Table,
+    BPagination: Pagination,
     CategoryDropdown,
     Upvote,
     Avatar,
@@ -140,6 +153,12 @@ export default {
     loggedIn() {
       return this.$store.state.auth.username;
     },
+    currentPage() {
+      const topics = this.topicList || [];
+      const start = ( this.current - 1 ) * this.perPage;
+      const end = this.current * this.perPage;
+      return topics.slice( start, end );
+    },
     topicList() {
       if ( !this.selectedCategoryId ) {
         return this.$store.state.topics.topicList;
@@ -154,6 +173,9 @@ export default {
     return {
       selectedCategoryId: null,
       selected: null,
+      total: 0,
+      current: 1,
+      perPage: 10,
     };
   },
   watch: {
