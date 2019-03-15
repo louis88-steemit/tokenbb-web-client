@@ -71,6 +71,9 @@ export default {
       } else {
         self.$data.timeout = 60 * 60 * 1000;
       }
+      if ( self.$data.timeout > 1000 ) {
+        self.$data.timeout -= parseInt( Math.random() * 0.1 * self.$data.timeout );
+      }
       console.log( `Updating time ${minutesDiff}, ${self.$data.timeout}}` );
       self.$data.ticker += 1;
       clearTimeout( self.$data.timeoutHandle );
