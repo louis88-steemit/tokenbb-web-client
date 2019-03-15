@@ -41,6 +41,7 @@
         <b-field>
           <b-input
             v-model="text"
+            autofocus
             type="textarea"
             :loading="fetching"
             :disabled="fetching"
