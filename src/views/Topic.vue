@@ -34,7 +34,7 @@
           <Post :data="topic" />
 
           <Post
-            v-for="(reply, index) in topic.replies"
+            v-for="(reply, index) in currentPage"
             :key="index"
             :data="reply"
             :is-reply="true"
@@ -45,6 +45,15 @@
           >
             Back to Top
           </a>
+          <b-pagination
+            :total="topic.replies.length"
+            :current.sync="current"
+            order="is-centered"
+            size="is-large"
+            :simple="false"
+            :rounded="false"
+            :per-page="perPage"
+          />
         </main>
 
         <br>
@@ -68,6 +77,7 @@
 import { mapState } from 'vuex';
 
 import Loading from 'buefy/src/components/loading/Loading';
+import Pagination from 'buefy/src/components/pagination/Pagination';
 
 import Post from '../components/Post.vue';
 import ReplyForm from '../components/ReplyForm.vue';
@@ -82,6 +92,7 @@ export default {
   name: 'Topic',
   components: {
     BLoading: Loading,
+    BPagination: Pagination,
     Post,
     ReplyForm,
     ShowIfLoggedIn,
@@ -92,6 +103,9 @@ export default {
       fetching: true,
       topic: {},
       replyText: '',
+      total: 0,
+      current: 1,
+      perPage: 10,
     };
   },
   created() {
@@ -101,8 +115,14 @@ export default {
     ...mapState( 'categories', [
       'categoriesBySlug',
     ] ),
+    currentPage() {
+      const replies = this.topic.replies || [];
+      const start = ( this.current - 1 ) * this.perPage;
+      const end = this.current * this.perPage;
+      return replies.slice( start, end );
+    },
     quote() {
-      const arr = this.topic.replies;
+      const arr = this.currentPage;
       if ( arr && arr.length > 0 ) {
         return arr[arr.length - 1].body.trim();
       } else if ( this.topic.body ) {
