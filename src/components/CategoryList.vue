@@ -16,9 +16,9 @@
             role="button"
             aria-controls="contentIdForA11y3"
           >
-            <p class="card-header-title">
+            <h2 class="card-header-title">
               {{ scprops.row.name }}
-            </p>
+            </h2>
             <a class="card-header-icon">
               <b-icon
                 :icon="scprops.open ? 'menu-down' : 'menu-down'"
@@ -42,14 +42,14 @@
     >
       <template slot-scope="cprops">
         <router-link :to="{ path: '', query: { category : cprops.row.slug } }">
-          <table class="table is-bordered is-striped is-fullwidth category-table">
-            <tbody class="box-style">
+          <table class="table is-bordered is-striped is-fullwidth category-table box-style">
+            <tbody class="content">
               <tr>
                 <td width="70%">
-                  <h4 class="is-6">
+                  <h4>
                     {{ cprops.row.title }}
                   </h4>
-                  <span><small>{{ cprops.row.description }}</small></span>
+                  <span>{{ cprops.row.description }}</span>
                 </td>
                 <td
                   style="text-align:center;"
