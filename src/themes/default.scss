@@ -122,6 +122,12 @@ a:hover {
     color: $primary;
   }
 }
+.pagination {
+  margin-top: 25px;
+}
+.pagination .info {
+  color: black;
+}
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
