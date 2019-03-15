@@ -30,9 +30,11 @@ export default {
         state.categoriesById[category._id] = category;
       } );
 
+      const categoriesByBreadcrumb = { title: 'Home', groups: [], categories: [] };
+
       // map category by breadcrumb
       categories.forEach( ( category ) => {
-        let categoryGroup = state.categoriesByBreadcrumb;
+        let categoryGroup = categoriesByBreadcrumb;
         for ( let idx = 0; idx < category.breadcrumb.length; idx++ ) {
           const crumb = category.breadcrumb[idx];
           let group = categoryGroup.groups.find( ( g ) => g.title === crumb );
@@ -46,7 +48,7 @@ export default {
       } );
 
       // For Vue Reactivity.
-      state.categoriesByBreadcrumb = { ...state.categoriesByBreadcrumb };
+      state.categoriesByBreadcrumb = categoriesByBreadcrumb;
       state.categoriesById = { ...state.categoriesById };
     },
   },

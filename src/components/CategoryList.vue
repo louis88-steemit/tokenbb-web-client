@@ -3,6 +3,7 @@
     <b-table
       v-if="categoryGroups.length > 0"
       :data="categoryGroups"
+      :loading="fetching"
       mobile-cards
     >
       <template slot-scope="cgprops">
@@ -12,6 +13,7 @@
         >
           <div
             slot="trigger"
+            slot-scope="cardprops"
             class="card-header"
             role="button"
             aria-controls="contentIdForA11y3"
@@ -21,13 +23,16 @@
             </h2>
             <a class="card-header-icon">
               <b-icon
-                :icon="cgprops.open ? 'menu-down' : 'menu-up'"
+                :icon="cardprops.open ? 'menu-down' : 'menu-up'"
               />
             </a>
           </div>
           <div class="card-content">
             <div class="content">
-              <CategoryGroup :categories-by-breadcrumb="cgprops.row" />
+              <CategoryGroup
+                :categories-by-breadcrumb="cgprops.row"
+                :fetching="fetching"
+              />
             </div>
           </div>
         </b-collapse>
@@ -35,12 +40,13 @@
     </b-table>
 
     <b-table
+      :loading="fetching"
       :data="categories"
       mobile-cards
       striped
     >
       <template slot-scope="cprops">
-        <router-link :to="{ path: '', query: { category : cprops.row.slug } }">
+        <router-link :to="{ path: 'topics', query: { category : cprops.row.slug } }">
           <table class="table is-bordered is-striped is-fullwidth category-table box-style">
             <tbody class="content">
               <tr>
@@ -85,6 +91,10 @@ export default {
     BCollapse: Collapse,
   },
   props: {
+    fetching: {
+      type: Boolean,
+      default: true,
+    },
     categoriesByBreadcrumb: {
       type: Object,
       default: null,
