@@ -144,10 +144,11 @@ export default {
   },
   actions: {
     fetchRoles( { commit, state } ) {
-      listRoles()
-        .then( ( forum ) => {
-          const isAdmin = forum.data.owners.includes( state.id );
-          const isMod = isAdmin || forum.data.mods.includes( state.id );
+      this.dispatch( 'forum/fetch' )
+        .then( ( ) => {
+          const { owners, mods } = this.getters['forum/getRoles'];
+          const isAdmin = owners.includes( state.id );
+          const isMod = isAdmin || mods.includes( state.id );
           commit( 'setRoles', { admin: isAdmin, mod: isMod } );
         } )
         .catch( ( err ) => {

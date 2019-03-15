@@ -30,6 +30,73 @@ export default {
         state.categoriesById[category._id] = category;
       } );
 
+      const categoryOrdering = this.getters['forum/getCategoryOrdering'];
+
+      function stringToSlug( inputStr ) {
+        let str = String( inputStr );
+        str = str.trim();
+        str = str.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        const from = 'åàáãäâèéëêìíïîòóöôùúüûñç·/_,:;';
+        const to = 'aaaaaaeeeeiiiioooouuuunc------';
+
+        for ( let i = 0, l = from.length; i < l; i++ ) {
+          str = str.replace( new RegExp( from.charAt( i ), 'g' ), to.charAt( i ) );
+        }
+
+        return str
+          .replace( /[^a-z0-9 -]/g, '' ) // remove invalid chars
+          .replace( /\s+/g, '-' ) // collapse whitespace and replace by -
+          .replace( /-+/g, '-' ) // collapse dashes
+          .replace( /^-+/, '' ) // trim - from start of text
+          .replace( /-+$/, '' ) // trim - from end of text
+          .substring( 0, 24 );
+      }
+
+      function parseCategoryOrderingLevel( level, restCategories ) {
+        if ( !( level instanceof Array ) ) {
+          return [ [], restCategories ];
+        }
+        let categoriesLeft = restCategories;
+        const currentLevels = [];
+        for ( const index in level ) {
+          const current = level[index];
+          current.slug = stringToSlug( current.slug );
+          current.name = current.name || 'Empty Name';
+          const [ newCurrent, newCategories ] = parseCategoryOrderingLevel( current.groups, categoriesLeft );
+          categoriesLeft = newCategories;
+          const thislevel = [];
+          for ( const categoryIndex in current.categories ) {
+            const category = current.categories[categoryIndex];
+            const cat = categoriesLeft.find( ( c ) => c.slug === category.slug );
+            categoriesLeft = categoriesLeft.filter( ( c ) => c.slug !== category.slug );
+            if ( cat ) {
+              thislevel.push( cat );
+            }
+          }
+          if ( newCurrent.length > 0 || thislevel.length > 0 ) {
+            currentLevels.push( {
+              name: current.name,
+              slug: current.slug,
+              groups: newCurrent,
+              categories: thislevel,
+            } );
+          }
+        }
+        return [ currentLevels, categoriesLeft ];
+      }
+      const [ catparsed, restcats ] = parseCategoryOrderingLevel( categoryOrdering, categories );
+      if ( restcats.length > 0 ) {
+        catparsed.push( {
+          name: 'Uncategorized',
+          slug: 'uncategorized',
+          groups: [],
+          categories: restcats,
+        } );
+      }
+      console.log( catparsed );
+
       // map category by breadcrumb
       categories.forEach( ( category ) => {
         if ( category.breadcrumb && category.breadcrumb.length > 0 ) {
