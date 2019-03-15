@@ -125,8 +125,22 @@ a:hover {
 .pagination {
   margin-top: 25px;
 }
-.pagination .info {
-  color: black;
+.pagination-link {
+  background-color: $background-one;
+  color: $primary;
+  border-color: $primary;
+  font-weight: 500;
+}
+.pagination-link:hover {
+  border-color: $tag;
+  color: $primary;
+  background-color: $background-one;
+}
+a.pagination-link.is-current {
+  background-color: $primary;
+  border: 1px solid white;
+  color: white;
+  font-size: 0.9rem;
 }
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";

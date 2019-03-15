@@ -19,15 +19,6 @@
         </router-link>>
       </div>
     </div>
-    <b-pagination
-      v-if="topicList.length > perPage"
-      :total="topicList.length"
-      :current.sync="current"
-      size="is-small"
-      :simple="false"
-      :rounded="false"
-      :per-page="perPage"
-    />
     <b-table
       :loading="fetching"
       :data="currentPage"
@@ -115,7 +106,7 @@
       v-if="topicList.length > perPage"
       :total="topicList.length"
       :current.sync="current"
-      order="is-right"
+      order="is-centered"
       size="is-small"
       :simple="false"
       :rounded="false"
