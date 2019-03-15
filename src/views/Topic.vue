@@ -180,10 +180,12 @@ export default {
 
         this.topic = topic;
         this.fetching = false;
+
+        // Hack to prevent scrolling down on load
+        this.$nextTick( function () {
+          this.scrollTo( 'topOfPage' );
+        } );
       } );
-    },
-    categoryFromId( id ) {
-      return ( this.categoriesBySlug[id] || { name: '' } ).name;
     },
     scrollTo( id ) {
       window.scrollTo( 0, document.getElementById( id ).offsetTop );
