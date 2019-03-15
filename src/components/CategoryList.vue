@@ -1,18 +1,36 @@
 <template>
   <div>
     <b-table
+      v-if="subCategories.length > 0"
       :data="subCategories"
       mobile-cards
     >
       <template slot-scope="scprops">
-        <div class="content-box box-styling">
-          <div class="content-box-middle">
-            <div class="break-words">
-              <h2><strong>{{ scprops.row.name }}</strong></h2>
-            </div>
-            <CategoryGroup :categories-by-breadcrumb="scprops.row.subCategory" />
+        <b-collapse
+          class="card"
+          aria-id="contentIdForA11y3"
+        >
+          <div
+            slot="trigger"
+            class="card-header"
+            role="button"
+            aria-controls="contentIdForA11y3"
+          >
+            <p class="card-header-title">
+              {{ scprops.row.name }}
+            </p>
+            <a class="card-header-icon">
+              <b-icon
+                :icon="scprops.open ? 'menu-down' : 'menu-up'"
+              />
+            </a>
           </div>
-        </div>
+          <div class="card-content">
+            <div class="content">
+              <CategoryGroup :categories-by-breadcrumb="scprops.row.subCategory" />
+            </div>
+          </div>
+        </b-collapse>
       </template>
     </b-table>
 
@@ -54,12 +72,16 @@
 </template>
 
 <script>
+import Icon from 'buefy/src/components/icon/Icon';
+import Collapse from 'buefy/src/components/collapse/Collapse';
 import Table from 'buefy/src/components/table/Table';
 
 export default {
   name: 'CategoryGroup',
   components: {
     BTable: Table,
+    BIcon: Icon,
+    BCollapse: Collapse,
   },
   props: {
     categoriesByBreadcrumb: {
