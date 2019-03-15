@@ -120,6 +120,7 @@ export default {
   },
   created() {
     this.fetchTopic();
+    this.$root.$on( 'topicRefresh', this.fetchTopic );
   },
   computed: {
     ...mapState( 'categories', [
@@ -158,7 +159,7 @@ export default {
       this.$store.dispatch( 'replies/submitReply', payload )
         .then( ( reply ) => {
           if ( reply ) {
-            this.fetchTopic();
+            this.fetchTopic( true );
             this.replyText = '';
           }
         } )
@@ -168,7 +169,7 @@ export default {
           this.$ga.exception( err );
         } );
     },
-    fetchTopic() {
+    fetchTopic( scrollDown ) {
       const { author, permlink } = this.$route.params;
 
       this.fetching = true;
@@ -183,7 +184,11 @@ export default {
 
         // Hack to prevent scrolling down on load
         this.$nextTick( function () {
-          this.scrollTo( 'topOfPage' );
+          if ( scrollDown ) {
+            this.scrollTo( 'endOfTopic' );
+          } else {
+            this.scrollTo( 'topOfPage' );
+          }
         } );
       } );
     },

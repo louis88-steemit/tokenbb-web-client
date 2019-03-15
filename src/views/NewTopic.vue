@@ -121,10 +121,12 @@ export default {
 
       this.$store.dispatch( 'topics/createTopic', payload )
         .then( () => {
-          this.$router.push( '/' );
-          Toast.open( {
-            message: 'Your topic has been posted.',
-            type: 'is-primary',
+          this.$store.dispatch( 'topics/fetchAll' ).then( () => {
+            this.$router.push( '/' );
+            Toast.open( {
+              message: 'Your topic has been posted.',
+              type: 'is-primary',
+            } );
           } );
         } )
         .catch( ( err ) => {

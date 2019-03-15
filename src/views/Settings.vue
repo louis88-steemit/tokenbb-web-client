@@ -136,6 +136,7 @@ export default {
           this.name = '';
           this.title = '';
           this.description = '';
+          this.$store.dispatch( 'categories/fetchAll' );
         } )
         .catch( ( err ) => {
           console.error( err );
@@ -144,6 +145,7 @@ export default {
     },
     remove( category ) {
       this.$store.dispatch( 'categories/remove', category )
+        .then( () => this.$store.dispatch( 'categories/fetchAll' ) )
         .catch( ( err ) => {
           console.error( err );
           this.fetching = false;
