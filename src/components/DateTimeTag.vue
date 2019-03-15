@@ -1,10 +1,14 @@
 <template>
-  <div>
+  <b-tooltip
+    :label="timeAbsolute"
+    size="is-small"
+    type="is-black"
+  >
     <b-icon
       icon="clock"
       size="is-small"
     />
-    {{ this.timeFromNow }}
+    {{ this.timeRelative }}
     <template v-if="!this.time && this.numberOfReplies > 0">
       <span>by</span>
       <Avatar
@@ -13,21 +17,24 @@
         size="small"
       />
     </template>
-  </div>
+  </b-tooltip>
 </template>
 
 <script>
 
 import Icon from 'buefy/src/components/icon/Icon';
+import Tooltip from 'buefy/src/components/tooltip/Tooltip';
+
 import Avatar from '../components/Avatar.vue';
 
 import { DateTime } from 'luxon';
 
-import { formatDateTimeFromNow } from '../utils/content';
+import { formatDateTimeAbsolute, formatDateTimeRelative } from '../utils/content';
 
 export default {
   components: {
     BIcon: Icon,
+    BTooltip: Tooltip,
     Avatar,
   },
   props: {
@@ -47,9 +54,13 @@ export default {
     };
   },
   computed: {
-    timeFromNow() {
+    timeRelative() {
       const dummyTicker = this.$data.ticker;
-      return formatDateTimeFromNow( this.time || this.lastReply.time );
+      return formatDateTimeRelative( this.time || this.lastReply.time );
+    },
+    timeAbsolute() {
+      const dummyTicker = this.$data.ticker;
+      return formatDateTimeAbsolute( this.time || this.lastReply.time );
     },
   },
   mounted() {
