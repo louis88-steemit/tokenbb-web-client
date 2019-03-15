@@ -20,10 +20,11 @@
       </div>
     </div>
     <b-pagination
+      v-if="topicList.length > perPage"
       :total="topicList.length"
       :current.sync="current"
       order="is-centered"
-      size="is-large"
+      size="is-normal"
       :simple="false"
       :rounded="false"
       :per-page="perPage"
@@ -112,10 +113,11 @@
       </template>
     </b-table>
     <b-pagination
+      v-if="topicList.length > perPage"
       :total="topicList.length"
       :current.sync="current"
       order="is-centered"
-      size="is-large"
+      size="is-normal"
       :simple="false"
       :rounded="false"
       :per-page="perPage"

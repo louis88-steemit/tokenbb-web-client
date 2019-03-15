@@ -33,10 +33,11 @@
         <main ref="posts">
           <Post :data="topic" />
           <b-pagination
+            v-if="topic.replies.length > perPage"
             :total="topic.replies.length"
             :current.sync="current"
             order="is-centered"
-            size="is-large"
+            size="is-normal"
             :simple="false"
             :rounded="false"
             :per-page="perPage"
@@ -54,10 +55,11 @@
             Back to Top
           </a>
           <b-pagination
+            v-if="topic.replies.length > perPage"
             :total="topic.replies.length"
             :current.sync="current"
             order="is-centered"
-            size="is-large"
+            size="is-normal"
             :simple="false"
             :rounded="false"
             :per-page="perPage"
