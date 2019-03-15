@@ -8,6 +8,8 @@
 
 <script>
 
+import { quoteText } from '../utils/content';
+
 export default {
   props: {
     fetching: Boolean,
@@ -39,7 +41,7 @@ export default {
   },
   methods: {
     addQuote( quote ) {
-      this.content += `\n> @${ quote.author.user }:\n${ quote.body.replace( /^/gm, '> ' ) }\n---\n`;
+      this.content += quoteText( quote );
     },
   },
 };

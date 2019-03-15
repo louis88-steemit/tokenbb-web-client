@@ -1,5 +1,5 @@
 <template>
-  <div class="container fill">
+  <div class="container">
     <div
       v-if="fetching"
       class="spacer"
@@ -11,52 +11,74 @@
     </div>
 
     <div v-if="!fetching">
-      <header class="has-text-left">
-        <h1 class="title is-3">
-          {{ topic.title }}
-        </h1>
-
-        <CategoryTag :category-id="topic.categoryId" />
+      <div class="post-page">
+        <header class="has-text-left">
+          <h1 class="title is-3">
+            {{ topic.title }}
+          </h1>
+          <span class="tag is-small">
+            <CategoryTag :category-id="topic.categoryId" />
+          </span>
         &nbsp;
-        <a
-          class="topic-nav topic-nav-to-end"
-          @click="scrollTo('endOfTopic')"
-        >
-          Jump to end
-        </a>
-      </header>
+          <a
+            class="topic-nav topic-nav-to-end"
+            @click="scrollTo('endOfTopic')"
+          >
+            Jump to end
+          </a>
+        </header>
 
-      <br>
+        <br>
 
-      <main ref="posts">
-        <Post :data="topic" />
+        <main ref="posts">
+          <Post :data="topic" />
+          <b-pagination
+            v-if="topic.replies.length > perPage"
+            :total="topic.replies.length"
+            :current.sync="current"
+            order="is-centered"
+            size="is-normal"
+            :simple="false"
+            :rounded="false"
+            :per-page="perPage"
+          />
+          <Post
+            v-for="(reply, index) in currentPage"
+            :key="index"
+            :data="reply"
+            :is-reply="true"
+          />
+          <a
+            class="topic-nav topic-nav-to-top"
+            @click="scrollTo('topOfPage')"
+          >
+            Back to Top
+          </a>
+          <b-pagination
+            v-if="topic.replies.length > perPage"
+            :total="topic.replies.length"
+            :current.sync="current"
+            order="is-centered"
+            size="is-normal"
+            :simple="false"
+            :rounded="false"
+            :per-page="perPage"
+          />
+        </main>
 
-        <Post
-          v-for="(reply, index) in topic.replies"
-          :key="index"
-          :data="reply"
-          :is-reply="true"
-        />
-        <a
-          class="topic-nav topic-nav-to-top"
-          @click="scrollTo('topOfPage')"
-        >
-          Back to Top
-        </a>
-      </main>
-
-      <br>
-      <a id="endOfTopic" />
-      <ShowIfLoggedIn>
-        <ReplyForm
-          :fetching="$store.state.replies.fetching"
-          :text="replyText"
-          :quote="quote"
-          :quote-author="quoteAuthor"
-          @input="onReplyInput"
-          @submit="onReplySubmit"
-        />
-      </ShowIfLoggedIn>
+        <br>
+        <a id="endOfTopic" />
+        <ShowIfLoggedIn>
+          <ReplyForm
+            :fetching="$store.state.replies.fetching"
+            :text="replyText"
+            :quote="quote"
+            :quote-author="quoteAuthor"
+            @input="onReplyInput"
+            @submit="onReplySubmit"
+          />
+        </ShowIfLoggedIn>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +87,7 @@
 import { mapState } from 'vuex';
 
 import Loading from 'buefy/src/components/loading/Loading';
+import Pagination from 'buefy/src/components/pagination/Pagination';
 
 import Post from '../components/Post.vue';
 import ReplyForm from '../components/ReplyForm.vue';
@@ -79,6 +102,7 @@ export default {
   name: 'Topic',
   components: {
     BLoading: Loading,
+    BPagination: Pagination,
     Post,
     ReplyForm,
     ShowIfLoggedIn,
@@ -89,17 +113,27 @@ export default {
       fetching: true,
       topic: {},
       replyText: '',
+      total: 0,
+      current: 1,
+      perPage: 10,
     };
   },
   created() {
     this.fetchTopic();
+    this.$root.$on( 'topicRefresh', this.fetchTopic );
   },
   computed: {
     ...mapState( 'categories', [
       'categoriesBySlug',
     ] ),
+    currentPage() {
+      const replies = this.topic.replies || [];
+      const start = ( this.current - 1 ) * this.perPage;
+      const end = this.current * this.perPage;
+      return replies.slice( start, end );
+    },
     quote() {
-      const arr = this.topic.replies;
+      const arr = this.currentPage;
       if ( arr && arr.length > 0 ) {
         return arr[arr.length - 1].body.trim();
       } else if ( this.topic.body ) {
@@ -125,7 +159,7 @@ export default {
       this.$store.dispatch( 'replies/submitReply', payload )
         .then( ( reply ) => {
           if ( reply ) {
-            this.fetchTopic();
+            this.fetchTopic( true );
             this.replyText = '';
           }
         } )
@@ -135,7 +169,7 @@ export default {
           this.$ga.exception( err );
         } );
     },
-    fetchTopic() {
+    fetchTopic( scrollDown ) {
       const { author, permlink } = this.$route.params;
 
       this.fetching = true;
@@ -147,10 +181,16 @@ export default {
 
         this.topic = topic;
         this.fetching = false;
+
+        // Hack to prevent scrolling down on load
+        this.$nextTick( function () {
+          if ( scrollDown ) {
+            this.scrollTo( 'endOfTopic' );
+          } else {
+            this.scrollTo( 'topOfPage' );
+          }
+        } );
       } );
-    },
-    categoryFromId( id ) {
-      return ( this.categoriesBySlug[id] || { name: '' } ).name;
     },
     scrollTo( id ) {
       window.scrollTo( 0, document.getElementById( id ).offsetTop );

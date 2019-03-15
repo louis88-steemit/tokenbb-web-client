@@ -1,11 +1,11 @@
 <template>
   <b-dropdown
-    class="dropdown-style"
+    class="is-right"
     @change="onChange"
   >
     <button
       slot="trigger"
-      class="button is-primary"
+      class="button is-small"
       type="button"
     >
       <Avatar

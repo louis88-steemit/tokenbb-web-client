@@ -9,9 +9,9 @@ import store from './store/index.js';
 
 import steemEditor from 'steem-editor';
 import 'steem-editor/dist/css/index.css';
-import moment from 'moment/moment';
-import 'moment/locale/en-au';
 import VueAnalytics from 'vue-analytics';
+
+import { formatDate, formatDateTimeFromNow } from './utils/content';
 
 registerSW();
 
@@ -19,7 +19,7 @@ const contextMap = {
   default: { theme: 'theme-default', forum: 'support', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon_teeth.png' },
   drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
-  localhost: { theme: 'theme-default', forum: 'monsters', icon: 'favicon.ico' },
+  localhost: { theme: 'theme-default', forum: 'test', icon: 'favicon.ico' },
 };
 let context = contextMap.default;
 const subs = ( new URL( window.location ) ).hostname.split( '.' );
@@ -65,29 +65,8 @@ function setGAUserID( userID ) {
 
 Vue.use( steemEditor );
 
-
-Vue.filter( 'formatDate', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .format( 'MMM Do YYYY' );
-  }
-} );
-
-/*
-const locale = window.navigator.userLanguage || window.navigator.language || 'en';
-console.log( `Setting TimeZone Language to ${locale}` );
-moment.lang('en-AU')
-*/
-moment.locale( 'en-AU' );
-
-Vue.filter( 'fromNow', ( value ) => {
-  if ( value ) {
-    return moment.utc( String( value ) )
-      .add( moment().utcOffset(), 'minutes' )
-      .calendar();
-  }
-} );
-
+Vue.filter( 'formatDate', formatDate );
+Vue.filter( 'fromNow', formatDateTimeFromNow );
 
 Vue.filter( 'usernameDisplay', ( username, owner ) => {
   if ( username === process.env.VUE_APP_ANON_USER ) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container fill">
+  <div class="container">
     <h2 class="title is-2">
       Create a New Forum
     </h2>
@@ -8,30 +8,19 @@
       class="new-forum"
       @submit.prevent="onSubmit"
     >
-      <div class="level is-mobile">
-        <div class="level-left">
-          <div class="level-item">
-            <b-field label="Name">
-              <b-input
-                v-model="name"
-                placeholder="Type name here"
-              />
-            </b-field>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <button
-            role="submit"
-            :class="{ 'is-loading': fetching }"
-            class="button is-primary"
-          >
-            Create Forum
-          </button>
-        </div>
-      </div>
+      <b-field label="Name">
+        <b-input
+          v-model="name"
+          placeholder="Type name here"
+        />
+      </b-field>
+      <button
+        role="submit"
+        :class="{ 'is-loading': fetching }"
+        class="button is-primary"
+      >
+        Create Forum
+      </button>
     </form>
   </div>
 </template>

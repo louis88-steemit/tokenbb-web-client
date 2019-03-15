@@ -1,7 +1,7 @@
 <template>
-  <div class="post columns is-mobile box-styling">
-    <div class="column is-12 post-body">
-      <header class="level is-mobile">
+  <div class="container post">
+    <div class="box is-mobile">
+      <div class="level is-tablet">
         <div class="level-left">
           <div class="level-item">
             <Avatar
@@ -9,40 +9,39 @@
               :owner="data.author.owner_id"
               size="large"
             />
+          </div>
+          <div class="level-item">
             <p class="username">
               {{ data.author.user | usernameDisplay(data.author.owner_id) }}
             </p>
-            <div class="mod-display">
-              <ModActions
-                :post="data"
-                :is-reply="isReply"
-              />
-            </div>
+          </div>
+          <div class="level-item is-tablet">
+            <ModActions
+              :post="data"
+              :is-reply="isReply"
+            />
           </div>
         </div>
-
         <div class="level-right">
           <p class="level-item">
             <small>
-              <b-icon
-                icon="clock"
-                size="is-small"
-              />{{ data.createdAt | fromNow }}
+              <DateTimeTag :time="data.createdAt" />
             </small>
           </p>
         </div>
-      </header>
-
-      <article
-        v-if="!editing"
-        class="content has-text-left"
-        v-html="$renderMD(data.body)"
-      />
-
+      </div>
+      <div class="media-content">
+        <article
+          v-if="!editing"
+          class="content"
+          v-html="$renderMD(data.body)"
+        />
+      </div>
       <form v-if="editing">
         <b-field>
           <b-input
             v-model="text"
+            autofocus
             type="textarea"
             :loading="fetching"
             :disabled="fetching"
@@ -51,19 +50,17 @@
         </b-field>
 
         <b-field>
-          <p class="control">
+          <a
+            class="button is-small is-topic save"
+            :class="{ 'is-loading': this.fetching }"
+            @click="onSave"
+          >
+            Save
+          </a>
+          <span />
+          <p>
             <a
-              class="button is-primary"
-              :class="{ 'is-loading': this.fetching }"
-              @click="onSave"
-            >
-              Save
-            </a>
-          </p>
-
-          <p class="control">
-            <a
-              class="button"
+              class="button is-small"
               :disabled="this.fetching"
               @click="onCancel"
             >
@@ -74,27 +71,44 @@
       </form>
       <ShowIfLoggedIn
         :hidden="true"
-        class="quote-this"
       >
-        <a @click="handleQuoteClick">Quote this</a>
-      </ShowIfLoggedIn>
-      <div class="upvote-module">
-        <!--
-              <a v-if="editable && !editing"
+        <div class="level is-tablet">
+          <div class="level-left" />
+          <div class="level-right">
+            <div class="level-item edit-this">
+              <a
+                v-if="editable && !editing"
+                class="has-icon"
                 @click="onStartEditing"
-                class="button is-small has-icon">
+              >
                 <b-icon
                   icon="square-edit-outline"
-                  size="is-small">
-                </b-icon>
+                  size="is-small"
+                />
                 <span>Edit</span>
               </a>
-              -->
-        <Upvote
-          :votes="[]"
-          :author="data.steem.author"
-          :permlink="data.steem.permlink"
-        />
+            </div>
+            <div class="level-item quote-this">
+              <a @click="handleQuoteClick">
+                <b-icon
+                  icon="comment"
+                  size="is-small"
+                />Quote this</a>
+            </div>
+          </div>
+        </div>
+      </ShowIfLoggedIn>
+      <div class="level">
+        <div class="level-left" />
+        <div class="level-right">
+          <div class="level-item">
+            <Upvote
+              :votes="[]"
+              :author="data.steem.author"
+              :permlink="data.steem.permlink"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -110,8 +124,10 @@ import Icon from 'buefy/src/components/icon/Icon';
 import Avatar from '../components/Avatar.vue';
 import Upvote from '../components/Upvote.vue';
 import ModActions from '../components/ModActions.vue';
+import { publishEdit } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
+import DateTimeTag from '../components/DateTimeTag';
 
 import { Toast } from 'buefy/dist/components/toast';
 
@@ -124,6 +140,7 @@ export default {
     Upvote,
     ModActions,
     ShowIfLoggedIn,
+    DateTimeTag,
   },
   props: {
     data: Object,
@@ -138,7 +155,7 @@ export default {
   },
   computed: {
     editable() {
-      return this.$store.state.auth.accounts.includes( this.data.author );
+      return this.$store.state.auth.accounts.find( ( account ) => account.user_id === this.data.author.owner_id );
     },
     steemitLink() {
       return `https://steemit.com/@${this.data.steem.author}/${this.data.steem.permlink}`;
@@ -157,14 +174,10 @@ export default {
     onSave() {
       this.fetching = true;
 
-      const payload = {
-        post: this.data,
-        content: this.text,
-      };
-
-      this.$store.dispatch( 'posts/editPost', payload )
+      publishEdit( this.data, { content: this.text } )
         .then( ( post ) => {
-          this.data.body = post.body;
+          console.log( post );
+          this.data.body = post.data.body;
           this.editing = false;
           this.fetching = false;
         } )

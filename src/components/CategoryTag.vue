@@ -4,10 +4,7 @@
       icon="tag"
       size="is-small"
     />
-    <span
-      class="tag is-info"
-      v-html="category"
-    />
+    {{ this.category }}
   </router-link>
 </template>
 

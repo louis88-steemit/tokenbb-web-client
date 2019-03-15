@@ -1,145 +1,148 @@
 <template>
-  <div class="container">
-    <nav class="level is-mobile second-nav">
+  <div class="container home">
+    <div class="level is-mobile">
       <div class="level-left">
-        <div class="level-item">
-          <div class="dropdown-style">
-            <CategoryDropdown
-              :selected-id="selectedCategoryId"
-              :label-for-all="'All Categories'"
-              @change="onSelectCategoryId"
-            />
-          </div>
-        </div>
+        <CategoryDropdown
+          :selected-id="selectedCategoryId"
+          :label-for-all="'All Categories'"
+          @change="onSelectCategoryId"
+        />
       </div>
       <div class="level-right">
-        <div class="level-item">
-          <router-link
-            v-if="loggedIn && selectedCategoryId"
-            :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
-            class="is-topic"
-          >
-            New Topic
-          </router-link>
-        </div>
-      </div>
-    </nav>
-
-    <div class="main-content">
-      <div v-show="!selectedCategoryId">
-        <CategoryList :categories-by-breadcrumb="categoriesByBreadcrumb" />
-      </div>
-
-      <div v-show="selectedCategoryId">
-        <b-table
-          :loading="fetching"
-          :data="topicList"
-          :row-class="getRowClass"
-          :mobile-cards="false"
+        <router-link
+          v-if="loggedIn && selectedCategoryId"
+          :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
         >
-          <template slot-scope="props">
-            <div class="content-box box-styling">
-              <div class="content-box-left">
-                <div>
+          <button class="button is-small is-topic">
+            New Topic
+          </button>
+        </router-link>>
+      </div>
+    </div>
+    <div v-show="!selectedCategoryId">
+      <CategoryList :categories-by-breadcrumb="categoriesByBreadcrumb" />
+    </div>
+
+    <div v-show="selectedCategoryId">
+      <b-table
+        :loading="fetching"
+        :data="currentPage"
+        :row-class="getRowClass"
+        :mobile-cards="false"
+      >
+        <template slot-scope="props">
+          <div class="box is-mobile">
+            <article class="media is-mobile">
+              <figure class="media-left">
+                <p class="image is-64x64">
                   <Avatar
                     :author="props.row.author.user"
                     :owner="props.row.author.owner_id"
                     size="large"
                   />
-                </div>
-              </div>
-              <div class="content-box-middle">
-                <div class="break-words">
+                </p>
+              </figure>
+              <div class="media-content">
+                <div class="content">
                   <router-link :to="topicRoute(props.row)">
-                    <h2><strong>{{ props.row.title }}</strong></h2>
+                    <h2 class="title is-6">
+                      <span
+                        v-if="props.row.pinned"
+                        type="is-secondary"
+                      >
+                        <b-icon
+                          icon="pin"
+                          size="is-small"
+                        /></span>
+                      {{ props.row.title }}
+                    </h2>
                   </router-link>
                 </div>
-                <span
-                  field="icon"
-                  width="0px"
-                >
-                  <span
-                    class=" has-text-center"
-                    style="width: 100%"
-                  >
-                    <b-icon
-                      v-if="props.row.pinned"
-                      icon="pin"
-                      size="is-small"
-                    />
-                  </span>
-                </span>
-                <span class="meta-box">
-                  <CategoryTag :category-id="props.row.categoryId" />
-                </span>
-                <span id="tiptop-control">
-                  <span
-                    class="tip tip-left"
-                    title=""
-                    data-original-title="Views"
-                  ><b-icon
-                    icon="eye"
-                    size="is-small"
-                  /> {{ props.row.numberOfViews }}</span>
-                  <span
-                    class="tip tip-center"
-                    title=""
-                    data-original-title="Number of Replies"
-                  ><b-icon
-                    icon="reply"
-                    size="is-small"
-                  /> {{ props.row.numberOfReplies }}</span>
-                  <span
-                    class="tip tip-right"
-                    title=""
-                    data-original-title="Last Reply"
-                  ><b-icon
-                     icon="clock"
-                     size="is-small"
-                   /> {{ props.row.lastReply.time | fromNow }}
-                    <template v-if="props.row.numberOfReplies > 0">by
-                      <Avatar
-                        :author="props.row.lastReply.author"
-                        :owner="props.row.lastReply.owner"
-                        size="small"
+                <nav class="level is-tablet">
+                  <div class="level-left post-stats">
+                    <span class="level-item">
+                      <span class="tag is-small">
+                        <CategoryTag :category-id="props.row.categoryId" />
+                      </span>
+                    </span>
+                    <span class="level-item">
+                      <Upvote
+                        :votes="[]"
+                        :author="props.row.steem.author"
+                        :permlink="props.row.steem.permlink"
                       />
-                    </template></span>
-                </span>
+                    </span>
+                    <span class="level-item">
+                      <span
+                        class=""
+                        title="View Count"
+                        data-original-title="Number of Views"
+                      >
+                        <b-icon
+                          icon="eye"
+                          size="is-small"
+                        /> {{ props.row.numberOfViews }}
+                      </span>
+                      <span
+                        class=""
+                        title="Reply Count"
+                        data-original-title="Number of Replies"
+                      >
+                        <b-icon
+                          icon="reply"
+                          size="is-small"
+                        /> {{ props.row.numberOfReplies }}
+                      </span>
+                    </span>
+                    <span class="level-item">
+                      <DateTimeTag
+                        :last-reply="props.row.lastReply"
+                        :number-of-replies="props.row.numberOfReplies"
+                      />
+                    </span>
+                  </div>
+                </nav>
               </div>
-              <div class="content-box-right">
-                <Upvote
-                  :votes="[]"
-                  :author="props.row.steem.author"
-                  :permlink="props.row.steem.permlink"
-                />
-              </div>
-            </div>
-          </template>
-        </b-table>
-      </div>
+            </article>
+          </div>
+        </template>
+      </b-table>
+      <b-pagination
+        v-if="topicList.length > perPage"
+        :total="topicList.length"
+        :current.sync="current"
+        order="is-centered"
+        size="is-small"
+        :simple="false"
+        :rounded="false"
+        :per-page="perPage"
+      />
     </div>
   </div>
 </template>
 
 <script>
 
+import { mapState } from 'vuex';
+
 import Icon from 'buefy/src/components/icon/Icon';
 import Table from 'buefy/src/components/table/Table';
-
-
-import { mapState } from 'vuex';
+import Pagination from 'buefy/src/components/pagination/Pagination';
 
 import CategoryDropdown from '@/components/CategoryDropdown.vue';
 import CategoryList from '@/components/CategoryList.vue';
 import CategoryTag from '../components/CategoryTag.vue';
 import Upvote from '@/components/Upvote.vue';
 import Avatar from '@/components/Avatar.vue';
+import DateTimeTag from '../components/DateTimeTag';
 
 export default {
   name: 'Home',
   components: {
+    DateTimeTag,
     BIcon: Icon,
     BTable: Table,
+    BPagination: Pagination,
     CategoryDropdown,
     CategoryList,
     Upvote,
@@ -160,6 +163,21 @@ export default {
     fetching() {
       return this.$store.state.topics.fetching || this.$store.state.categories.fetching;
     },
+    currentPage() {
+      const topics = this.topicList || [];
+      const start = ( this.current - 1 ) * this.perPage;
+      const end = this.current * this.perPage;
+      return topics.slice( start, end );
+    },
+    topicList() {
+      if ( !this.selectedCategoryId ) {
+        return this.$store.state.topics.topicList;
+      }
+
+      return this.$store.state.topics.topicList.filter( ( topic ) => {
+        return topic.categoryId === this.selectedCategoryId;
+      } );
+    },
   },
   beforeRouteUpdate( to, from, next ) {
     if ( to.query.category ) {
@@ -173,6 +191,9 @@ export default {
     return {
       selectedCategoryId: null,
       selected: null,
+      total: 0,
+      current: 1,
+      perPage: 10,
     };
   },
   watch: {
@@ -214,3 +235,4 @@ export default {
   },
 };
 </script>
+
