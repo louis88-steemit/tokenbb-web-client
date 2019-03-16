@@ -152,7 +152,7 @@ export default {
         name: this.name,
         title: this.title,
         description: this.description,
-        breadcrumb: this.breadcrumb.split( ',' ).map( ( s ) => s.trim() ),
+        breadcrumb: this.breadcrumb.split( ',' ).map( ( s ) => s.trim() ).filter( ( s ) => s !== '' ),
       } )
         .then( () => {
           this.name = '';
