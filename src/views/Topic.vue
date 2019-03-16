@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div class="level-left">
+      <Breadcrumb :crumbs="breadcrumb" />
+    </div>
     <div
       v-if="fetching"
       class="spacer"
@@ -89,6 +92,7 @@ import { mapState } from 'vuex';
 import Loading from 'buefy/src/components/loading/Loading';
 import Pagination from 'buefy/src/components/pagination/Pagination';
 
+import Breadcrumb from '../components/Breadcrumb.vue';
 import Post from '../components/Post.vue';
 import ReplyForm from '../components/ReplyForm.vue';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
@@ -103,6 +107,7 @@ export default {
   components: {
     BLoading: Loading,
     BPagination: Pagination,
+    Breadcrumb,
     Post,
     ReplyForm,
     ShowIfLoggedIn,
@@ -124,7 +129,8 @@ export default {
   },
   computed: {
     ...mapState( 'categories', [
-      'categoriesBySlug',
+      'categoriesById',
+      'categoriesByBreadcrumb',
     ] ),
     currentPage() {
       const replies = this.topic.replies || [];
@@ -144,6 +150,23 @@ export default {
     quoteAuthor() {
       const topic = this.topic;
       return topic.lastReply.author === '' ? topic.author.user : topic.lastReply.author;
+    },
+    breadcrumb() {
+      const breadcrumb = [];
+      const category = this.categoriesById[this.topic.categoryId];
+      if ( category ) {
+        let nav = '';
+        if ( category.nav ) {
+          category.nav.split( '/' ).forEach( ( crumb ) => {
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+          } );
+        }
+        breadcrumb.push( { path: '/topics', query: { category: category.slug }, name: category.title } );
+        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: '' } );
+      }
+      return breadcrumb;
     },
   },
   methods: {

@@ -2,26 +2,7 @@
   <div class="container home">
     <div class="level is-mobile">
       <div class="level-left">
-        <nav
-          class="breadcrumb"
-          aria-label="breadcrumbs"
-        >
-          <ul>
-            <li>
-              <router-link :to="{ path: '/' }">
-                Home
-              </router-link>
-            </li>
-            <li
-              v-for="crumb in breadcrumb"
-              :key="crumb.name"
-            >
-              <router-link :to="{ path: crumb.path, query: crumb.query }">
-                {{ crumb.name }}
-              </router-link>
-            </li>
-          </ul>
-        </nav>
+        <Breadcrumb :crumbs="breadcrumb" />
       </div>
       <div class="level-right">
         <router-link
@@ -139,6 +120,7 @@ import Icon from 'buefy/src/components/icon/Icon';
 import Table from 'buefy/src/components/table/Table';
 import Pagination from 'buefy/src/components/pagination/Pagination';
 
+import Breadcrumb from '../components/Breadcrumb.vue';
 import CategoryTag from '../components/CategoryTag.vue';
 import Upvote from '@/components/Upvote.vue';
 import Avatar from '@/components/Avatar.vue';
@@ -151,6 +133,7 @@ export default {
     BIcon: Icon,
     BTable: Table,
     BPagination: Pagination,
+    Breadcrumb,
     Upvote,
     Avatar,
     CategoryTag,
@@ -188,7 +171,7 @@ export default {
             breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
           } );
         }
-        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: this.selectedCategory.title } );
+        breadcrumb.push( { path: 'topics', query: { category: this.selectedCategory.slug }, name: this.selectedCategory.title } );
       }
       return breadcrumb;
     },

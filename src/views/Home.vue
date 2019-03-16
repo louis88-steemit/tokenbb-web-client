@@ -1,27 +1,7 @@
 <template>
   <div class="container home">
     <div class="level-left">
-      <nav
-        v-if="queryCategoriesByBreadcrumb.breadcrumb.length > 0"
-        class="breadcrumb"
-        aria-label="breadcrumbs"
-      >
-        <ul>
-          <li>
-            <router-link :to="{ path: '/' }">
-              Home
-            </router-link>
-          </li>
-          <li
-            v-for="crumb in queryCategoriesByBreadcrumb.breadcrumb"
-            :key="crumb.name"
-          >
-            <router-link :to="{ path: crumb.path, query: crumb.query }">
-              {{ crumb.name }}
-            </router-link>
-          </li>
-        </ul>
-      </nav>
+      <Breadcrumb :crumbs="queryCategoriesByBreadcrumb.breadcrumb" />
     </div>
 
     <CategoryList
@@ -35,11 +15,13 @@
 
 import { mapState } from 'vuex';
 
+import Breadcrumb from '@/components/Breadcrumb.vue';
 import CategoryList from '@/components/CategoryList.vue';
 
 export default {
   name: 'Home',
   components: {
+    Breadcrumb,
     CategoryList,
   },
   computed: {

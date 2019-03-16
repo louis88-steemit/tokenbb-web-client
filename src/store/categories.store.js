@@ -10,7 +10,7 @@ export default {
     fetching: true,
     categoryList: [],
     categoriesById: {},
-    categoriesByBreadcrumb: { title: 'Home', groups: [], categories: [] },
+    categoriesByBreadcrumb: null,
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -75,18 +75,23 @@ export default {
         } ).filter( ( c ) => c );
         return categoryGroup;
       }
-      const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
 
-      // Place other categories on root level.
-      categoriesByBreadcrumb.categories = categoriesByBreadcrumb.categories.concat(
-        Object.values( categoriesBySlug ).filter( ( c ) => c ).map( ( c ) => {
-          c.nav = '';
-          return c;
-        } ) );
-      categoriesByBreadcrumb.categoryGroupsByNav = categoryGroupsByNav;
+      // when getter not ready, categoryOrdering is a function
+      if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
+        const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
+
+        // Place other categories on root level.
+        categoriesByBreadcrumb.categories = categoriesByBreadcrumb.categories.concat(
+          Object.values( categoriesBySlug ).filter( ( c ) => c ).map( ( c ) => {
+            c.nav = '';
+            return c;
+          } ) );
+        categoriesByBreadcrumb.categoryGroupsByNav = categoryGroupsByNav;
+
+        state.categoriesByBreadcrumb = categoriesByBreadcrumb;
+      }
 
       // For Vue Reactivity.
-      state.categoriesByBreadcrumb = categoriesByBreadcrumb;
       state.categoriesById = { ...state.categoriesById };
     },
   },

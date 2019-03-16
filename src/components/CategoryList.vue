@@ -25,7 +25,7 @@
             </h2>
             <a class="card-header-icon">
               <b-icon
-                :icon="cardprops.open ? 'menu-down' : 'menu-up'"
+                :icon="cardprops.open ? 'menu-up' : 'menu-down'"
               />
             </a>
           </div>
