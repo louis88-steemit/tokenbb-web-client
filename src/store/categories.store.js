@@ -91,10 +91,10 @@ export default {
     },
   },
   actions: {
-    add( { commit }, { name: categoryName, title, description, breadcrumb } ) {
+    add( { commit }, { name: categoryName, title, description } ) {
       commit( 'setFetching', true );
 
-      addCategory( categoryName, title, description, breadcrumb )
+      addCategory( categoryName, title, description )
         .then( ( category ) => {
           commit( 'add', category.data );
           commit( 'setFetching', false );

@@ -111,7 +111,7 @@ export function createForum( forumName ) {
   return requestAsync( opts );
 }
 
-export function addCategory( categoryName, title, description, breadcrumb ) {
+export function addCategory( categoryName, title, description ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -121,7 +121,6 @@ export function addCategory( categoryName, title, description, breadcrumb ) {
       name: categoryName,
       title,
       description,
-      breadcrumb,
     },
   };
 

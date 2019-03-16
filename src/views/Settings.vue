@@ -38,12 +38,6 @@
         >
           {{ props.row.description }}
         </b-table-column>
-        <b-table-column
-          field="breadcrumb"
-          label="Breadcrumb"
-        >
-          {{ props.row.breadcrumb.join(',') }}
-        </b-table-column>
         <!--
         <b-table-column label="Delete" centered>
 
@@ -94,16 +88,6 @@
         />
       </b-field>
 
-      <b-field label="Breadcrumb (comma-separated, e.g. Sports,Baseball)">
-        <b-input
-          v-model="breadcrumb"
-          :maxlength="320"
-          :has-counter="false"
-          :disabled="fetching"
-        />
-      </b-field>
-
-
       <button
         role="submit"
         class="button is-small"
@@ -137,7 +121,6 @@ export default {
       name: '',
       title: '',
       description: '',
-      breadcrumb: '',
     };
   },
   computed: {
@@ -152,13 +135,11 @@ export default {
         name: this.name,
         title: this.title,
         description: this.description,
-        breadcrumb: this.breadcrumb.split( ',' ).map( ( s ) => s.trim() ).filter( ( s ) => s !== '' ),
       } )
         .then( () => {
           this.name = '';
           this.title = '';
           this.description = '';
-          this.breadcrumb = '';
           this.$store.dispatch( 'categories/fetchAll' );
         } )
         .catch( ( err ) => {
