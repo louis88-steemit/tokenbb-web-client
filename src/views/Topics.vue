@@ -2,13 +2,6 @@
   <div class="container home">
     <div class="level is-mobile">
       <div class="level-left">
-        <CategoryDropdown
-          :selected-id="selectedCategory ? selectedCategory._id : null"
-          :label-for-all="'All Categories'"
-          @change="onSelectCategory"
-        />
-      </div>
-      <div class="level-left">
         <nav
           class="breadcrumb"
           aria-label="breadcrumbs"
@@ -21,9 +14,11 @@
             </li>
             <li
               v-for="crumb in breadcrumb"
-              :key="crumb"
+              :key="crumb.title"
             >
-              <a href="javascript:void(0);">{{ crumb }}</a>
+              <router-link :to="{ path: crumb.path, query: crumb.query }">
+                {{ crumb.title }}
+              </router-link>
             </li>
           </ul>
         </nav>
@@ -144,7 +139,6 @@ import Icon from 'buefy/src/components/icon/Icon';
 import Table from 'buefy/src/components/table/Table';
 import Pagination from 'buefy/src/components/pagination/Pagination';
 
-import CategoryDropdown from '@/components/CategoryDropdown.vue';
 import CategoryTag from '../components/CategoryTag.vue';
 import Upvote from '@/components/Upvote.vue';
 import Avatar from '@/components/Avatar.vue';
@@ -157,7 +151,6 @@ export default {
     BIcon: Icon,
     BTable: Table,
     BPagination: Pagination,
-    CategoryDropdown,
     Upvote,
     Avatar,
     CategoryTag,
@@ -184,7 +177,16 @@ export default {
       return this.$store.state.topics.fetching || this.$store.state.categories.fetching;
     },
     breadcrumb() {
-      return this.selectedCategory && this.selectedCategory.breadcrumb ? this.selectedCategory.breadcrumb.concat( this.selectedCategory.title ) : [];
+      const breadcrumb = [];
+      if ( this.selectedCategory && this.selectedCategory.breadcrumb ) {
+        let nav = [];
+        this.selectedCategory.breadcrumb.forEach( ( crumb ) => {
+          nav = nav.concat( crumb );
+          breadcrumb.push( { path: '/', query: { nav: nav.join( ',' ) }, title: crumb } );
+        } );
+        breadcrumb.push( { path: this.$route.path, query: this.$route.query, title: this.selectedCategory.title } );
+      }
+      return breadcrumb;
     },
     currentPage() {
       const topics = this.topicList || [];
