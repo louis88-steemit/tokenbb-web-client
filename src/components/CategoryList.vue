@@ -19,7 +19,9 @@
             aria-controls="contentIdForA11y3"
           >
             <h2 class="card-header-title">
-              {{ cgprops.row.title }}
+              <router-link :to="{ path: '/', query: { nav: cgprops.row.nav } }">
+                {{ cgprops.row.title }}
+              </router-link>
             </h2>
             <a class="card-header-icon">
               <b-icon

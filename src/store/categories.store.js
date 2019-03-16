@@ -30,7 +30,7 @@ export default {
         state.categoriesById[category._id] = category;
       } );
 
-      const categoriesByBreadcrumb = { title: 'Home', groups: [], categories: [] };
+      const categoriesByBreadcrumb = { title: 'Home', nav: '', groups: [], categories: [] };
 
       // map category by breadcrumb
       categories.forEach( ( category ) => {
@@ -39,7 +39,7 @@ export default {
           const crumb = category.breadcrumb[idx];
           let group = categoryGroup.groups.find( ( g ) => g.title === crumb );
           if ( !group ) {
-            group = { title: crumb, groups: [], categories: [] };
+            group = { nav: category.breadcrumb.slice( 0, idx + 1 ).join( ',' ), title: crumb, groups: [], categories: [] };
             categoryGroup.groups.push( group );
           }
           categoryGroup = group;
