@@ -26,8 +26,10 @@ export default {
     },
     updateCategoryList( state, categories ) {
       state.categoryList = categories;
+      const categoriesBySlug = {};
       categories.forEach( ( category ) => {
         state.categoriesById[category._id] = category;
+        categoriesBySlug[category.slug] = category;
       } );
 
       const categoryOrdering = this.getters['forum/getCategoryOrdering'];
@@ -54,65 +56,34 @@ export default {
           .substring( 0, 24 );
       }
 
-      function parseCategoryOrderingLevel( level, restCategories ) {
-        if ( !( level instanceof Array ) ) {
-          return [ [], restCategories ];
-        }
-        let categoriesLeft = restCategories;
-        const currentLevels = [];
-        for ( const index in level ) {
-          const current = level[index];
-          current.slug = stringToSlug( current.slug );
-          current.name = current.name || 'Empty Name';
-          const [ newCurrent, newCategories ] = parseCategoryOrderingLevel( current.groups, categoriesLeft );
-          categoriesLeft = newCategories;
-          const thislevel = [];
-          for ( const categoryIndex in current.categories ) {
-            const category = current.categories[categoryIndex];
-            const cat = categoriesLeft.find( ( c ) => c.slug === category.slug );
-            categoriesLeft = categoriesLeft.filter( ( c ) => c.slug !== category.slug );
-            if ( cat ) {
-              thislevel.push( cat );
-            }
-          }
-          if ( newCurrent.length > 0 || thislevel.length > 0 ) {
-            currentLevels.push( {
-              name: current.name,
-              slug: current.slug,
-              groups: newCurrent,
-              categories: thislevel,
-            } );
-          }
-        }
-        return [ currentLevels, categoriesLeft ];
-      }
-      const [ catparsed, restcats ] = parseCategoryOrderingLevel( categoryOrdering, categories );
-      if ( restcats.length > 0 ) {
-        catparsed.push( {
-          name: 'Uncategorized',
-          slug: 'uncategorized',
-          groups: [],
-          categories: restcats,
+      const categoryGroupsByNav = {};
+      function processCategoryOrdering( ordering, nav = '' ) {
+        const slug = stringToSlug( ordering.slug );
+        const currentNav = nav + ( nav !== '' ? '/' : '' ) + slug;
+        const categoryGroup = { name: ordering.name, nav: currentNav };
+        categoryGroupsByNav[currentNav] = categoryGroup;
+        categoryGroup.groups = ordering.groups.map( ( g ) => {
+          return processCategoryOrdering( g, currentNav );
         } );
-      }
-      console.log( catparsed );
-
-      const categoriesByBreadcrumb = { title: 'Home', nav: '', groups: [], categories: [] };
-
-      // map category by breadcrumb
-      categories.forEach( ( category ) => {
-        let categoryGroup = categoriesByBreadcrumb;
-        for ( let idx = 0; idx < category.breadcrumb.length; idx++ ) {
-          const crumb = category.breadcrumb[idx];
-          let group = categoryGroup.groups.find( ( g ) => g.title === crumb );
-          if ( !group ) {
-            group = { nav: category.breadcrumb.slice( 0, idx + 1 ).join( ',' ), title: crumb, groups: [], categories: [] };
-            categoryGroup.groups.push( group );
+        categoryGroup.categories = ordering.categories.map( ( c ) => {
+          const found = categoriesBySlug[c];
+          if ( found ) {
+            found.nav = currentNav;
+            categoriesBySlug[c] = null;
           }
-          categoryGroup = group;
-        }
-        categoryGroup.categories.push( category );
-      } );
+          return found;
+        } ).filter( ( c ) => c );
+        return categoryGroup;
+      }
+      const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
+
+      // Place other categories on root level.
+      categoriesByBreadcrumb.categories = categoriesByBreadcrumb.categories.concat(
+        Object.values( categoriesBySlug ).filter( ( c ) => c ).map( ( c ) => {
+          c.nav = '';
+          return c;
+        } ) );
+      categoriesByBreadcrumb.categoryGroupsByNav = categoryGroupsByNav;
 
       // For Vue Reactivity.
       state.categoriesByBreadcrumb = categoriesByBreadcrumb;

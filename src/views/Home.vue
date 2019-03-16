@@ -14,10 +14,10 @@
           </li>
           <li
             v-for="crumb in queryCategoriesByBreadcrumb.breadcrumb"
-            :key="crumb.title"
+            :key="crumb.name"
           >
             <router-link :to="{ path: crumb.path, query: crumb.query }">
-              {{ crumb.title }}
+              {{ crumb.name }}
             </router-link>
           </li>
         </ul>
@@ -50,18 +50,18 @@ export default {
     queryCategoriesByBreadcrumb() {
       let categoriesByBreadcrumb = this.categoriesByBreadcrumb;
       const breadcrumb = [];
-      let nav = [];
-      if ( this.$route.query.nav ) {
-        const navBreadcrumb = this.$route.query.nav.split( ',' );
-        for ( let idx = 0; idx < navBreadcrumb.length; idx++ ) {
-          const crumb = navBreadcrumb[idx];
-          const group = categoriesByBreadcrumb.groups.find( ( g ) => g.title === crumb );
-          if ( group ) {
-            nav = nav.concat( crumb );
-            breadcrumb.push( { path: '/', query: { nav: nav.join( ',' ) }, title: crumb } );
-            categoriesByBreadcrumb = group;
-          } else {
-            break;
+      const queryNav = this.$route.query.nav;
+      if ( queryNav && this.categoriesByBreadcrumb ) {
+        const queryGroup = this.categoriesByBreadcrumb.categoryGroupsByNav[queryNav];
+        if ( queryGroup ) {
+          categoriesByBreadcrumb = queryGroup;
+          const navBreadcrumb = queryNav.split( '/' );
+          let nav = '';
+          for ( let idx = 0; idx < navBreadcrumb.length; idx++ ) {
+            const crumb = navBreadcrumb[idx];
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
           }
         }
       }

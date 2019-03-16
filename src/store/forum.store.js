@@ -17,7 +17,6 @@ export default {
       state.fetching = fetching;
     },
     updateForum( state, forum ) {
-      console.log( forum );
       try {
         state.categoryOrdering = JSON.parse( forum.categoryOrdering );
       } catch ( e ) {

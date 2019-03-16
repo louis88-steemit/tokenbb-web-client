@@ -14,10 +14,10 @@
             </li>
             <li
               v-for="crumb in breadcrumb"
-              :key="crumb.title"
+              :key="crumb.name"
             >
               <router-link :to="{ path: crumb.path, query: crumb.query }">
-                {{ crumb.title }}
+                {{ crumb.name }}
               </router-link>
             </li>
           </ul>
@@ -169,6 +169,7 @@ export default {
     ] ),
     ...mapState( 'categories', [
       'categoryList',
+      'categoriesByBreadcrumb',
     ] ),
     loggedIn() {
       return this.$store.state.auth.username;
@@ -178,13 +179,16 @@ export default {
     },
     breadcrumb() {
       const breadcrumb = [];
-      if ( this.selectedCategory && this.selectedCategory.breadcrumb ) {
-        let nav = [];
-        this.selectedCategory.breadcrumb.forEach( ( crumb ) => {
-          nav = nav.concat( crumb );
-          breadcrumb.push( { path: '/', query: { nav: nav.join( ',' ) }, title: crumb } );
-        } );
-        breadcrumb.push( { path: this.$route.path, query: this.$route.query, title: this.selectedCategory.title } );
+      if ( this.selectedCategory ) {
+        let nav = '';
+        if ( this.selectedCategory.nav ) {
+          this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+          } );
+        }
+        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: this.selectedCategory.title } );
       }
       return breadcrumb;
     },

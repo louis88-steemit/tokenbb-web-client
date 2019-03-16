@@ -20,7 +20,7 @@
           >
             <h2 class="card-header-title">
               <router-link :to="{ path: '/', query: { nav: cgprops.row.nav } }">
-                {{ cgprops.row.title }}
+                {{ cgprops.row.name }}
               </router-link>
             </h2>
             <a class="card-header-icon">
