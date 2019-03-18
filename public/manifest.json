@@ -3,9 +3,9 @@
   "short_name": "TBB",
   "icons": [
     {
-      "src": "/img/icons/android-chrome-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png"
+      "src": "/img/icons/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/ico"
     }
   ],
   "start_url": "/index.html",
