@@ -22,11 +22,11 @@
                   role="button"
                   aria-controls="contentIdForA11y3"
                 >
-                  <h2 class="card-header-title">
+                  <h5 class="card-header-title">
                     <router-link :to="{ path: '/', query: { nav: cgprops.row.nav } }">
                       {{ cgprops.row.name }}
                     </router-link>
-                  </h2>
+                  </h5>
                   <a class="card-header-icon">
                     <b-icon
                       :icon="cardprops.open ? 'menu-up' : 'menu-down'"

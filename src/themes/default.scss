@@ -80,6 +80,13 @@ h6.card-header-title a {
 .card {
   background-color: $background-content;
 }
+.card-content {
+  padding: 0.2rem;
+}
+.card-header-title {
+  margin-bottom: 0px;
+}
+
 // Navbar Style
 .navbar {
   background-color: #2B3E50;
@@ -242,7 +249,7 @@ button.dropdown-item {
       word-wrap: normal; 
     }
     pre code {
-        background-color: transparent;
+        background-color: $background;
         color: currentColor;
         font-size: 1em;
         padding: 0; 
@@ -254,6 +261,8 @@ button.dropdown-item {
       font-weight: normal;
       padding: 0.25em 0.5em 0.25em; 
     }
+    .content table thead th {
+      color: #bdcbdb; }
   }
 //Post List Page
 span.tag.is-small {
