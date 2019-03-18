@@ -18,9 +18,9 @@ const router = new Router( {
       component: loadView( 'Home' ),
     },
     {
-      path: '/topics',
-      name: 'topics',
-      component: loadView( 'Topics' ),
+      path: '/topic-list',
+      name: 'topic-list',
+      component: loadView( 'TopicList' ),
     },
 
     {

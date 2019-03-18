@@ -163,7 +163,7 @@ export default {
             breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
           } );
         }
-        breadcrumb.push( { path: '/topics', query: { category: category.slug }, name: category.title } );
+        breadcrumb.push( { path: '/topic-list', query: { category: category.slug }, name: category.title } );
         breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: '' } );
       }
       return breadcrumb;

@@ -181,7 +181,7 @@ export default {
         } );
       } else {
         breadcrumb.push( {
-          path: 'topics',
+          path: 'topic-list',
           query: {},
           name: 'All Categories',
         } );
@@ -241,7 +241,7 @@ export default {
     onSelectCategory( selected ) {
       this.selectedCategory = selected;
       this.$router.push( {
-        path: '/topics',
+        path: '/topic-list',
         query: selected
           ? { category: selected.slug }
           : {},

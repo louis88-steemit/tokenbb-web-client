@@ -47,7 +47,7 @@
             striped
           >
             <template slot-scope="cprops">
-              <router-link :to="{ path: 'topics', query: { category : cprops.row.slug } }">
+              <router-link :to="{ path: 'topic-list', query: { category : cprops.row.slug } }">
                 <table class="table is-bordered is-striped is-fullwidth category-table box-style">
                   <tbody class="content">
                     <tr>

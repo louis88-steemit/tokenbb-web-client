@@ -4,7 +4,7 @@
       <Breadcrumb :crumbs="queryCategoriesByBreadcrumb.breadcrumb" />
     </div>
     <div class="level-left">
-      <router-link :to="{ path: '/topics' }">
+      <router-link :to="{ path: '/topic-list' }">
         All Categories
       </router-link>
     </div>
