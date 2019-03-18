@@ -1,27 +1,5 @@
 <template>
-  <b-collapse
-    v-if="categoryGroups.length > 0 || categories.length > 0"
-    class="card box-style"
-    aria-id="contentIdForA11y3"
-  >
-    <div
-      slot="trigger"
-      slot-scope="cardprops"
-      class="card-header"
-      role="button"
-      aria-controls="contentIdForA11y3"
-    >
-      <h6 class="card-header-title">
-        <router-link :to="{ path: '/', query: { nav: nav } }">
-          {{ name }}
-        </router-link>
-      </h6>
-      <a class="card-header-icon">
-        <b-icon
-          :icon="cardprops.open ? 'menu-up' : 'menu-down'"
-        />
-      </a>
-    </div>
+  <div>
     <div class="card-content">
       <div class="content">
         <div>
