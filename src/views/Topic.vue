@@ -160,11 +160,13 @@ export default {
           category.nav.split( '/' ).forEach( ( crumb ) => {
             nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
             const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
-            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+            if ( group ) {
+              breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+            }
           } );
         }
         breadcrumb.push( { path: '/topic-list', query: { category: category.slug }, name: category.title } );
-        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: '' } );
+        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: this.topic.title } );
       }
       return breadcrumb;
     },
