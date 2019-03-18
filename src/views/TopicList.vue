@@ -166,11 +166,10 @@ export default {
         if ( this.selectedCategory.nav ) {
           let nav = '';
           this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
-            if ( crumb ) {
-              nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
-              const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
-              const name = group.name || 'name_error';
-              breadcrumb.push( { path: '/', query: { nav }, name } );
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            if ( group ) {
+              breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
             }
           } );
         }

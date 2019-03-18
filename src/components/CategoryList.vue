@@ -106,7 +106,7 @@ export default {
   },
   computed: {
     nav() {
-      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.nav : '/';
+      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.nav : '';
     },
     name() {
       return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.name : 'Home';
