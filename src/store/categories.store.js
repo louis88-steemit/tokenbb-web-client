@@ -3,6 +3,7 @@ import { Toast } from 'buefy/dist/components/toast';
 import { addCategory, listCategories, removeCategory } from '../services/api.service';
 import { errorAlertOptions } from '../utils/notifications.js';
 
+import map from 'lodash/map';
 
 export default {
   namespaced: true,
@@ -62,10 +63,10 @@ export default {
         const currentNav = nav + ( nav !== '' ? '/' : '' ) + slug;
         const categoryGroup = { name: ordering.name, nav: currentNav };
         categoryGroupsByNav[currentNav] = categoryGroup;
-        categoryGroup.groups = ordering.groups.map( ( g ) => {
+        categoryGroup.groups = map( ordering.groups, ( g ) => {
           return processCategoryOrdering( g, currentNav );
         } );
-        categoryGroup.categories = ordering.categories.map( ( c ) => {
+        categoryGroup.categories = map( ordering.categories, ( c ) => {
           const found = categoriesBySlug[c];
           if ( found ) {
             found.nav = currentNav;
@@ -76,20 +77,33 @@ export default {
         return categoryGroup;
       }
 
+      const homeCategory = {
+        name: 'Home',
+        nav: '',
+        groups: [],
+        categories: [],
+      };
+
       // when getter not ready, categoryOrdering is a function
       if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
-        const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
-
-        // Place other categories on root level.
-        categoriesByBreadcrumb.categories = categoriesByBreadcrumb.categories.concat(
-          Object.values( categoriesBySlug ).filter( ( c ) => c ).map( ( c ) => {
-            c.nav = '';
-            return c;
-          } ) );
-        categoriesByBreadcrumb.categoryGroupsByNav = categoryGroupsByNav;
-
-        state.categoriesByBreadcrumb = categoriesByBreadcrumb;
+        if ( Array.isArray( categoryOrdering ) ) {
+          homeCategory.groups = map( categoryOrdering, processCategoryOrdering );
+        } else {
+          const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
+          homeCategory.groups.push( categoriesByBreadcrumb );
+        }
       }
+
+      // Place other categories on root level.
+      homeCategory.categories = Object.values( categoriesBySlug )
+        .filter( ( c ) => c )
+        .map( ( c ) => {
+          c.nav = '';
+          return c;
+        } );
+      homeCategory.categoryGroupsByNav = categoryGroupsByNav;
+
+      state.categoriesByBreadcrumb = homeCategory;
 
       // For Vue Reactivity.
       state.categoriesById = { ...state.categoriesById };

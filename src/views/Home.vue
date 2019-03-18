@@ -15,8 +15,8 @@
 
 import { mapState } from 'vuex';
 
-import Breadcrumb from '@/components/Breadcrumb.vue';
-import CategoryList from '@/components/CategoryList.vue';
+import Breadcrumb from '../components/Breadcrumb.vue';
+import CategoryList from '../components/CategoryList.vue';
 
 export default {
   name: 'Home',

@@ -3,7 +3,7 @@
     class="breadcrumb"
     aria-label="breadcrumbs"
   >
-    <ul>
+    <ul v-if="crumbs.length > 0">
       <li>
         <router-link :to="{ path: '/' }">
           Home
