@@ -181,11 +181,11 @@ export default {
           } );
         }
         breadcrumb.push( {
-          path: 'topics',
+          path: 'topic-list',
           query: { category: this.selectedCategory.slug },
           name: this.selectedCategory.title,
         } );
-      } else {
+      } else if ( this.categoriesByBreadcrumb ) {
         breadcrumb.push( {
           path: '/',
           query: {},
@@ -219,6 +219,7 @@ export default {
     if ( to.query.category ) {
       this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
     } else {
+      this.$store.dispatch( 'topics/fetchAll' );
       this.selectedCategory = null;
     }
     next();
