@@ -79,7 +79,8 @@ export default {
 
       let homeCategory = {
         name: 'Home',
-        nav: '',
+        nav: 'home',
+        slug: 'home',
         groups: [],
         categories: [],
       };
@@ -87,7 +88,8 @@ export default {
       // when getter not ready, categoryOrdering is a function
       if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
         if ( Array.isArray( categoryOrdering ) ) {
-          homeCategory.groups = map( categoryOrdering, processCategoryOrdering );
+          homeCategory.groups = categoryOrdering;
+          homeCategory = processCategoryOrdering( homeCategory );
         } else {
           homeCategory = processCategoryOrdering( categoryOrdering );
         }
@@ -97,7 +99,7 @@ export default {
       homeCategory.categories = Object.values( categoriesBySlug )
         .filter( ( c ) => c )
         .map( ( c ) => {
-          c.nav = '';
+          c.nav = 'home';
           return c;
         } );
       homeCategory.categoryGroupsByNav = categoryGroupsByNav;
