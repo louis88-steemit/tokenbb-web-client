@@ -3,12 +3,7 @@
     class="breadcrumb"
     aria-label="breadcrumbs"
   >
-    <ul v-if="crumbs.length > 0">
-      <li>
-        <router-link :to="{ path: '/' }">
-          Home
-        </router-link>
-      </li>
+    <ul>
       <li
         v-for="crumb in crumbs"
         :key="crumb.name"

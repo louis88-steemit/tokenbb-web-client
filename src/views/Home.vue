@@ -5,7 +5,7 @@
     </div>
     <div class="level-left">
       <router-link :to="{ path: '/topic-list' }">
-        All Categories
+        <small>Show All Topics</small>
       </router-link>
     </div>
     <CategoryList
@@ -52,6 +52,8 @@ export default {
             }
           }
         }
+      } else if ( this.categoriesByBreadcrumb ) {
+        breadcrumb.push( { path: '/', name: this.categoriesByBreadcrumb.name } );
       }
       return { breadcrumb, categoriesByBreadcrumb };
     },

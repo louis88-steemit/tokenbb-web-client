@@ -77,7 +77,7 @@ export default {
         return categoryGroup;
       }
 
-      const homeCategory = {
+      let homeCategory = {
         name: 'Home',
         nav: '',
         groups: [],
@@ -89,8 +89,7 @@ export default {
         if ( Array.isArray( categoryOrdering ) ) {
           homeCategory.groups = map( categoryOrdering, processCategoryOrdering );
         } else {
-          const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
-          homeCategory.groups.push( categoriesByBreadcrumb );
+          homeCategory = processCategoryOrdering( categoryOrdering );
         }
       }
 
