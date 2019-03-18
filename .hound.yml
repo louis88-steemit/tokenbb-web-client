@@ -7,7 +7,7 @@ eslint:
   ignore_file: .eslintignore
   version: 5.7.0
 scss:
-  enabled: true
+  enabled: false
 jshint:
   enabled: true
   config_file: .jshintrc
