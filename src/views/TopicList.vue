@@ -181,11 +181,11 @@ export default {
           } );
         }
         breadcrumb.push( {
-          path: 'topics',
+          path: 'topic-list',
           query: { category: this.selectedCategory.slug },
           name: this.selectedCategory.title,
         } );
-      } else {
+      } else if ( this.categoriesByBreadcrumb ) {
         breadcrumb.push( {
           path: '/',
           query: {},

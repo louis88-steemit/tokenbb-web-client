@@ -1,10 +1,10 @@
 <template>
-  <router-link :to="categoryRoute(categoryId)">
+  <router-link :to="categoryRoute(this.category)">
     <b-icon
       icon="tag"
       size="is-small"
     />
-    {{ this.category }}
+    {{ category.name }}
   </router-link>
 </template>
 
@@ -25,17 +25,17 @@ export default {
       category( state ) {
         const byId = state.categories.categoriesById || {};
         const category = byId[this.categoryId];
-        return category ? category.name : 'oops';
+        return category ? category : { name: 'oops' };
       },
     } ),
 
   },
   methods: {
-    categoryRoute( id ) {
+    categoryRoute( cat ) {
       return {
-        path: '/topics',
+        path: '/topic-list',
         query: {
-          category: id,
+          category: cat.slug,
         },
       };
     },
