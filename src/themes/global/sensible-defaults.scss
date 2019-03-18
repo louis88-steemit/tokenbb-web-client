@@ -103,6 +103,9 @@ width: auto;
     top: -15px;
     left: -48px;
 }
+  .dropdown-item:focus {
+  outline: none !important;
+}
   .percent-label {
     width: 40px;
 }
