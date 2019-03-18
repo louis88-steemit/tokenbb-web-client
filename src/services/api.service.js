@@ -142,7 +142,7 @@ export function listValidTopics( category ) {
   let url = apiURL() + '/topics';
 
   if ( category ) {
-    url = apiURL() + `${category}/topics`;
+    url = apiURL() + `/${category}/topics`;
   }
 
   const opts = {

@@ -131,7 +131,11 @@ export default {
   },
   methods: {
     add() {
-      this.$store.dispatch( 'categories/add', { name: this.name, title: this.title, description: this.description } )
+      this.$store.dispatch( 'categories/add', {
+        name: this.name,
+        title: this.title,
+        description: this.description,
+      } )
         .then( () => {
           this.name = '';
           this.title = '';

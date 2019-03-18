@@ -3,6 +3,7 @@ import { Toast } from 'buefy/dist/components/toast';
 import { addCategory, listCategories, removeCategory } from '../services/api.service';
 import { errorAlertOptions } from '../utils/notifications.js';
 
+import map from 'lodash/map';
 
 export default {
   namespaced: true,
@@ -10,6 +11,7 @@ export default {
     fetching: true,
     categoryList: [],
     categoriesById: {},
+    categoriesByBreadcrumb: null,
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -25,9 +27,83 @@ export default {
     },
     updateCategoryList( state, categories ) {
       state.categoryList = categories;
+      const categoriesBySlug = {};
       categories.forEach( ( category ) => {
         state.categoriesById[category._id] = category;
+        categoriesBySlug[category.slug] = category;
       } );
+
+      const categoryOrdering = this.getters['forum/getCategoryOrdering'];
+
+      function stringToSlug( inputStr ) {
+        let str = String( inputStr );
+        str = str.trim();
+        str = str.toLowerCase();
+
+        // remove accents, swap ñ for n, etc
+        const from = 'åàáãäâèéëêìíïîòóöôùúüûñç·/_,:;';
+        const to = 'aaaaaaeeeeiiiioooouuuunc------';
+
+        for ( let i = 0, l = from.length; i < l; i++ ) {
+          str = str.replace( new RegExp( from.charAt( i ), 'g' ), to.charAt( i ) );
+        }
+
+        return str
+          .replace( /[^a-z0-9 -]/g, '' ) // remove invalid chars
+          .replace( /\s+/g, '-' ) // collapse whitespace and replace by -
+          .replace( /-+/g, '-' ) // collapse dashes
+          .replace( /^-+/, '' ) // trim - from start of text
+          .replace( /-+$/, '' ) // trim - from end of text
+          .substring( 0, 24 );
+      }
+
+      const categoryGroupsByNav = {};
+      function processCategoryOrdering( ordering, nav = '' ) {
+        const slug = stringToSlug( ordering.slug );
+        const currentNav = nav + ( nav !== '' ? '/' : '' ) + slug;
+        const categoryGroup = { name: ordering.name, nav: currentNav };
+        categoryGroupsByNav[currentNav] = categoryGroup;
+        categoryGroup.groups = map( ordering.groups, ( g ) => {
+          return processCategoryOrdering( g, currentNav );
+        } );
+        categoryGroup.categories = map( ordering.categories, ( c ) => {
+          const found = categoriesBySlug[c];
+          if ( found ) {
+            found.nav = currentNav;
+            categoriesBySlug[c] = null;
+          }
+          return found;
+        } ).filter( ( c ) => c );
+        return categoryGroup;
+      }
+
+      const homeCategory = {
+        name: 'Home',
+        nav: '',
+        groups: [],
+        categories: [],
+      };
+
+      // when getter not ready, categoryOrdering is a function
+      if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
+        if ( Array.isArray( categoryOrdering ) ) {
+          homeCategory.groups = map( categoryOrdering, processCategoryOrdering );
+        } else {
+          const categoriesByBreadcrumb = processCategoryOrdering( categoryOrdering );
+          homeCategory.groups.push( categoriesByBreadcrumb );
+        }
+      }
+
+      // Place other categories on root level.
+      homeCategory.categories = Object.values( categoriesBySlug )
+        .filter( ( c ) => c )
+        .map( ( c ) => {
+          c.nav = '';
+          return c;
+        } );
+      homeCategory.categoryGroupsByNav = categoryGroupsByNav;
+
+      state.categoriesByBreadcrumb = homeCategory;
 
       // For Vue Reactivity.
       state.categoriesById = { ...state.categoriesById };

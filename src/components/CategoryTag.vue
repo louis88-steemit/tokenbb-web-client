@@ -33,7 +33,7 @@ export default {
   methods: {
     categoryRoute( id ) {
       return {
-        path: '/',
+        path: '/topics',
         query: {
           category: id,
         },

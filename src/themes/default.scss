@@ -142,6 +142,18 @@ a.pagination-link.is-current {
   color: white;
   font-size: 0.9rem;
 }
+table .table .category-table {
+  -webkit-box-shadow: 2px 2px 0px 0px $primary;
+  -moz-box-shadow: 2px 2px 0px 0px $primary;
+  box-shadow: 2px 2px 0px 0px $primary;
+  border-radius: 0px;
+}
+table .table .category-table:hover {
+  h4 {
+    color: $tag;
+  }
+  background-color: $background-one;
+}
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }

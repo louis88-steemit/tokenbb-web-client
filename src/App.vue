@@ -37,8 +37,10 @@ export default {
 
       this.$store.commit( 'auth/init', this.$store );
 
-      this.$store.dispatch( 'categories/fetchAll' )
-        .then( () => this.$store.dispatch( 'topics/fetchAll' ) )
+      const category = this.$route.query.category;
+      this.$store.dispatch( 'forum/fetch' )
+        .then( () => this.$store.dispatch( 'categories/fetchAll' ) )
+        .then( () => this.$store.dispatch( 'topics/fetchAll', { category } ) )
         .then( () => {
           this.loaded = true;
         } );
