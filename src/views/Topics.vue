@@ -162,13 +162,16 @@ export default {
     },
     breadcrumb() {
       const breadcrumb = [];
-      if ( this.selectedCategory && this.selectedCategory.nav ) {
-        let nav = '';
-        this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
-          nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
-          const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
-          breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
-        } );
+      console.log( this.selectedCategory );
+      if ( this.selectedCategory ) {
+        if ( this.selectedCategory.nav ) {
+          let nav = '';
+          this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+          } );
+        }
         breadcrumb.push( {
           path: 'topics',
           query: { category: this.selectedCategory.slug },
@@ -177,7 +180,7 @@ export default {
       } else {
         breadcrumb.push( {
           path: 'topics',
-          query: { },
+          query: {},
           name: 'All Categories',
         } );
       }
