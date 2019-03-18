@@ -15,7 +15,14 @@
         </router-link>>
       </div>
     </div>
-
+    <div
+      v-if="selectedCategory"
+      class="level-left"
+    >
+      <router-link :to="{ path: '/topic-list' }">
+        <small>Show All Topics</small>
+      </router-link>
+    </div>
     <b-table
       :loading="fetching"
       :data="currentPage"
@@ -179,6 +186,11 @@ export default {
           name: this.selectedCategory.title,
         } );
       } else {
+        breadcrumb.push( {
+          path: '/',
+          query: {},
+          name: this.categoriesByBreadcrumb.name,
+        } );
         breadcrumb.push( {
           path: 'topic-list',
           query: {},

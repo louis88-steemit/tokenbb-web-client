@@ -1,27 +1,5 @@
 <template>
-  <b-collapse
-    v-if="categoryGroups.length > 0 || categories.length > 0"
-    class="card box-style"
-    aria-id="contentIdForA11y3"
-  >
-    <div
-      slot="trigger"
-      slot-scope="cardprops"
-      class="card-header"
-      role="button"
-      aria-controls="contentIdForA11y3"
-    >
-      <h2 class="card-header-title">
-        <router-link :to="{ path: '/', query: { nav: nav } }">
-          {{ name }}
-        </router-link>
-      </h2>
-      <a class="card-header-icon">
-        <b-icon
-          :icon="cardprops.open ? 'menu-up' : 'menu-down'"
-        />
-      </a>
-    </div>
+  <div>
     <div class="card-content">
       <div class="content">
         <div>
@@ -32,10 +10,34 @@
             mobile-cards
           >
             <template slot-scope="cgprops">
-              <CategoryGroup
-                :categories-by-breadcrumb="cgprops.row"
-                :fetching="fetching"
-              />
+              <b-collapse
+                v-if="cgprops.row.groups.length > 0 || cgprops.row.categories.length > 0"
+                class="card box-style"
+                aria-id="contentIdForA11y3"
+              >
+                <div
+                  slot="trigger"
+                  slot-scope="cardprops"
+                  class="card-header"
+                  role="button"
+                  aria-controls="contentIdForA11y3"
+                >
+                  <h2 class="card-header-title">
+                    <router-link :to="{ path: '/', query: { nav: cgprops.row.nav } }">
+                      {{ cgprops.row.name }}
+                    </router-link>
+                  </h2>
+                  <a class="card-header-icon">
+                    <b-icon
+                      :icon="cardprops.open ? 'menu-up' : 'menu-down'"
+                    />
+                  </a>
+                </div>
+                <CategoryGroup
+                  :categories-by-breadcrumb="cgprops.row"
+                  :fetching="fetching"
+                />
+              </b-collapse>
             </template>
           </b-table>
 
@@ -80,7 +82,7 @@
         </div>
       </div>
     </div>
-  </b-collapse>
+  </div>
 </template>
 
 <script>
@@ -107,9 +109,6 @@ export default {
   computed: {
     nav() {
       return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.nav : '';
-    },
-    name() {
-      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.name : 'Home';
     },
     categories() {
       return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.categories : [];
