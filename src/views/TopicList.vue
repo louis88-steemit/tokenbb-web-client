@@ -219,6 +219,7 @@ export default {
     if ( to.query.category ) {
       this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
     } else {
+      this.$store.dispatch( 'topics/fetchAll' );
       this.selectedCategory = null;
     }
     next();

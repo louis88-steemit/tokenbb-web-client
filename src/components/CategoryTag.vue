@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="categoryRoute(this.category)">
+  <router-link :to="categoryRoute(category)">
     <b-icon
       icon="tag"
       size="is-small"
