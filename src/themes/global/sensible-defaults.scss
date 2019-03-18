@@ -17,7 +17,7 @@ a.dropdown-item {
 width: auto;
 }
 // Topic List Card Overflow
-.home {
+.topic-list {
 .box {
   .media-left {
     margin-right: 0px;
@@ -55,6 +55,9 @@ width: auto;
     padding: 2rem;
   }
 }
+}
+.media-content {
+  overflow-x:hidden;
 }
 // Upvote Button Size
 .mdi-36px.mdi-set, .mdi-36px.mdi:before {
@@ -122,15 +125,34 @@ width: auto;
 .save {
   margin-right: 1rem;
 }
-.collapse {
-  margin-bottom:15px;
-}
 .card-header-title {
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
-table .table .category-table {
-  h4 {
-    margin-bottom: 0.5em;
+.table {
+  overflow: hidden;
+}
+.cat-stats {
+  font-size: .8rem;
+}
+.columns.is-tablet.cat-list {
+  overflow: hidden;
+}
+.card-cat .card-content {
+  padding:0px;
+}
+.b-table .table {
+  background-color: transparent;
+}
+.columns.cat-style {
+  margin: 2px 2px 2px 2px;
+  padding:0px;
+}
+.pagination {
+  margin-top: 25px;
+}
+a.pagination-link.is-current {
+  font-size: 0.9rem;
+}
+.nav-control {
+    margin:20px 0px 0px 0;
   }
-  margin-bottom: 15px;
-}
