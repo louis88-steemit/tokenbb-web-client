@@ -3,7 +3,11 @@
     <div class="level-left">
       <Breadcrumb :crumbs="queryCategoriesByBreadcrumb.breadcrumb" />
     </div>
-
+    <div class="level-left">
+      <router-link :to="{ path: '/topics' }">
+        All Categories
+      </router-link>
+    </div>
     <CategoryList
       :categories-by-breadcrumb="queryCategoriesByBreadcrumb.categoriesByBreadcrumb"
       :fetching="fetching"

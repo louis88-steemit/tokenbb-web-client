@@ -162,16 +162,24 @@ export default {
     },
     breadcrumb() {
       const breadcrumb = [];
-      if ( this.selectedCategory ) {
+      if ( this.selectedCategory && this.selectedCategory.nav ) {
         let nav = '';
-        if ( this.selectedCategory.nav ) {
-          this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
-            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
-            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
-            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
-          } );
-        }
-        breadcrumb.push( { path: 'topics', query: { category: this.selectedCategory.slug }, name: this.selectedCategory.title } );
+        this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
+          nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+          const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+          breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+        } );
+        breadcrumb.push( {
+          path: 'topics',
+          query: { category: this.selectedCategory.slug },
+          name: this.selectedCategory.title,
+        } );
+      } else {
+        breadcrumb.push( {
+          path: 'topics',
+          query: { },
+          name: 'All Categories',
+        } );
       }
       return breadcrumb;
     },
