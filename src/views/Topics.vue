@@ -162,14 +162,16 @@ export default {
     },
     breadcrumb() {
       const breadcrumb = [];
-      console.log( this.selectedCategory );
       if ( this.selectedCategory ) {
         if ( this.selectedCategory.nav ) {
           let nav = '';
           this.selectedCategory.nav.split( '/' ).forEach( ( crumb ) => {
-            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
-            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
-            breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+            if ( crumb ) {
+              nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+              const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+              const name = group.name || 'name_error';
+              breadcrumb.push( { path: '/', query: { nav }, name } );
+            }
           } );
         }
         breadcrumb.push( {
