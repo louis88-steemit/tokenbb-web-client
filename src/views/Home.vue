@@ -46,7 +46,7 @@ export default {
           for ( let idx = 0; idx < navBreadcrumb.length; idx++ ) {
             const crumb = navBreadcrumb[idx];
             nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
-            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav] || { name: 'undefined-name' };
             breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
           }
         }
