@@ -122,7 +122,7 @@ export default {
       this.$store.dispatch( 'topics/createTopic', payload )
         .then( () => {
           this.$store.dispatch( 'topics/fetchAll' ).then( () => {
-            this.$router.push( '/' );
+            this.$router.push( { path: '/topic-list', query: { category: this.selectedCategory.slug } } );
             Toast.open( {
               message: 'Your topic has been posted.',
               type: 'is-primary',

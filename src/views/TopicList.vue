@@ -19,7 +19,14 @@
         </div>
       </div>
     </div>
-
+    <div
+      v-if="selectedCategory"
+      class="level-left"
+    >
+      <router-link :to="{ path: '/topic-list' }">
+        <small>Show All Topics</small>
+      </router-link>
+    </div>
     <b-table
       :loading="fetching"
       :data="currentPage"
@@ -178,11 +185,16 @@ export default {
           } );
         }
         breadcrumb.push( {
-          path: 'topics',
+          path: 'topic-list',
           query: { category: this.selectedCategory.slug },
           name: this.selectedCategory.title,
         } );
-      } else {
+      } else if ( this.categoriesByBreadcrumb ) {
+        breadcrumb.push( {
+          path: '/',
+          query: {},
+          name: this.categoriesByBreadcrumb.name,
+        } );
         breadcrumb.push( {
           path: 'topic-list',
           query: {},
@@ -211,6 +223,7 @@ export default {
     if ( to.query.category ) {
       this.$store.dispatch( 'topics/fetchAll', { category: to.query.category } );
     } else {
+      this.$store.dispatch( 'topics/fetchAll' );
       this.selectedCategory = null;
     }
     next();
