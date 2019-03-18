@@ -52,7 +52,7 @@ html, section {
   .box {
     background-color: $background-content;
     border-radius: 6px;
-    box-shadow: 2px 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    box-shadow: 2px 2px 3px rgba(10, 10, 10, 0.1), 2px 2px 3px 1px rgba(10, 10, 10, 0.1);
     color: $content;
     display: block;
     padding: 1.25rem; 

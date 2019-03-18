@@ -47,7 +47,7 @@
                 </p>
               </figure>
               <div class="media-content">
-                <div class="content">
+                <div class="content topic-title">
                   <h2 class="title is-6">
                     <span
                       v-if="props.row.pinned"

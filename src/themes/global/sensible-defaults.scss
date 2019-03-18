@@ -1,3 +1,4 @@
+
 /* Navigation Bar */
 .logo {
   content: $logo;
@@ -12,6 +13,9 @@ a.dropdown-item {
   width: 4.25rem;
 }
 }
+.content.topic-title {
+  margin-bottom: 0px;
+}
 // Dropdown Category
 a.dropdown-item {
 width: auto;
@@ -23,7 +27,7 @@ width: auto;
     margin-right: 0px;
   }
   .media-content {
-    overflow-x: hidden;
+    overflow: hidden;
   }
   nav.level.is-tablet {
     padding-bottom: 0px;
@@ -42,7 +46,7 @@ width: auto;
   span.upvote-value {
     margin-right: 8px;
   }
-  padding: 0.7rem;
+  padding: 0.6rem 0 0.1rem 0.3rem;
 }
 @media screen and (max-width: 768px) {
   .content {
@@ -156,3 +160,11 @@ a.pagination-link.is-current {
 .nav-control {
     margin:20px 0px 0px 0;
   }
+.cat-stats {
+  padding-top: 20px;
+}
+@media screen and (max-width: 768px) {
+  .column.is-half.cat-title {
+    text-align: center;
+  }
+}

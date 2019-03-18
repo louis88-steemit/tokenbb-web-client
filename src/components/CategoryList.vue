@@ -50,11 +50,11 @@
           >
             <template slot-scope="cprops">
               <div class="columns is-tablet box cat-style">
-                <div class="column is-half">
+                <div class="column is-half cat-title">
                   <router-link :to="{ path: 'topic-list', query: { category : cprops.row.slug } }">
                     <span style="font-size: 20px; font-weight: 600;">{{ cprops.row.title }}</span><br>
                   </router-link>
-                  <span class="cat-stats">{{ cprops.row.description }}</span>
+                  <span>{{ cprops.row.description }}</span>
                 </div>
                 <div class="column cat-stats">
                   <div class="level-item">
