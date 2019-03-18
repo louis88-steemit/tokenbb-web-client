@@ -297,7 +297,22 @@ span.tag.is-small {
     box-shadow: 2px 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   }
 }
-
+.pagination {
+  margin: 25px 0 25px 0;
+}
+a.pagination-link {
+  color: $content;
+  background-color: $background;
+  border: 1px solid $content;
+}
+a.pagination-link:hover {
+  color: $primary;
+}
+a.pagination-link.is-current {
+  font-size: 0.9rem;
+  background-color: $background;
+  border-color: $primary;
+}
 // make sure to have all sensible defaults set
   @import "./global/sensible-defaults.scss";
 }
