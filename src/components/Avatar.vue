@@ -2,7 +2,7 @@
   <b-tooltip
     :label="author | usernameDisplay(owner)"
     size="is-small"
-    type="is-black"
+    type="is-black is-right"
   >
     <figure
       class="image avatar"

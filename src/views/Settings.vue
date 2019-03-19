@@ -1,14 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container setting-view">
     <p>Settings</p>
 
-    <h3 class="title is-5">
+    <h3 class="title">
       Categories
     </h3>
 
     <b-table
-      class="box-styling setting-page"
-      striped
+      class="setting-page"
       :data="categoryList"
       mobile-cards
     >
@@ -56,7 +55,7 @@
 
     <hr>
 
-    <h3 class="title is-5">
+    <h3 class="title">
       Add a category
     </h3>
 

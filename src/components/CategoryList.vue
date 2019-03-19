@@ -22,11 +22,11 @@
                   role="button"
                   aria-controls="contentIdForA11y3"
                 >
-                  <h2 class="card-header-title">
+                  <h5 class="card-header-title">
                     <router-link :to="{ path: '/', query: { nav: cgprops.row.nav } }">
                       {{ cgprops.row.name }}
                     </router-link>
-                  </h2>
+                  </h5>
                   <a class="card-header-icon">
                     <b-icon
                       :icon="cardprops.open ? 'menu-up' : 'menu-down'"
@@ -45,37 +45,33 @@
             v-if="categories.length > 0"
             :loading="fetching"
             :data="categories"
+            class=""
             mobile-cards
-            striped
           >
             <template slot-scope="cprops">
               <router-link :to="{ path: 'topic-list', query: { category : cprops.row.slug } }">
-                <table class="table is-bordered is-striped is-fullwidth category-table box-style">
-                  <tbody class="content">
-                    <tr>
-                      <td width="70%">
-                        <h4>
-                          {{ cprops.row.title }}
-                        </h4>
-                        <span>{{ cprops.row.description }}</span>
-                      </td>
-                      <td
-                        style="text-align:center;"
-                        width="15%"
-                      >
-                        {{ cprops.row.meta ? cprops.row.meta.topics : '' }} Topics
-                        <br>
-                        {{ cprops.row.meta ? cprops.row.meta.views : '' }} Views
-                      </td>
-                      <td
-                        style="text-align:center;"
-                        width="15%"
-                      >
-                        {{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="columns is-tablet box cat-style">
+                  <div class="column is-half cat-title">
+                    <span class="cprops-title">{{ cprops.row.title }}</span><br>
+                    <span>{{ cprops.row.description }}</span>
+                  </div>
+                  <div class="column cat-stats">
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.topics : '' }} Topics</span>
+                    </div>
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.views : '' }} Views</span>
+                    </div>
+                  </div>
+                  <div class="column cat-stats">
+                    <div class="level-item">
+                      <span>Last Reply By</span>
+                    </div>
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}</span>
+                    </div>
+                  </div>
+                </div>
               </router-link>
             </template>
           </b-table>
@@ -84,7 +80,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import Icon from 'buefy/src/components/icon/Icon';
 import Collapse from 'buefy/src/components/collapse/Collapse';
