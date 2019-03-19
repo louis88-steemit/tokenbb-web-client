@@ -1,18 +1,22 @@
 <template>
-  <div class="container home">
-    <div class="level is-mobile">
+  <div class="container topic-list">
+    <div class="level is-tablet">
       <div class="level-left">
-        <Breadcrumb :crumbs="breadcrumb" />
+        <div class="level-item breadcrumb">
+          <Breadcrumb :crumbs="breadcrumb" />
+        </div>
       </div>
       <div class="level-right">
-        <router-link
-          v-if="loggedIn"
-          :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
-        >
-          <button class="button is-small is-topic">
-            New Topic
-          </button>
-        </router-link>>
+        <div class="level-item">
+          <router-link
+            v-if="loggedIn"
+            :to="{ path: 'new', query: { category: this.$route.query.category ? this.$route.query.category : null } }"
+          >
+            <button class="button is-small">
+              New Topic
+            </button>
+          </router-link>
+        </div>
       </div>
     </div>
     <div
@@ -31,19 +35,19 @@
     >
       <template slot-scope="props">
         <div class="box is-mobile">
-          <article class="media is-mobile">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <Avatar
-                  :author="props.row.author.user"
-                  :owner="props.row.author.owner_id"
-                  size="large"
-                />
-              </p>
-            </figure>
-            <div class="media-content">
-              <div class="content">
-                <router-link :to="topicRoute(props.row)">
+          <router-link :to="topicRoute(props.row)">
+            <article class="media is-mobile">
+              <figure class="media-left">
+                <p class="image is-64x64">
+                  <Avatar
+                    :author="props.row.author.user"
+                    :owner="props.row.author.owner_id"
+                    size="large"
+                  />
+                </p>
+              </figure>
+              <div class="media-content">
+                <div class="content topic-title">
                   <h2 class="title is-6">
                     <span
                       v-if="props.row.pinned"
@@ -55,54 +59,54 @@
                       /></span>
                     {{ props.row.title }}
                   </h2>
-                </router-link>
-              </div>
-              <nav class="level is-tablet">
-                <div class="level-left post-stats">
-                  <span class="level-item">
-                    <span class="tag is-small">
-                      <CategoryTag :category-id="props.row.categoryId" />
-                    </span>
-                  </span>
-                  <span class="level-item">
-                    <Upvote
-                      :votes="[]"
-                      :author="props.row.steem.author"
-                      :permlink="props.row.steem.permlink"
-                    />
-                  </span>
-                  <span class="level-item">
-                    <span
-                      class=""
-                      title="View Count"
-                      data-original-title="Number of Views"
-                    >
-                      <b-icon
-                        icon="eye"
-                        size="is-small"
-                      /> {{ props.row.numberOfViews }}
-                    </span>
-                    <span
-                      class=""
-                      title="Reply Count"
-                      data-original-title="Number of Replies"
-                    >
-                      <b-icon
-                        icon="reply"
-                        size="is-small"
-                      /> {{ props.row.numberOfReplies }}
-                    </span>
-                  </span>
-                  <span class="level-item">
-                    <DateTimeTag
-                      :last-reply="props.row.lastReply"
-                      :number-of-replies="props.row.numberOfReplies"
-                    />
-                  </span>
                 </div>
-              </nav>
-            </div>
-          </article>
+                <nav class="level is-tablet">
+                  <div class="level-left post-stats">
+                    <span class="level-item">
+                      <span class="tag is-small">
+                        <CategoryTag :category-id="props.row.categoryId" />
+                      </span>
+                    </span>
+                    <span class="level-item">
+                      <Upvote
+                        :votes="[]"
+                        :author="props.row.steem.author"
+                        :permlink="props.row.steem.permlink"
+                      />
+                    </span>
+                    <span class="level-item">
+                      <span
+                        class=""
+                        title="View Count"
+                        data-original-title="Number of Views"
+                      >
+                        <b-icon
+                          icon="eye"
+                          size="is-small"
+                        /> {{ props.row.numberOfViews }}
+                      </span>
+                      <span
+                        class=""
+                        title="Reply Count"
+                        data-original-title="Number of Replies"
+                      >
+                        <b-icon
+                          icon="reply"
+                          size="is-small"
+                        /> {{ props.row.numberOfReplies }}
+                      </span>
+                    </span>
+                    <span class="level-item">
+                      <DateTimeTag
+                        :last-reply="props.row.lastReply"
+                        :number-of-replies="props.row.numberOfReplies"
+                      />
+                    </span>
+                  </div>
+                </nav>
+              </div>
+            </article>
+          </router-link>
         </div>
       </template>
     </b-table>

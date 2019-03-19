@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    <div class="level-left">
-      <Breadcrumb :crumbs="breadcrumb" />
-    </div>
+  <div class="container topic-view">
     <div
       v-if="fetching"
       class="spacer"
@@ -19,16 +16,16 @@
           <h1 class="title is-3">
             {{ topic.title }}
           </h1>
-          <span class="tag is-small">
-            <CategoryTag :category-id="topic.categoryId" />
-          </span>
-        &nbsp;
-          <a
-            class="topic-nav topic-nav-to-end"
-            @click="scrollTo('endOfTopic')"
-          >
-            Jump to end
-          </a>
+          <div class="level-left">
+            <Breadcrumb :crumbs="breadcrumb" />
+          </div>
+          <div class="nav-control">
+            <a
+              class="topic-nav topic-nav-to-end"
+              @click="scrollTo('endOfTopic')"
+            >Jump to end
+            </a>
+          </div>
         </header>
 
         <br>
@@ -96,7 +93,6 @@ import Breadcrumb from '../components/Breadcrumb.vue';
 import Post from '../components/Post.vue';
 import ReplyForm from '../components/ReplyForm.vue';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
-import CategoryTag from '../components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
@@ -111,7 +107,6 @@ export default {
     Post,
     ReplyForm,
     ShowIfLoggedIn,
-    CategoryTag,
   },
   data() {
     return {

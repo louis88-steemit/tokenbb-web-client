@@ -1,9 +1,5 @@
 <template>
-  <b-tooltip
-    :label="timeAbsolute"
-    size="is-small"
-    type="is-black"
-  >
+  <div>
     <b-icon
       icon="clock"
       size="is-small"
@@ -17,7 +13,7 @@
         size="small"
       />
     </template>
-  </b-tooltip>
+  </div>
 </template>
 
 <script>
@@ -34,7 +30,6 @@ import { formatDateTimeAbsolute, formatDateTimeRelative } from '../utils/content
 export default {
   components: {
     BIcon: Icon,
-    BTooltip: Tooltip,
     Avatar,
   },
   props: {
