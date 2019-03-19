@@ -49,30 +49,30 @@
             mobile-cards
           >
             <template slot-scope="cprops">
-              <div class="columns is-tablet box cat-style">
-                <div class="column is-half cat-title">
-                  <router-link :to="{ path: 'topic-list', query: { category : cprops.row.slug } }">
-                    <span style="font-size: 20px; font-weight: 600;">{{ cprops.row.title }}</span><br>
-                  </router-link>
-                  <span>{{ cprops.row.description }}</span>
+              <router-link :to="{ path: 'topic-list', query: { category : cprops.row.slug } }">
+                <div class="columns is-tablet box cat-style">
+                  <div class="column is-half cat-title">
+                    <span class="cprops-title">{{ cprops.row.title }}</span><br>
+                    <span>{{ cprops.row.description }}</span>
+                  </div>
+                  <div class="column cat-stats">
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.topics : '' }} Topics</span>
+                    </div>
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.views : '' }} Views</span>
+                    </div>
+                  </div>
+                  <div class="column cat-stats">
+                    <div class="level-item">
+                      <span>Last Reply By</span>
+                    </div>
+                    <div class="level-item">
+                      <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}</span>
+                    </div>
+                  </div>
                 </div>
-                <div class="column cat-stats">
-                  <div class="level-item">
-                    <span>{{ cprops.row.meta ? cprops.row.meta.topics : '' }} Topics</span>
-                  </div>
-                  <div class="level-item">
-                    <span>{{ cprops.row.meta ? cprops.row.meta.views : '' }} Views</span>
-                  </div>
-                </div>
-                <div class="column cat-stats">
-                  <div class="level-item">
-                    <span>Last Reply By</span>
-                  </div>
-                  <div class="level-item">
-                    <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}</span>
-                  </div>
-                </div>
-              </div>
+              </router-link>
             </template>
           </b-table>
         </div>

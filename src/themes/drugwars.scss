@@ -1,25 +1,26 @@
 .theme-drugwars {
  // Set your brand colors
- $primary: #df691a;  
- $tag: #04F3C6;
+ $primary: #FFC400;  
+ $tag: #00A32A;
  // Import Bulma's core
  @import "~bulma/sass/utilities/_all";
  @import "./global/variables.scss";
- $logo: url("https://tokenbb.io/wp-content/uploads/2018/11/icon-reverse.png");
+ $logo: url("https://drugwars.io/img/drugwars.png");
  // Import Bulma and Buefy styles
  @import "~bulma";
  @import "~buefy/src/scss/buefy";
  @import "~bulma-extensions/bulma-slider/dist/css/bulma-slider.sass";
  #app {
-   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;;
+  font-family: American Captain,Helvetica,Arial,sans-serif;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
  }
  //Set Colors
- $background: #1f2d3b;
- $background-content: #2B3E50;
- $content: #dee5ed;
- $link:#8694a4;
+ $background: #020202;
+ $background-content: #121212;
+ $content: #f3f3f3;
+ $link:#FFC400;
+ $border: #00A32A;
 
 html, section {
    background-color: $background;
@@ -49,34 +50,39 @@ html, section {
  span {
    color: $content;
  }
+ // Category Page
  .box {
    background-color: $background-content;
+   margin: 0px 2px 0 2px; 
    border-radius: 6px;
-   box-shadow: 2px 2px 3px rgba(10, 10, 10, 0.1), 2px 2px 3px 1px rgba(10, 10, 10, 0.1);
    color: $content;
+   -webkit-box-shadow: 3px 3px 0px 0px rgba(255,196,0,1);
+  -moz-box-shadow: 3px 3px 0px 0px rgba(255,196,0,1);
+  box-shadow: 3px 3px 0px 0px rgba(255,196,0,1);
    display: block;
    padding: 1.25rem; 
  }
- a.box:hover, a.box:focus {
-   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px $link; 
-   border: 1px solid $primary;
- }
- a.box:active {
-   box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px $link; 
- }
-
 h6.card-header-title a {
  color: $content;
 }
 .cat-style.box {
  margin-left: 10px;
- border: 1px solid transparent;
+ border: 1px solid $background;
 }
 .cat-style.box:hover {
  background-color: $background;
  border-color: $background-content;
+ .cprops-title {
+  color: $link;
 }
-
+}
+.cprops-title {
+  font-size: 20px; 
+  font-weight: 600;
+}
+.b-table .icon {
+  color: $tag;
+}
 .card {
  background-color: $background-content;
 }
@@ -89,26 +95,25 @@ h6.card-header-title a {
 
 // Navbar Style
 .navbar {
- background-color: #2B3E50;
+ background-color: $background;
  z-index: 30; 
 }
 .navbar-burger {
- color: #dee5ed;
+ color: $content;
 }
  .navbar-burger span {
    background-color: currentColor;
  }
  .navbar-menu {
-   background-color: #2B3E50;
-   box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
+   background-color: $background;
    padding: 0.5rem 0; 
  }
 //Button
 .button.is-small {
- background-color: #4E5D6C;
- border-color: #4E5D6C;
+ background-color: $border;
+ border-color: $border;
  border-width: 1px;
- color: #dee5ed;
+ color: $content;
  justify-content: center;
  padding-bottom: calc(0.375em - 1px);
  padding-left: 0.75em;
@@ -117,11 +122,11 @@ h6.card-header-title a {
  text-align: center;
 }
 .button.is-small:hover, .button.is-hovered {
- border-color: $link;
+ border-color: $content;
  color: $content; 
 }
 .button.is-small:focus, .button.is-focused {
- border-color: #5bc0de;
+ border-color: $content;
  color: $content; 
 }
 .button.is-small:focus:not(:active), .button.is-focused:not(:active) {
@@ -148,7 +153,7 @@ h6.card-header-title a {
  padding-top: 0.5rem; }
 
 .dropdown-item {
- color: #dee5ed;
+ color: $content;
  display: block;
  font-size: 0.875rem;
  line-height: 1.5;
@@ -160,18 +165,20 @@ button.dropdown-item {
  padding-right: 3rem;
  text-align: left;
  white-space: nowrap;
- width: 100%; }
+ width: 100%; 
+}
  a.dropdown-item:hover,
  button.dropdown-item:hover {
    background-color: $background-content;
-   color: $link; }
+   color: $link; 
+  }
  a.dropdown-item.is-active,
  button.dropdown-item.is-active {
    background-color: $link;
-   color: #fff; }
-
+   color: $tag; 
+  }
 .dropdown-divider {
- background-color: #4E5D6C;
+ background-color: $border;
  border: none;
  display: block;
  height: 1px;
@@ -181,41 +188,41 @@ button.dropdown-item {
  color: $link;
 }
 .breadcrumb a:hover {
- color: $primary;
+ color: white;
 }
 .topic-nav {
  margin: 10px 0 10px 0;
 }
 //Category Page {
  .card-header {
-   border-bottom: 1px solid $background;
+   border-bottom: 1px solid $link;
    box-shadow: none;
  } 
 .table {
    width: 100%; 
  }
 .table td, .table th {
-   border: 1px solid #4E5D6C;
+   border: 1px solid $border;
    border-width: 0 0 1px;
    padding: 0.5em 0.75em;
    vertical-align: top; }
  .table th {
-   color: #bdcbdb;
+   color: #fff;
    text-align: left; }
  .table thead td,
  .table thead th {
    border-width: 0 0 2px;
-   color: #bdcbdb; }
+   color: #fff; }
  .table tfoot td,
  .table tfoot th {
    border-width: 2px 0 0;
-   color: #bdcbdb; }
+   color: #fff; }
  .table tbody tr:last-child td,
  .table tbody tr:last-child th {
    border-bottom-width: 0; 
  }
  .label {
-   color: #dee5ed; 
+   color: $content; 
  }
  .setting-view {
    h1,h2,h3,h4,h5,h6 {
@@ -225,23 +232,23 @@ button.dropdown-item {
 //Topic View Page {
  .topic-view {
    blockquote {
-     background-color: #2B3E50;
-     border-left: 5px solid #4E5D6C;
+     background-color: $background-content;
+     border-left: 5px solid $border;
      padding: 1.25em 1.5em; 
    }
    h1,h2,h3,h4,h5,h6 {
-     color: #bdcbdb;
+     color: #fff;
      font-weight: 600;
      line-height: 1.125; 
    }
    strong {
-     color: #bdcbdb;
+     color: #fff;
      font-weight: 700; 
    }
    pre {
      -webkit-overflow-scrolling: touch;
-     background-color: #2B3E50;
-     color: #dee5ed;
+     background-color: $background-content;
+     color: $content;
      font-size: 0.875em;
      overflow-x: auto;
      padding: 1.25rem 1.5rem;
@@ -255,14 +262,14 @@ button.dropdown-item {
        padding: 0; 
      }
    code {
-     background-color: #2B3E50;
-     color: #d9534f;
+     background-color: $background;
+     color: $tag;
      font-size: 0.875em;
      font-weight: normal;
      padding: 0.25em 0.5em 0.25em; 
    }
    .content table thead th {
-     color: #bdcbdb; }
+     color: #fff; }
  }
 //Post List Page
 span.tag.is-small {
