@@ -82,8 +82,11 @@ h6.card-header-title a {
 .b-table .icon {
   color: $tag;
 }
+.b-table .table {
+  background-color: $background;
+}
 .card {
- background-color: $background-content;
+ background-color: $background;
 }
 .card-content {
  padding: 0.2rem;
