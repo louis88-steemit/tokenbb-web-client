@@ -53,7 +53,7 @@
                 <div class="columns is-tablet box cat-style">
                   <div class="column is-half cat-title">
                     <span class="cprops-title">{{ cprops.row.title }}</span><br>
-                    <span>{{ cprops.row.description }}</span>
+                    <span class="cprops-description">{{ cprops.row.description }}</span>
                   </div>
                   <div class="column cat-stats">
                     <div class="level-item">
@@ -68,7 +68,7 @@
                       <span>Last Reply By</span>
                     </div>
                     <div class="level-item">
-                      <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }}</span>
+                      <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }} </span>
                     </div>
                   </div>
                 </div>
