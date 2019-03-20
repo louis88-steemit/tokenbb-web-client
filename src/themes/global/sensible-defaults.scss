@@ -1,4 +1,6 @@
-
+body {
+  min-height: 100vh !important;
+}
 /* Navigation Bar */
 .logo {
   content: $logo;
