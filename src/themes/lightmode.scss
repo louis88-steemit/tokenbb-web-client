@@ -1,5 +1,5 @@
 .theme-lightmode {
-  background-color:#fff;
+  background-color:rgb(252, 252, 252);
   // Set your brand colors
   $primary: #df691a;  
   $tag: #04F3C6;
@@ -17,7 +17,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
   //Set Colors
-  $background: #ffffff;
+  $background: rgb(252, 252, 252);
   $background-content: #eff5fc;
   $content: #2B3E50;
   $link: #1f2d3b;
@@ -50,6 +50,9 @@ html, section {
   span {
     color: $content;
   }
+  .button.is-small span {
+    color: $background;
+  }
   .box {
     background-color: $background;
     border-radius: 6px;
@@ -71,7 +74,7 @@ h5.card-header-title a {
 }
 .cat-style.box {
   margin-left: 10px;
-  border: 1px solid $background-content;
+  border: 1px solid #999;
 }
 .cat-style.box:hover {
   background-color: $background-content;
@@ -79,7 +82,7 @@ h5.card-header-title a {
 }
 
 .card {
-  background-color: $background-content;
+  background-color: $background;
 }
 .card-content {
   padding: 0.2rem;
@@ -90,8 +93,8 @@ h5.card-header-title a {
 
 // Navbar Style
 .navbar {
-  background-color: #2B3E50;
-  z-index: 30; 
+  background-color: $background;
+  box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
 }
 .navbar-burger {
   color: #dee5ed;
@@ -100,9 +103,8 @@ h5.card-header-title a {
     background-color: currentColor;
   }
   .navbar-menu {
-    background-color: #2B3E50;
-    box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
-    padding: 0.5rem 0; 
+    background-color: $background;
+    padding: 1rem 0; 
   }
 //Button
 .button.is-small {
@@ -130,6 +132,7 @@ h5.card-header-title a {
 }
 .button.is-small:focus:not(:active), .button.is-focused:not(:active) {
     box-shadow: 0 0 0 0.125em rgba(134, 148, 164, 0.25); 
+    color: #dee5ed;
   }
 .button.is-small:active, .button.is-active {
   border-color: transparent;
@@ -152,7 +155,7 @@ h5.card-header-title a {
   padding-top: 0.5rem; }
 
 .dropdown-item {
-  color: #dee5ed;
+  color: $content;
   display: block;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -167,7 +170,7 @@ button.dropdown-item {
   width: 100%; }
   a.dropdown-item:hover,
   button.dropdown-item:hover {
-    background-color: $background-content;
+    background-color: $content;
     color: #dee5ed; }
   a.dropdown-item.is-active,
   button.dropdown-item.is-active {
@@ -181,11 +184,9 @@ button.dropdown-item {
   height: 1px;
   margin: 0.5rem 0; 
 }
-.accountdrop span {
-  color: fff;
-}
 .breadcrumb a {
   color: $link;
+  text-decoration: underline;
 }
 .breadcrumb a:hover {
   color: $primary;
@@ -202,7 +203,7 @@ button.dropdown-item {
     width: 100%; 
   }
 .table td, .table th {
-    border: 1px solid #4E5D6C;
+    border: 1px solid $content;
     border-width: 0 0 1px;
     padding: 0.5em 0.75em;
     vertical-align: top; }
@@ -222,14 +223,12 @@ button.dropdown-item {
     border-bottom-width: 0; 
   }
   .label {
-    color: #dee5ed; 
+    color: $content; 
   }
   .cprops-description {
     color: $link;
     font-size: 0.8em;
   }
-
-
   .setting-view {
     h1,h2,h3,h4,h5,h6 {
       color: $content;
@@ -240,18 +239,21 @@ button.dropdown-item {
   }
 //Topic View Page {
   .topic-view {
+    .box {
+      border: 1px solid $content;
+    }
     blockquote {
-      background-color: $background;
+      background-color: $background-content;
       border-left: 5px solid $primary;
       padding: 1.25em 1.5em; 
     }
     h1,h2,h3,h4,h5,h6 {
-      color: #bdcbdb;
+      color: $content;
       font-weight: 600;
       line-height: 1.125; 
     }
     strong {
-      color: #bdcbdb;
+      color: $content;
       font-weight: 700; 
     }
     pre {
@@ -265,8 +267,8 @@ button.dropdown-item {
       word-wrap: normal; 
     }
     pre code {
-        background-color: $background;
-        color: currentColor;
+        background-color: $background-content;
+        color: $primary;
         font-size: 1em;
         padding: 0; 
       }
@@ -278,7 +280,8 @@ button.dropdown-item {
       padding: 0.25em 0.5em 0.25em; 
     }
     .content table thead th {
-      color: #bdcbdb; }
+      color: $primary;
+      font-weight: 600; }
   }
 //Post List Page
 span.tag.is-small {
@@ -288,14 +291,14 @@ span.tag.is-small {
 .topic-list {
   .box {
     margin-bottom: 5px;
-    border: 1px solid transparent;
+    border: 1px solid #999;
     .icon.is-small {
       color: $content;
     }
   }
   .box:hover {
     background-color: $background;
-    border-color: $background-content;
+    border-color: $link;
   }
   h2.title.is-6 {
     color: $content;

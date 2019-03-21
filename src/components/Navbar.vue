@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navstyle is-tablet"
+    class="navbar navstyle is-desktop"
     role="navigation"
     aria-label="main navigation"
   >
@@ -88,7 +88,7 @@
             class="button is-small"
             type="button"
           >
-            <span class="accountdrop">Account</span>
+            <span>Account</span>
             <b-icon icon="menu-down" />
           </button>
 
