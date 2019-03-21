@@ -116,11 +116,13 @@ h6.card-header-title a {
  border-width: 1px;
  color: $content;
  justify-content: center;
- padding-bottom: calc(0.375em - 1px);
- padding-left: 0.75em;
- padding-right: 0.75em;
- padding-top: calc(0.375em - 1px);
+ padding-bottom: calc(0.5em - 1px);
+ padding-left: 1em;
+ padding-right: 1em;
+ padding-top: calc(0.5em - 1px);
  text-align: center;
+ font-size: 1em;
+ min-width: 100px;
 }
 .button.is-small:hover, .button.is-hovered {
  border-color: $content;
@@ -233,9 +235,9 @@ button.dropdown-item {
 //Topic View Page {
  .topic-view {
    blockquote {
-     background-color: $background-content;
-     border-left: 5px solid $border;
-     padding: 1.25em 1.5em; 
+      background-color: $background;
+      border-left: 5px solid $primary;
+      padding: 1.25em 1.5em; 
    }
    h1,h2,h3,h4,h5,h6 {
      color: #fff;
@@ -272,6 +274,9 @@ button.dropdown-item {
    .content table thead th {
      color: #fff; }
  }
+ .markdown-body blockquote {
+  color: $content;
+}
 //Post List Page
 span.tag.is-small {
  background-color: $background;
