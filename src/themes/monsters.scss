@@ -1,18 +1,7 @@
 .theme-monsters {
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
-@at-root {
-	@font-face {
-	font-family: 'Nanami Bold Oblique';
-	src: url('../public/themes/monsters/fonts/nanami-boldoblique-webfont.eot');
-	src: url('../public/themes/monsters/fonts/nanami-boldoblique-webfont.eot?') format('☺'),
-	   url('../public/themes/monsters/fonts/nanami-boldoblique-webfont.woff') format('woff'),
-	   url('../public/themes/monsters/fonts/nanami-boldoblique-webfont.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-	}
-}
+@import url('../public/themes/monsters/fonts/monsters-fonts.css');
 	
 background-color:#001B1F;
 $logo: url("../public/themes/monsters/nav_logo.png");
@@ -109,6 +98,9 @@ background-color: #001B1F;
 .table-wrapper .table tr:last-child .box {
 margin-bottom:0 !important;
 }
+.table-wrapper .table tr .box:hover {
+background-color: #1a4045;
+}
 h6.card-header-title a {
 color: $content;
 }
@@ -201,6 +193,14 @@ background-color: transparent;
 }
 .navbar .button.is-small span {
 color: #86CED9;
+}
+.navbar .button.is-small:hover span, 
+.navbar .button.is-hovered span,
+.navbar .button.is-small:focus span, 
+.navbar .button.is-focused span,
+.navbar .button.is-small:active span,
+.navbar .button.is-active span {
+color: #fff;
 }
 .navbar-item, 
 .navbar-link {
