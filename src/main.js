@@ -41,6 +41,34 @@ link.rel = 'shortcut icon';
 link.href = `${ process.env.VUE_APP_BASE_URL }/${ context.icon }`;
 document.getElementsByTagName( 'head' )[0].appendChild( link );
 
+if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
+  console.log( 'Setting up proxy keychain communication for iframe.' );
+  let steemKeychainCallId = 1;
+  const steemKeychainCallbacks = {};
+
+  // Set up keychain communication to parent iframe
+  window.steem_keychain = new Proxy( {}, {
+    get: ( obj, method ) => {
+      return ( ...args ) => {
+        steemKeychainCallId++;
+        steemKeychainCallbacks[steemKeychainCallId] = args[args.length - 1];
+        window.parent.postMessage( { type: 'tokenbb_wrapper_keychain',
+          method,
+          args: args.slice( 0, args.length - 1 ),
+          call_id: steemKeychainCallId,
+        }, process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN );
+      };
+    },
+  } );
+  window.addEventListener( 'message', ( e ) => {
+    if ( e.data.type === 'tokenbb_wrapper_keychain_response' ) {
+      if ( steemKeychainCallbacks[e.data.call_id] ) {
+        steemKeychainCallbacks[e.data.call_id]( e.data.response );
+        steemKeychainCallbacks[e.data.call_id] = null;
+      }
+    }
+  } );
+}
 
 Vue.config.productionTip = false;
 
