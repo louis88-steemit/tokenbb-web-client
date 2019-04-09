@@ -34,11 +34,11 @@ export default {
   },
   watch: {
     '$route'( to, from ) {
-      if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
+      if ( true ) {
         window.parent.postMessage( {
           type: 'tokenbb_wrapper_route',
           payload: to.fullPath,
-        }, process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN );
+        }, '*' );
       }
     },
   },
