@@ -41,7 +41,7 @@ link.rel = 'shortcut icon';
 link.href = `${ process.env.VUE_APP_BASE_URL }/${ context.icon }`;
 document.getElementsByTagName( 'head' )[0].appendChild( link );
 
-if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
+if ( true ) {
   console.log( 'Setting up proxy keychain communication for iframe.' );
   let steemKeychainCallId = 1;
   const steemKeychainCallbacks = {};
@@ -56,7 +56,7 @@ if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
           method,
           args: args.slice( 0, args.length - 1 ),
           call_id: steemKeychainCallId,
-        }, process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN );
+        }, '*' );
       };
     },
   } );
