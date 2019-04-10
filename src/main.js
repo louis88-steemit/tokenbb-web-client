@@ -21,27 +21,72 @@ const contextMap = {
   drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
   localhost: { theme: 'theme-lightmode', forum: 'test', icon: 'favicon.ico' },
 };
-let context = contextMap.default;
-const subs = ( new URL( window.location ) ).hostname.split( '.' );
-if ( contextMap.hasOwnProperty( subs[0] ) ) {
-  context = contextMap[subs[0]];
-} else if ( subs.length >= 2 ) {
-  if ( subs[1] === 'tokenbb' ) {
-    context.forum = subs[0];
+
+function setUpForum( forum, isTokenbbDomain ) {
+  let context = contextMap.default;
+  if ( contextMap.hasOwnProperty( forum ) ) {
+    context = contextMap[forum];
+  } else if ( isTokenbbDomain ) {
+    context.forum = forum;
   }
+  console.log( `Loading TokenBB on ${ context.forum } with ${ context.theme }` );
+  document.documentElement.className = `${ context.theme }`;
+  global.forumname = context.forum;
+  document.title = `TokenBB ${global.forumname}`;
+
+  const link = document.querySelector( 'link[rel*=\'icon\']' ) || document.createElement( 'link' );
+  link.type = 'image/x-icon';
+  link.rel = 'shortcut icon';
+  link.href = `${ process.env.VUE_APP_BASE_URL }/${ context.icon }`;
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+
+  Vue.config.productionTip = false;
+
+  Vue.use( VueAnalytics, {
+    id: process.env.VUE_APP_GA_ID,
+    router,
+    autoTracking: {
+      exception: true,
+      exceptionLogs: true,
+    },
+    batch: {
+      enabled: true,
+      amount: 5,
+      delay: 500,
+    },
+  } );
+
+  window.setGAUserID = setGAUserID;
+  function setGAUserID( userID ) {
+    Vue.$ga.set( 'userId', userID );
+  }
+
+  Vue.use( steemEditor );
+
+  Vue.filter( 'formatDate', formatDate );
+  Vue.filter( 'fromNow', formatDateTimeFromNow );
+
+  Vue.filter( 'usernameDisplay', ( username, owner ) => {
+    if ( username === process.env.VUE_APP_ANON_USER ) {
+      return `GuestUser#${owner.substring( 4, 10 )}`;
+    }
+    return username;
+  } );
+
+  new Vue( {
+    router,
+    store,
+    render: ( h ) => h( App ),
+  } ).$mount( '#app' );
 }
-console.log( `Loading TokenBB on ${ context.forum } with ${ context.theme }` );
-document.documentElement.className = `${ context.theme }`;
-global.forumname = context.forum;
-document.title = `TokenBB ${global.forumname}`;
 
-const link = document.querySelector( 'link[rel*=\'icon\']' ) || document.createElement( 'link' );
-link.type = 'image/x-icon';
-link.rel = 'shortcut icon';
-link.href = `${ process.env.VUE_APP_BASE_URL }/${ context.icon }`;
-document.getElementsByTagName( 'head' )[0].appendChild( link );
+const subs = ( new URL( window.location ) ).hostname.split( '.' );
+const urlForum = subs[0];
+const urlIsTokenbbDomain = subs.length >= 2 && subs[1] === 'tokenbb';
 
-if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
+if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
+  setUpForum( urlForum, urlIsTokenbbDomain );
+} else {
   console.log( 'Setting up proxy keychain communication for iframe.' );
   let steemKeychainCallId = 1;
   const steemKeychainCallbacks = {};
@@ -66,45 +111,16 @@ if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         steemKeychainCallbacks[e.data.call_id]( e.data.response );
         steemKeychainCallbacks[e.data.call_id] = null;
       }
+    } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
+      setUpForum( e.data.forum, urlIsTokenbbDomain );
+    } else if ( e.data.type === 'tokenbb_wrapper_nav' ) {
+      const urlParams = new URLSearchParams( e.data.search );
+      const query = {};
+      for ( const pair of urlParams.entries() ) {
+        query[pair[0]] = pair[1];
+      }
+      router.replace( { path: e.data.pathname, query } );
     }
   } );
 }
 
-Vue.config.productionTip = false;
-
-Vue.use( VueAnalytics, {
-  id: process.env.VUE_APP_GA_ID,
-  router,
-  autoTracking: {
-    exception: true,
-    exceptionLogs: true,
-  },
-  batch: {
-    enabled: true,
-    amount: 5,
-    delay: 500,
-  },
-} );
-
-window.setGAUserID = setGAUserID;
-function setGAUserID( userID ) {
-  Vue.$ga.set( 'userId', userID );
-}
-
-Vue.use( steemEditor );
-
-Vue.filter( 'formatDate', formatDate );
-Vue.filter( 'fromNow', formatDateTimeFromNow );
-
-Vue.filter( 'usernameDisplay', ( username, owner ) => {
-  if ( username === process.env.VUE_APP_ANON_USER ) {
-    return `GuestUser#${owner.substring( 4, 10 )}`;
-  }
-  return username;
-} );
-
-new Vue( {
-  router,
-  store,
-  render: ( h ) => h( App ),
-} ).$mount( '#app' );
