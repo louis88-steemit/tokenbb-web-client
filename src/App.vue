@@ -38,7 +38,7 @@ export default {
         window.parent.postMessage( {
           type: 'tokenbb_wrapper_route',
           payload: to.fullPath,
-        }, '*' /* process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN*/ );
+        }, process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN );
       }
     },
   },
