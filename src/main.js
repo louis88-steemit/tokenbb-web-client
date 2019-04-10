@@ -22,13 +22,12 @@ const contextMap = {
   localhost: { theme: 'theme-lightmode', forum: 'test', icon: 'favicon.ico' },
 };
 
-function setUpForum( forum, isTokenbbDomain ) {
+function setUpForum( forumContext, forum ) {
   let context = contextMap.default;
-  if ( contextMap.hasOwnProperty( forum ) ) {
-    context = contextMap[forum];
-  } else if ( isTokenbbDomain ) {
-    context.forum = forum;
+  if ( contextMap.hasOwnProperty( forumContext ) ) {
+    context = contextMap[forumContext];
   }
+  context.forum = forum;
   console.log( `Loading TokenBB on ${ context.forum } with ${ context.theme }` );
   document.documentElement.className = `${ context.theme }`;
   global.forumname = context.forum;
@@ -85,7 +84,7 @@ const urlForum = subs[0];
 const urlIsTokenbbDomain = subs.length >= 2 && subs[1] === 'tokenbb';
 
 if ( urlForum !== 'app' && false /* !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN*/ ) {
-  setUpForum( urlForum, urlIsTokenbbDomain );
+  setUpForum( urlForum, urlIsTokenbbDomain ? urlForum : contextMap.default.forum );
 } else {
   console.log( 'Setting up proxy keychain communication for iframe.' );
   let steemKeychainCallId = 1;
@@ -112,7 +111,7 @@ if ( urlForum !== 'app' && false /* !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN*/
         steemKeychainCallbacks[e.data.call_id] = null;
       }
     } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
-      setUpForum( e.data.forum, urlIsTokenbbDomain );
+      setUpForum( e.data.forumContext, e.data.forum );
     } else if ( e.data.type === 'tokenbb_wrapper_nav' ) {
       const urlParams = new URLSearchParams( e.data.search );
       const query = {};
