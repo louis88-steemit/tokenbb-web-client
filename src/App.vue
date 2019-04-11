@@ -33,7 +33,7 @@ export default {
     };
   },
   watch: {
-    '$route'( to, from ) {
+    '$route'( to ) {
       if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         window.parent.postMessage( {
           type: 'tokenbb_wrapper_route',
