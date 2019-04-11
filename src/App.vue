@@ -34,7 +34,7 @@ export default {
   },
   watch: {
     '$route'( to, from ) {
-      if ( true ) {
+      if ( process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         window.parent.postMessage( {
           type: 'tokenbb_wrapper_route',
           payload: to.fullPath,
