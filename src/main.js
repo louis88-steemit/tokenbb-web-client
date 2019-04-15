@@ -83,7 +83,7 @@ const subs = ( new URL( window.location ) ).hostname.split( '.' );
 const urlForum = subs[0];
 const urlIsTokenbbDomain = subs.length >= 2 && subs[1] === 'tokenbb';
 
-if ( urlForum !== 'app' && false /* !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN*/ ) {
+if ( urlForum !== 'app' && true /* process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN*/ ) {
   setUpForum( urlForum, urlIsTokenbbDomain ? urlForum : contextMap.default.forum );
 } else {
   console.log( 'Setting up proxy keychain communication for iframe.' );
