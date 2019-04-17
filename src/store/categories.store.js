@@ -1,6 +1,6 @@
 import { Toast } from 'buefy/dist/components/toast';
 
-import { addCategory, listCategories, removeCategory } from '../services/api.service';
+import { addCategory, editCategory, listCategories, removeCategory } from '../services/api.service';
 import { errorAlertOptions } from '../utils/notifications.js';
 
 import map from 'lodash/map';
@@ -116,7 +116,19 @@ export default {
 
       addCategory( categoryName, title, description )
         .then( ( category ) => {
-          commit( 'add', category.data );
+          commit( 'setFetching', false );
+        } )
+        .catch( ( err ) => {
+          commit( 'setFetching', false );
+          Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
+          console.error( err );
+        } );
+    },
+    edit( { commit }, category ) {
+      commit( 'setFetching', true );
+
+      editCategory( category )
+        .then( ( cat ) => {
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {
@@ -130,7 +142,6 @@ export default {
 
       removeCategory( category.name )
         .then( () => {
-          commit( 'remove', category );
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {
