@@ -128,6 +128,20 @@ export function addCategory( categoryName, title, description ) {
   return requestAsync( opts );
 }
 
+export function editCategory( category ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${apiURL()}/${category.slug}/edit`,
+    body: {
+      ...category,
+    },
+  };
+
+  return requestAsync( opts );
+}
+
 export function removeCategory( categoryName ) {
   const opts = {
     method: 'DELETE',
