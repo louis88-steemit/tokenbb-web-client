@@ -168,13 +168,13 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { mapState } from 'vuex';
+import Field from 'buefy/src/components/field/Field';
+import Input from 'buefy/src/components/input/Input';
 
 import Table from 'buefy/src/components/table/Table';
 import TableColumn from 'buefy/src/components/table/TableColumn';
-import Field from 'buefy/src/components/field/Field';
-import Input from 'buefy/src/components/input/Input';
+import Vue from 'vue';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Settings',
@@ -229,7 +229,7 @@ export default {
           this.name = '';
           this.title = '';
           this.description = '';
-          this.$store.dispatch( 'categories/fetchAll' );
+          this.$nextTick( () => this.$store.dispatch( 'categories/fetchAll' ) );
         } )
         .catch( ( err ) => {
           console.error( err );
@@ -240,9 +240,8 @@ export default {
       this.$store.dispatch( 'categories/edit', this.editing[slug] )
         .then( () => {
           this.editing[slug] = null;
-          this.$store.dispatch( 'categories/fetchAll' );
-        } )
-        .catch( ( err ) => {
+          this.$nextTick( () => this.$store.dispatch( 'categories/fetchAll' ) );
+        }, ( err ) => {
           console.error( err );
           this.editing[slug] = null;
           this.fetching = false;
@@ -250,7 +249,7 @@ export default {
     },
     remove( category ) {
       this.$store.dispatch( 'categories/remove', category )
-        .then( () => this.$store.dispatch( 'categories/fetchAll' ) )
+        .then( () => this.$nextTick( () => this.$store.dispatch( 'categories/fetchAll' ) ) )
         .catch( ( err ) => {
           console.error( err );
           this.fetching = false;
