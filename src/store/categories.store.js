@@ -115,7 +115,7 @@ export default {
       commit( 'setFetching', true );
 
       addCategory( categoryName, title, description )
-        .then( ( category ) => {
+        .then( () => {
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {
@@ -128,12 +128,12 @@ export default {
       commit( 'setFetching', true );
 
       editCategory( category )
-        .then( ( cat ) => {
+        .then( () => {
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {
           commit( 'setFetching', false );
-          Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
+          Toast.open( errorAlertOptions( `Error editing category ${category.name}`, err ) );
           console.error( err );
         } );
     },
