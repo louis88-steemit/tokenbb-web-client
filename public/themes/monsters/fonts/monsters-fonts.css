@@ -1,0 +1,9 @@
+@font-face {
+font-family: 'Nanami Bold Oblique';
+src: url('./nanami-boldoblique-webfont.eot');
+src: url('./nanami-boldoblique-webfont.eot?') format('☺'),
+   url('./nanami-boldoblique-webfont.woff') format('woff'),
+   url('./nanami-boldoblique-webfont.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
