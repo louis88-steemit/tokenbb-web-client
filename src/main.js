@@ -12,6 +12,10 @@ import 'steem-editor/dist/css/index.css';
 import VueAnalytics from 'vue-analytics';
 
 import { formatDate, formatDateTimeFromNow } from './utils/content';
+import { getDomainForum } from './services/api.service.js';
+
+import { Toast } from 'buefy/dist/components/toast';
+import { errorAlertOptions } from './utils/notifications.js';
 
 registerSW();
 
@@ -111,7 +115,16 @@ if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         steemKeychainCallbacks[e.data.call_id] = null;
       }
     } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
-      setUpForum( e.data.forumContext, e.data.forum );
+
+      // Look up forum for domain.
+      getDomainForum( e.origin )
+        .then( ( forum ) => {
+          setUpForum( forum.data.slug, forum.data.slug );
+        } )
+        .catch( ( err ) => {
+          Toast.open( errorAlertOptions( `Could not find forum for domain ${e.origin}`, err ) );
+          console.error( err );
+        } );
     } else if ( e.data.type === 'tokenbb_wrapper_nav' ) {
       const urlParams = new URLSearchParams( e.data.search );
       const query = {};

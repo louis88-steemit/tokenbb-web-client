@@ -65,6 +65,19 @@ export function vote( author, permlink, voter, weight ) {
   return requestAsync( opts );
 }
 
+export function getDomainForum( domain ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${process.env.VUE_APP_API_HOST}/v1/domainforum/`,
+    body: {
+      domain,
+    },
+  };
+  return requestAsync( opts );
+}
+
 export function listRoles() {
   const opts = {
     method: 'GET',
