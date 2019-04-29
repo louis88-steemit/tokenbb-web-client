@@ -117,7 +117,7 @@ if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
     } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
 
       // Look up forum for domain.
-      getDomainForum( e.origin )
+      getDomainForum( new URL( e.origin ).hostname )
         .then( ( forum ) => {
           setUpForum( forum.data.slug, forum.data.slug );
         } )
