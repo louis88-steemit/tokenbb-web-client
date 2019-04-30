@@ -115,10 +115,11 @@ if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         steemKeychainCallbacks[e.data.call_id] = null;
       }
     } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
-
+      console.log(`querying forum name for ${e.origin ).hostname}`);
       // Look up forum for domain.
       getDomainForum( new URL( e.origin ).hostname )
         .then( ( forum ) => {
+          console.log(`found forum name ${forum.data.slug}`);
           setUpForum( forum.data.slug, forum.data.slug );
         } )
         .catch( ( err ) => {
