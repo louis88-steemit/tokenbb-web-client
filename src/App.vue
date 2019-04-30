@@ -7,6 +7,11 @@
     >
       <router-view />
     </section>
+    <footer class="footer-main">
+      <p class="has-text-centered">
+        Powered by <a href="https://tokenbb.io">TokenBB</a>, Handcrafted by <a href="https://buildteam.io/">BuildTeam</a>
+      </p>
+    </footer>
   </div>
 </template>
 
