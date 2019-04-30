@@ -87,7 +87,7 @@ const subs = ( new URL( window.location ) ).hostname.split( '.' );
 const urlForum = subs[0];
 const urlIsTokenbbDomain = subs.length >= 2 && subs[1] === 'tokenbb';
 
-console.log( `Forum: ${urlForum} domain: ${(new URL( window.location ) ).hostname}` );
+console.log( `Forum: ${urlForum} domain: ${( new URL( window.location ) ).hostname}` );
 
 if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
   setUpForum( urlForum, urlIsTokenbbDomain ? urlForum : contextMap.default.forum );
@@ -117,11 +117,12 @@ if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         steemKeychainCallbacks[e.data.call_id] = null;
       }
     } else if ( e.data.type === 'tokenbb_wrapper_forum' ) {
-      console.log(`querying forum name for ${(e.origin ).hostname}`);
+      console.log( `querying forum name ${e.origin} for ${( new URL( e.origin ) ).hostname}` );
+
       // Look up forum for domain.
-      getDomainForum( new URL( e.origin ).hostname )
+      getDomainForum( ( new URL( e.origin ) ).hostname )
         .then( ( forum ) => {
-          console.log(`found forum name ${forum.data.slug}`);
+          console.log( `found forum name ${forum.data.slug}` );
           setUpForum( forum.data.slug, forum.data.slug );
         } )
         .catch( ( err ) => {
