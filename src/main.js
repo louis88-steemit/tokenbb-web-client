@@ -87,6 +87,8 @@ const subs = ( new URL( window.location ) ).hostname.split( '.' );
 const urlForum = subs[0];
 const urlIsTokenbbDomain = subs.length >= 2 && subs[1] === 'tokenbb';
 
+console.log( `Forum: ${urlForum} domain: ${(new URL( window.location ) ).hostname}` );
+
 if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
   setUpForum( urlForum, urlIsTokenbbDomain ? urlForum : contextMap.default.forum );
 } else {
