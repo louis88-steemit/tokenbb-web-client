@@ -31,29 +31,6 @@
       class="navbar-menu"
       :class="{ 'is-active': menuActive }"
     >
-      <div class="navbar-start">
-        <div class="navbar-item">
-          <!--<p class="tr is-right">
-              <router-link
-                      v-if="auth.username"
-                      to="/create-forum"
-                      class="navbar-item is-primary">
-                Create Forum
-              </router-link>
-            </p>-->
-          <div>
-            <a>
-              <router-link
-                v-if="auth.roles.admin"
-                to="/settings"
-              >
-                Settings
-              </router-link>
-            </a>
-          </div>
-        </div>
-      </div>
-
       <div class="navbar-end">
         <div class="navbar-item is-expanded tr">
           <div class="nav-account">
@@ -91,7 +68,12 @@
             <span>Account</span>
             <b-icon icon="menu-down" />
           </button>
-
+          <b-dropdown-item
+            v-if="auth.roles.admin"
+            href="/settings"
+          >
+            Forum Settings
+          </b-dropdown-item>
           <b-dropdown-item
             class="is-right"
             @click="auth.addLink"
