@@ -125,7 +125,7 @@ export function createForum( forumName, admin ) {
   return requestAsync( opts );
 }
 
-export function addCategory( categoryName, title, description ) {
+export function addCategory( categoryName, title, description, nav ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -135,6 +135,7 @@ export function addCategory( categoryName, title, description ) {
       name: categoryName,
       title,
       description,
+      nav,
     },
   };
 
@@ -161,6 +162,20 @@ export function removeCategory( categoryName ) {
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories/' + categoryName,
+  };
+
+  return requestAsync( opts );
+}
+
+export function setCategoryOrdering( categoryOrdering ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${apiURL()}/categoryOrdering`,
+    body: {
+      categoryOrdering: JSON.stringify( categoryOrdering ),
+    },
   };
 
   return requestAsync( opts );
