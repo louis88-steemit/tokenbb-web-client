@@ -54,16 +54,16 @@ export default {
           console.error( err );
         } );
     },
-    editCategoryOrdering( { commit }, categoryOrdering ) {
+    async editCategoryOrdering( { commit }, categoryOrdering ) {
       commit( 'setFetching', true );
-      setCategoryOrdering( categoryOrdering )
-        .then( () => {
-          commit( 'setFetching', false );
-        }, ( err ) => {
-          commit( 'setFetching', false );
-          Toast.open( errorAlertOptions( 'Error editing category ordering', err ) );
-          console.error( err );
-        } );
+      try {
+        await setCategoryOrdering( categoryOrdering );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( 'Error editing category ordering', err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
     },
   },
 };

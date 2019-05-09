@@ -275,19 +275,19 @@ export default {
       this.orderEdit = true;
       this.editing = {};
     },
-    saveOrdering() {
+    async saveOrdering() {
 
       // get category ordering.
       const categoryOrdering = getCategoryOrdering( this.categoryTree.tree );
-
-      this.$store.dispatch( 'forum/editCategoryOrdering', categoryOrdering )
-        .then( () => {
-          this.orderEdit = false;
-          this.$nextTick( () => this.$store.dispatch( 'forum/fetch' ) );
-        }, ( err ) => {
-          console.error( err );
-          this.orderEdit = false;
-        } );
+      try {
+        await this.$store.dispatch( 'forum/editCategoryOrdering', categoryOrdering );
+        await this.$store.dispatch( 'forum/fetch' );
+        await this.$store.dispatch( 'categories/fetchAll' );
+      } catch ( err ) {
+        console.error( err );
+      } finally {
+        this.orderEdit = false;
+      }
     },
     cancelOrdering() {
       this.orderEdit = false;
@@ -314,22 +314,22 @@ export default {
         Vue.set( this.editing, slug, null );
       }
     },
-    add( nav ) {
-      this.$store.dispatch( 'categories/add', {
-        name: this.editing[nav].name,
-        title: this.editing[nav].title,
-        description: this.editing[nav].description,
-        nav,
-      } )
-        .then( () => {
-          this.editing[nav] = null;
-          this.$nextTick( () => this.$store.dispatch( 'forum/fetch' ) );
-          this.$nextTick( () => this.$store.dispatch( 'categories/fetchAll' ) );
-        } )
-        .catch( ( err ) => {
-          console.error( err );
-          this.fetching = false;
+    async add( nav ) {
+      try {
+        await this.$store.dispatch( 'categories/add', {
+          name: this.editing[nav].name,
+          title: this.editing[nav].title,
+          description: this.editing[nav].description,
+          nav,
         } );
+        this.editing[nav] = null;
+        await this.$store.dispatch( 'forum/fetch' );
+        await this.$store.dispatch( 'categories/fetchAll' );
+      } catch ( err ) {
+        console.error( err );
+      } finally {
+        this.fetching = false;
+      }
     },
     save( slug ) {
       this.$store.dispatch( 'categories/edit', this.editing[slug] )

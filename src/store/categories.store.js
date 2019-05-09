@@ -117,18 +117,16 @@ export default {
     },
   },
   actions: {
-    add( { commit }, { name: categoryName, title, description, nav } ) {
+    async add( { commit }, { name: categoryName, title, description, nav } ) {
       commit( 'setFetching', true );
-
-      addCategory( categoryName, title, description, nav )
-        .then( () => {
-          commit( 'setFetching', false );
-        } )
-        .catch( ( err ) => {
-          commit( 'setFetching', false );
-          Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
-          console.error( err );
-        } );
+      try {
+        await addCategory( categoryName, title, description, nav );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
     },
     edit( { commit }, category ) {
       commit( 'setFetching', true );
