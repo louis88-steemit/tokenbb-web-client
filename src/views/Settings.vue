@@ -215,6 +215,7 @@ export default {
             description: cat.description,
             edit: editing[cat.slug],
             draggable: orderEdit,
+            droppable: false,
             isGroup: false,
           };
         } );
@@ -243,6 +244,7 @@ export default {
             nav: categoryGroup.nav,
             edit: editing[categoryGroup.nav],
             draggable: false,
+            droppable: false,
             isGroup: false,
           } );
         }
@@ -297,9 +299,9 @@ export default {
 
       // Used to indicate something is being edited
       const newCat = {
-        name: '',
-        title: '',
-        description: '',
+        name: 'Name',
+        title: 'Title',
+        description: 'Description',
       };
       Vue.set( this.editing, nav, newCat );
     },
