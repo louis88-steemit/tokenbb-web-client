@@ -49,7 +49,7 @@
             >
               <b-input
                 v-model="props.data.edit.name"
-                :maxlength="32"
+                :maxlength="64"
                 :has-counter="false"
               />
               <button
@@ -123,7 +123,7 @@
               >
                 <b-input
                   v-model="props.data.edit.name"
-                  :maxlength="32"
+                  :maxlength="64"
                   :has-counter="false"
                 />
               </b-field>
@@ -139,7 +139,7 @@
               >
                 <b-input
                   v-model="props.data.edit.title"
-                  :maxlength="32"
+                  :maxlength="64"
                   :has-counter="false"
                 />
               </b-field>
