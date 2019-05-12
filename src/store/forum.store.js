@@ -1,6 +1,6 @@
 import { Toast } from 'buefy/dist/components/toast';
 
-import { listRoles } from '../services/api.service.js';
+import { listRoles, setCategoryOrdering } from '../services/api.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
 
@@ -25,6 +25,7 @@ export default {
       }
       state.owners = forum.owners;
       state.mods = forum.mods;
+      this.commit( 'categories/updateCategoryOrderingData' );
     },
   },
   getters: {
@@ -52,6 +53,17 @@ export default {
           Toast.open( errorAlertOptions( 'Error fetching forum', err ) );
           console.error( err );
         } );
+    },
+    async editCategoryOrdering( { commit }, categoryOrdering ) {
+      commit( 'setFetching', true );
+      try {
+        await setCategoryOrdering( categoryOrdering );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( 'Error editing category ordering', err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
     },
   },
 };
