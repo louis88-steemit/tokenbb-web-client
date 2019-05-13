@@ -52,12 +52,13 @@ function computeCategoryOrderingData( state, categoryOrdering ) {
   }
 
   // Place other categories on root level.
-  homeCategory.categories = Object.values( categoriesBySlug )
-    .filter( ( c ) => c )
-    .map( ( c ) => {
-      c.nav = 'home';
-      return c;
-    } );
+  homeCategory.categories = homeCategory.categories.concat(
+    Object.values( categoriesBySlug )
+      .filter( ( c ) => c )
+      .map( ( c ) => {
+        c.nav = homeCategory.nav;
+        return c;
+      } ) );
   homeCategory.categoryGroupsByNav = categoryGroupsByNav;
 
   state.categoriesByBreadcrumb = homeCategory;
