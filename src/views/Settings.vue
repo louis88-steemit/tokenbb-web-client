@@ -49,6 +49,7 @@
             >
               <b-input
                 v-model="props.data.edit.name"
+                placeholder="Name"
                 :maxlength="32"
                 :has-counter="false"
               />
@@ -123,6 +124,7 @@
               >
                 <b-input
                   v-model="props.data.edit.name"
+                  placeholder="Name"
                   :maxlength="32"
                   :has-counter="false"
                 />
@@ -139,6 +141,7 @@
               >
                 <b-input
                   v-model="props.data.edit.title"
+                  placeholder="Title"
                   :maxlength="32"
                   :has-counter="false"
                 />
@@ -155,6 +158,7 @@
               >
                 <b-input
                   v-model="props.data.edit.description"
+                  placeholder="Description"
                   :maxlength="320"
                   :has-counter="false"
                 />
@@ -370,7 +374,7 @@ export default {
 
       // Used to indicate something is being edited
       const newGroup = {
-        name: 'Name',
+        name: '',
       };
       Vue.set( this.editingGroup, nav + '/__NEW__', newGroup );
     },
@@ -378,9 +382,9 @@ export default {
 
       // Used to indicate something is being edited
       const newCat = {
-        name: 'Name',
-        title: 'Title',
-        description: 'Description',
+        name: '',
+        title: '',
+        description: '',
       };
       Vue.set( this.editingCategory, nav, newCat );
     },
