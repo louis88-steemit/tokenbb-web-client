@@ -50,7 +50,7 @@
               <b-input
                 v-model="props.data.edit.name"
                 placeholder="Name"
-                :maxlength="32"
+                :maxlength="64"
                 :has-counter="false"
               />
               <button
@@ -125,7 +125,7 @@
                 <b-input
                   v-model="props.data.edit.name"
                   placeholder="Name"
-                  :maxlength="32"
+                  :maxlength="64"
                   :has-counter="false"
                 />
               </b-field>
@@ -142,7 +142,7 @@
                 <b-input
                   v-model="props.data.edit.title"
                   placeholder="Title"
-                  :maxlength="32"
+                  :maxlength="64"
                   :has-counter="false"
                 />
               </b-field>
