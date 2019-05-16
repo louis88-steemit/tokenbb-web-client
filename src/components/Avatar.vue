@@ -8,6 +8,7 @@
       :is="avatarLink(author)?'a':'span'"
       :href="avatarLink(author) || ''"
       target="_blank"
+      rel="noopener"
     >
       <figure
         class="image avatar"
