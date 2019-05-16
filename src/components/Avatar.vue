@@ -4,7 +4,11 @@
     size="is-small"
     type="is-black is-right"
   >
-    <a :href="avatarLINK(author)">
+    <component
+      :is="avatarLink(author)?'a':'span'"
+      :href="avatarLink(author) || ''"
+      target="_blank"
+    >
       <figure
         class="image avatar"
         :class="classes"
@@ -15,7 +19,7 @@
           :src="avatarURL(author, owner)"
         >
       </figure>
-    </a>
+    </component>
   </b-tooltip>
 </template>
 
@@ -50,13 +54,11 @@ export default {
       }
       return `https://robohash.org/${owner}.png?set=set4`;
     },
-    avatarLINK( author ) {
+    avatarLink( author ) {
       if ( author !== process.env.VUE_APP_ANON_USER ) {
         return `https://steempeak.com/@${author}`;
       }
-
-      return '#';
-
+      return '';
     },
   },
 };
