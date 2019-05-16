@@ -4,16 +4,18 @@
     size="is-small"
     type="is-black is-right"
   >
-    <figure
-      class="image avatar"
-      :class="classes"
-    >
-      <img
-        class="is-rounded"
-        :title="author | usernameDisplay(owner)"
-        :src="avatarURL(author, owner)"
+    <a :href="avatarLINK(author)">
+      <figure
+        class="image avatar"
+        :class="classes"
       >
-    </figure>
+        <img
+          class="is-rounded"
+          :title="author | usernameDisplay(owner)"
+          :src="avatarURL(author, owner)"
+        >
+      </figure>
+    </a>
   </b-tooltip>
 </template>
 
@@ -47,6 +49,14 @@ export default {
         return `https://img.busy.org/@${author}`;
       }
       return `https://robohash.org/${owner}.png?set=set4`;
+    },
+    avatarLINK( author ) {
+      if ( author !== process.env.VUE_APP_ANON_USER ) {
+        return `https://steempeak.com/@${author}`;
+      }
+
+      return '#';
+
     },
   },
 };
