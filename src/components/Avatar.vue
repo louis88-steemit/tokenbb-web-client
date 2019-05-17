@@ -6,7 +6,7 @@
   >
     <component
       :is="avatarLink(author)?'a':'span'"
-      :href="avatarLink(author) || ''"
+      :href="avatarLink(author)"
       target="_blank"
       rel="noopener"
     >
