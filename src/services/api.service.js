@@ -125,17 +125,14 @@ export function createForum( forumName, admin ) {
   return requestAsync( opts );
 }
 
-export function addCategory( categoryName, title, description, nav ) {
+export function addCategory( category ) {
   const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories/',
     body: {
-      name: categoryName,
-      title,
-      description,
-      nav,
+      ...category,
     },
   };
 

@@ -106,7 +106,7 @@ export default {
       return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.nav : '';
     },
     categories() {
-      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.categories : [];
+      return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.categories.filter( ( cat ) => !cat.hidden ) : [];
     },
     categoryGroups() {
       return this.categoriesByBreadcrumb ? this.categoriesByBreadcrumb.groups : [];

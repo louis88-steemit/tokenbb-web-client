@@ -97,29 +97,28 @@ export default {
     },
   },
   actions: {
-    async add( { commit }, { name: categoryName, title, description, nav } ) {
+    async add( { commit }, category ) {
       commit( 'setFetching', true );
       try {
-        await addCategory( categoryName, title, description, nav );
+        await addCategory( category );
       } catch ( err ) {
-        Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
+        Toast.open( errorAlertOptions( `Error adding category ${category.name}`, err ) );
         console.error( err );
       } finally {
         commit( 'setFetching', false );
       }
     },
-    edit( { commit }, category ) {
+    async edit( { commit }, category ) {
       commit( 'setFetching', true );
 
-      editCategory( category )
-        .then( () => {
-          commit( 'setFetching', false );
-        } )
-        .catch( ( err ) => {
-          commit( 'setFetching', false );
-          Toast.open( errorAlertOptions( `Error editing category ${category.name}`, err ) );
-          console.error( err );
-        } );
+      try {
+        await editCategory( category );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( `Error editing category ${category.name}`, err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
     },
     remove( { commit }, category ) {
       commit( 'setFetching', true );

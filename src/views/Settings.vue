@@ -91,6 +91,15 @@
               >
                 Edit
               </button>
+              <button
+                v-if="props.data.children.length == 0"
+                class="button is-small"
+                :class="{ 'is-loading': fetching }"
+                :disabled="fetching || activeEdits"
+                @click="removeGroup(props.data.nav)"
+              >
+                Remove
+              </button>
             </div>
             <div v-if="props.data.open">
               <button
@@ -172,6 +181,27 @@
                 {{ props.data.description }}
               </div>
             </div>
+            <div class="column cat-stats">
+              <b-field
+                v-if="props.data.edit"
+              >
+                <b-checkbox
+                  v-model="props.data.edit.hidden"
+                >
+                  Hidden
+                </b-checkbox>
+              </b-field>
+              <div
+                v-else
+              >
+                <b-checkbox
+                  v-model="props.data.hidden"
+                  disabled
+                >
+                  Hidden
+                </b-checkbox>
+              </div>
+            </div>
             <div class="column">
               <button
                 v-if="props.data.edit"
@@ -206,6 +236,7 @@
 </template>
 
 <script>
+import Checkbox from 'buefy/src/components/checkbox/Checkbox';
 import Field from 'buefy/src/components/field/Field';
 import Icon from 'buefy/src/components/icon/Icon';
 import Input from 'buefy/src/components/input/Input';
@@ -236,6 +267,7 @@ function getCategoryOrdering( treeGroup ) {
 export default {
   name: 'Settings',
   components: {
+    BCheckbox: Checkbox,
     BIcon: Icon,
     BField: Field,
     BInput: Input,
@@ -270,6 +302,7 @@ export default {
             name: cat.name,
             title: cat.title,
             description: cat.description,
+            hidden: Boolean( cat.hidden ),
             edit: editingCategory[cat.slug],
             draggable: orderEdit,
             droppable: false,
@@ -361,6 +394,12 @@ export default {
       const thisGroup = this.categoryTree.groupsByNav[nav];
       Vue.set( this.editingGroup, nav, { name: thisGroup.name, slug: thisGroup.slug } );
     },
+    async removeGroup( nav ) {
+      const thisGroup = this.categoryTree.groupsByNav[nav];
+      console.log( thisGroup );
+      thisGroup.parent.children = thisGroup.parent.children.filter( ( c ) => c.nav !== thisGroup.nav );
+      await this.saveOrdering();
+    },
     cancelGroupEdit( nav ) {
       Vue.set( this.editingGroup, nav, null );
     },
@@ -388,6 +427,7 @@ export default {
         name: '',
         title: '',
         description: '',
+        hidden: false,
       };
       Vue.set( this.editingCategory, nav, newCat );
     },
@@ -405,9 +445,7 @@ export default {
     async addCategory( nav ) {
       try {
         await this.$store.dispatch( 'categories/add', {
-          name: this.editingCategory[nav].name,
-          title: this.editingCategory[nav].title,
-          description: this.editingCategory[nav].description,
+          ...this.editingCategory[nav],
           nav,
         } );
         this.editingCategory[nav] = null;
