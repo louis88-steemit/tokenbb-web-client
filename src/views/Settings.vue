@@ -122,6 +122,7 @@
               <b-field
                 v-if="props.data.edit"
               >
+                Name
                 <b-input
                   v-model="props.data.edit.name"
                   placeholder="Name"
@@ -139,6 +140,7 @@
               <b-field
                 v-if="props.data.edit"
               >
+                Title
                 <b-input
                   v-model="props.data.edit.title"
                   placeholder="Title"
@@ -156,6 +158,7 @@
               <b-field
                 v-if="props.data.edit"
               >
+                Description
                 <b-input
                   v-model="props.data.edit.description"
                   placeholder="Description"
