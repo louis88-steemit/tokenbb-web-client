@@ -11,6 +11,10 @@ export default {
     categoryOrdering: Object,
     owners: [],
     mods: [],
+    token: {
+      enabled: false,
+      symbol: '',
+    },
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -25,6 +29,8 @@ export default {
       }
       state.owners = forum.owners;
       state.mods = forum.mods;
+      state.token.enabled = Boolean( forum.token && forum.token.SCOT );
+      state.token.symbols = ( forum.token && forum.token.symbol ) || '';
       this.commit( 'categories/updateCategoryOrderingData' );
     },
   },

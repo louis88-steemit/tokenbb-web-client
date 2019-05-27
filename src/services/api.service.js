@@ -13,6 +13,17 @@ function requestAsync( opts ) {
     .then( ( response ) => response.json() );
 }
 
+export function getScotTokenPayout( author, permlink ) {
+  const opts = {
+    method: 'GET',
+    json: true,
+    headers: {},
+    url: `https://scot-api.steem-engine.com/@${author}/${permlink}`,
+  };
+
+  return requestAsync( opts );
+}
+
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
 }

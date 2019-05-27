@@ -1,7 +1,7 @@
 <template class="upvote">
   <ShowIfLoggedIn :hidden="true">
     <span class="upvote-control">
-      <span class="upvote-value">${{ value }}</span>
+      <span class="upvote-value">{{ value }}</span>
       <span class="upvote-lenght"><b-icon
         icon="arrow-up-drop-circle-outline"
         size="is-small"
@@ -82,8 +82,9 @@ import Icon from 'buefy/src/components/icon/Icon';
 
 
 import { Client } from 'dsteem';
+import { mapState } from 'vuex';
 
-import { vote } from '../services/api.service.js';
+import { getScotTokenPayout, vote } from '../services/api.service.js';
 import ShowIfLoggedIn from './ShowIfLoggedIn.vue';
 
 import Timeout from 'await-timeout';
@@ -109,11 +110,14 @@ export default {
       percent: 10,
       fetching: false,
       paid: 0,
-      value: '0.000',
+      value: '$ 0.000',
       votes: [],
     };
   },
   computed: {
+    ...mapState( 'forum', [
+      'token',
+    ] ),
     voted() {
       return this.paid > 0
         || this.$store.state.auth.current === 'anon'
@@ -140,11 +144,26 @@ export default {
       this.percent = this.$refs.slider.value;
     },
     async updateValue() {
-      const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
-      const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
-      this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
-      this.value = ( this.paid + pending ).toFixed( 3 );
-      this.votes = data.active_votes;
+      if ( this.token.enabled ) {
+        const data = await getScotTokenPayout( this.author, this.permlink );
+        const tokenPayout = data[this.symbol] || {
+          pending_token: 0,
+          total_payout_value: 0,
+          precision: 3,
+          active_votes: [],
+        };
+        const precision = tokenPayout.precision || 3;
+        const pending = tokenPayout.pending_payout_value / precision;
+        this.paid = tokenPayout.total_payout_value / precision;
+        this.value = ( this.paid + pending ).toFixed( precision ) + ' ' + this.symbol;
+        this.votes = tokenPayout.active_votes;
+      } else {
+        const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
+        const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
+        this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
+        this.value = '$' + ( this.paid + pending ).toFixed( 3 );
+        this.votes = data.active_votes;
+      }
     },
     async handleClick() {
       if ( this.voted ) {
