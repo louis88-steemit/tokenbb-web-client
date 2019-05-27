@@ -30,7 +30,7 @@ export default {
       state.owners = forum.owners;
       state.mods = forum.mods;
       state.token.enabled = Boolean( forum.token && forum.token.SCOT );
-      state.token.symbols = ( forum.token && forum.token.symbol ) || '';
+      state.token.symbol = ( forum.token && forum.token.symbol ) || '';
       this.commit( 'categories/updateCategoryOrderingData' );
     },
   },

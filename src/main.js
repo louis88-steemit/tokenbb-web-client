@@ -20,7 +20,7 @@ import { errorAlertOptions } from './utils/notifications.js';
 registerSW();
 
 const contextMap = {
-  default: { theme: 'theme-default', forum: 'test', icon: 'favicon.ico' },
+  default: { theme: 'theme-default', forum: 'monsters', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'themes/monsters/favicon_teeth.png' },
   drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
   localhost: { theme: 'theme-monsters', forum: 'monsters', icon: 'favicon.ico' },

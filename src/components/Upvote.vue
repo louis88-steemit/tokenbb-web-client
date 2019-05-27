@@ -146,16 +146,16 @@ export default {
     async updateValue() {
       if ( this.token.enabled ) {
         const data = await getScotTokenPayout( this.author, this.permlink );
-        const tokenPayout = data[this.symbol] || {
+        const tokenPayout = data[this.token.symbol] || {
           pending_token: 0,
           total_payout_value: 0,
           precision: 3,
           active_votes: [],
         };
         const precision = tokenPayout.precision || 3;
-        const pending = tokenPayout.pending_payout_value / precision;
+        const pending = tokenPayout.pending_token / precision;
         this.paid = tokenPayout.total_payout_value / precision;
-        this.value = ( this.paid + pending ).toFixed( precision ) + ' ' + this.symbol;
+        this.value = ( this.paid + pending ).toFixed( precision ) + ' ' + this.token.symbol;
         this.votes = tokenPayout.active_votes;
       } else {
         const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
