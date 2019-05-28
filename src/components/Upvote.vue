@@ -137,7 +137,7 @@ export default {
       'token',
     ] ),
     voted() {
-      return this.paid > 0
+      return this.fetching || this.paid > 0
         || this.$store.state.auth.current === 'anon'
         || this.votes.filter( ( _vote ) => _vote.voter === this.$store.state.auth.current ).length > 0;
     },
