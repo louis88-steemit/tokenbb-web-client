@@ -1,7 +1,20 @@
 <template class="upvote">
   <ShowIfLoggedIn :hidden="true">
     <span class="upvote-control">
-      <span class="upvote-value">{{ value }}</span>
+      <b-tooltip
+        :label="'Payout in Steem-Engine tokens of: ' + token_value + ' and in Steem Blockchain tokens of: ' + value"
+        size="is-small"
+        type="is-black is-center"
+      >
+        <span
+          v-if="this.token.enabled"
+          class="upvote-value"
+        >{{ token_value }}</span>
+        <span
+          v-else
+          class="upvote-value"
+        >{{ value }}</span>
+      </b-tooltip>
       <span class="upvote-lenght"><b-icon
         icon="arrow-up-drop-circle-outline"
         size="is-small"
@@ -76,6 +89,7 @@
 
 <script>
 
+import Tooltip from 'buefy/src/components/tooltip/Tooltip';
 import Dropdown from 'buefy/src/components/dropdown/Dropdown';
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
 import Icon from 'buefy/src/components/icon/Icon';
@@ -95,6 +109,7 @@ const client = new Client( 'https://api.steemit.com' );
 
 export default {
   components: {
+    BTooltip: Tooltip,
     BDropdown: Dropdown,
     BDropdownItem: DropdownItem,
     BIcon: Icon,
@@ -107,11 +122,14 @@ export default {
   },
   data() {
     return {
-      percent: 10,
+      percent: 100,
       fetching: false,
       paid: 0,
+      token_paid: 0,
       value: '$ 0.000',
+      token_value: '0.000',
       votes: [],
+      token_votes: [],
     };
   },
   computed: {
@@ -145,25 +163,25 @@ export default {
     },
     async updateValue() {
       if ( this.token.enabled ) {
-        const data = await getScotTokenPayout( this.author, this.permlink );
-        const tokenPayout = data[this.token.symbol] || {
+        const token_data = await getScotTokenPayout( this.author, this.permlink );
+        const tokenPayout = token_data[this.token.symbol] || {
           pending_token: 0,
           total_payout_value: 0,
-          precision: 3,
+          precision: this.token.precision || 3,
           active_votes: [],
         };
-        const precision = tokenPayout.precision || 3;
-        const pending = tokenPayout.pending_token / precision;
-        this.paid = tokenPayout.total_payout_value / precision;
-        this.value = ( this.paid + pending ).toFixed( precision ) + ' ' + this.token.symbol;
-        this.votes = tokenPayout.active_votes;
-      } else {
-        const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
-        const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
-        this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
-        this.value = '$' + ( this.paid + pending ).toFixed( 3 );
-        this.votes = data.active_votes;
+        const precision = tokenPayout.precision || this.token.precision || 3;
+        const token_pending = tokenPayout.pending_token / precision;
+        this.token_paid = tokenPayout.total_payout_value / precision;
+        this.token_value = ( this.paid + token_pending ).toFixed( precision ) + ' ' + this.token.symbol;
+        this.token_votes = tokenPayout.active_votes;
       }
+
+      const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
+      const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
+      this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
+      this.value = '$ ' + ( this.paid + pending ).toFixed( 3 );
+      this.votes = data.active_votes;
     },
     async handleClick() {
       if ( this.voted ) {
