@@ -171,8 +171,9 @@ export default {
           active_votes: [],
         };
         const precision = tokenPayout.precision || this.token.precision || 3;
-        const token_pending = tokenPayout.pending_token / precision;
-        this.token_paid = tokenPayout.total_payout_value / precision;
+        const precision_div = Math.pow( 10, precision );
+        const token_pending = tokenPayout.pending_token / precision_div;
+        this.token_paid = tokenPayout.total_payout_value / precision_div;
         this.token_value = ( this.paid + token_pending ).toFixed( precision ) + ' ' + this.token.symbol;
         this.token_votes = tokenPayout.active_votes;
       }
