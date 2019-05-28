@@ -14,6 +14,7 @@ export default {
     token: {
       enabled: false,
       symbol: '',
+      precision: 3,
     },
   },
   mutations: {
@@ -31,6 +32,7 @@ export default {
       state.mods = forum.mods;
       state.token.enabled = Boolean( forum.token && forum.token.SCOT );
       state.token.symbol = ( forum.token && forum.token.symbol ) || '';
+      state.token.precision = ( forum.token && forum.token.precision ) || 3;
       this.commit( 'categories/updateCategoryOrderingData' );
     },
   },
