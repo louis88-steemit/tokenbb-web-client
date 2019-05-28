@@ -57,7 +57,7 @@
                 orient="horizontal"
                 class="slider is-primary is-circle"
                 step="1"
-                min="0"
+                min="1"
                 max="100"
                 :value="percent"
                 type="range"
@@ -202,10 +202,12 @@ export default {
         await this.updateValue();
         await Timeout.set( 3000 );
         await this.updateValue();
-        await Timeout.set( 30000 );
-        await this.updateValue();
-        await Timeout.set( 90000 );
-        await this.updateValue();
+
+        // check ever 5 seconds to make sure to update SPT once available
+        for ( let i = 0; i < 12; i++ ) {
+          await Timeout.set( 5000 );
+          await this.updateValue();
+        }
       } catch ( err ) {
         console.error( 'oops!', err );
         Toast.open( {
