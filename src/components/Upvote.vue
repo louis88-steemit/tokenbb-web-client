@@ -198,6 +198,7 @@ export default {
           message: 'Upvoted!',
           type: 'is-primary',
         } );
+        await this.updateValue();
         await Timeout.set( 3000 );
         await this.updateValue();
       } catch ( err ) {
