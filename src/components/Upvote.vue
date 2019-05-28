@@ -202,6 +202,10 @@ export default {
         await this.updateValue();
         await Timeout.set( 3000 );
         await this.updateValue();
+        await Timeout.set( 30000 );
+        await this.updateValue();
+        await Timeout.set( 90000 );
+        await this.updateValue();
       } catch ( err ) {
         console.error( 'oops!', err );
         Toast.open( {
