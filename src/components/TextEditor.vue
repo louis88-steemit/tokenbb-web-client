@@ -1,13 +1,16 @@
 <template>
   <steem-editor
+    ref="md"
     v-model="content"
     language="en"
     :toolbars="customToolbar"
+    @imgAdd="uploadEditorImage"
   />
 </template>
 
 <script>
 
+import { uploadImage } from '../services/api.service.js';
 import { quoteText } from '../utils/content';
 
 export default {
@@ -42,6 +45,18 @@ export default {
   methods: {
     addQuote( quote ) {
       this.content += quoteText( quote );
+    },
+    uploadEditorImage( pos, file ) {
+      const newPos = `Uploading File ${pos}, please wait...`;
+      this.$refs.md.$img2Url( pos, newPos );
+      uploadImage( file ).then( ( url ) => {
+        const reg_str = '/(!\\[\[^\\[\]*?\\]\(?=\\(\)\)\\(\\s*\(' + newPos + '\)\\s*\\)/g';
+        // eslint-disable-next-line no-eval
+        const reg = eval( reg_str );
+        this.$refs.md.d_value = this.$refs.md.d_value.replace( reg, '$1(' + url.data.url + ')' );
+        this.$refs.md.$refs.toolbar_left.$changeUrl( pos, url.data.url );
+        this.$refs.md.iRender();
+      } );
     },
   },
 };

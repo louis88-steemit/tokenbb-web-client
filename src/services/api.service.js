@@ -1,14 +1,16 @@
 import steem from './steem.service';
 
-function requestAsync( opts ) {
-  if ( opts.body ) {
+function requestAsync( opts, raw ) {
+  if ( opts.body && !raw ) {
     opts.body = JSON.stringify( opts.body );
   }
   if ( !opts.headers ) {
     opts.headers = {};
   }
-  opts.headers.accept = 'application/json';
-  opts.headers['content-type'] = 'application/json';
+  if ( !raw ) {
+    opts.headers.accept = 'application/json';
+    opts.headers['content-type'] = 'application/json';
+  }
   return fetch( opts.url, opts )
     .then( ( response ) => response.json() );
 }
@@ -26,6 +28,19 @@ export function getScotTokenPayout( author, permlink ) {
 
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
+}
+
+export function uploadImage( image ) {
+  const formdata = new FormData();
+  formdata.append( 'image', image );
+  const opts = {
+    method: 'POST',
+    body: formdata,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${process.env.VUE_APP_API_HOST}/v1/image-upload`,
+  };
+
+  return requestAsync( opts, true );
 }
 
 export function unpin( topic ) {
