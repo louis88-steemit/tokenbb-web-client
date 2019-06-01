@@ -22,4 +22,4 @@ A high level overview of the Task at hand, add screenshots if possible.
 
 ## Bounty
 
-Is there a Steem Task Request? Is there a bounty for this task?
+We are offering a xx BT bounty for a merged pull request that solves this issue.
