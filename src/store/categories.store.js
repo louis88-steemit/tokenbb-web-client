@@ -41,12 +41,12 @@ function computeCategoryOrderingData( state, categoryOrdering ) {
     categories: [],
   };
 
-  // when getter not ready, categoryOrdering is a function
+  // when getter not ready, categoryOrdering {__ob__: Observer... }
   if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
     if ( Array.isArray( categoryOrdering ) ) {
       homeCategory.groups = categoryOrdering;
       homeCategory = processCategoryOrdering( homeCategory );
-    } else {
+    } else if ( categoryOrdering.name && categoryOrdering.slug ) {
       homeCategory = processCategoryOrdering( categoryOrdering );
     }
   }
