@@ -106,17 +106,17 @@
                 class="button is-small"
                 :class="{ 'is-loading': fetching }"
                 :disabled="fetching || activeEdits"
-                @click="addCategoryToGroup(props.data.nav)"
+                @click="addGroupToGroup(props.data.nav)"
               >
-                Add Category
+                Add Category Group
               </button>
               <button
                 class="button is-small"
                 :class="{ 'is-loading': fetching }"
                 :disabled="fetching || activeEdits"
-                @click="addGroupToGroup(props.data.nav)"
+                @click="addCategoryToGroup(props.data.nav)"
               >
-                Add Category Group
+                Add Category
               </button>
             </div>
           </div>
