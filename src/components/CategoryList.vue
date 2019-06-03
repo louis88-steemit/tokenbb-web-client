@@ -64,12 +64,21 @@
                     </div>
                   </div>
                   <div class="column cat-stats">
-                    <div class="level-item">
-                      <span>Last Reply By</span>
-                    </div>
-                    <div class="level-item">
-                      <span>{{ cprops.row.meta ? cprops.row.meta.last_action.author : '' }} </span>
-                    </div>
+                    <span
+                      v-if="cprops.row.meta.replies > 0"
+                      class="level-item"
+                    >
+                      Last Activity
+                    </span>
+                    <span
+                      v-if="cprops.row.meta.replies > 0"
+                      class="level-item category-activity"
+                    >
+                      <DateTimeTag
+                        :last-reply="cprops.row.meta.last_action"
+                        :number-of-replies="cprops.row.meta.replies"
+                      />
+                    </span>
                   </div>
                 </div>
               </router-link>
@@ -81,12 +90,17 @@
   </div>
 </template>
 <script>
+
 import Icon from 'buefy/src/components/icon/Icon';
 import Collapse from 'buefy/src/components/collapse/Collapse';
 import Table from 'buefy/src/components/table/Table';
+
+import DateTimeTag from '../components/DateTimeTag';
+
 export default {
   name: 'CategoryGroup',
   components: {
+    DateTimeTag,
     BTable: Table,
     BIcon: Icon,
     BCollapse: Collapse,
