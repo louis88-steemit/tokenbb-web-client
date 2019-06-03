@@ -50,7 +50,7 @@ export default {
       const newPos = `Uploading File ${pos}, please wait...`;
       this.$refs.md.$img2Url( pos, newPos );
       uploadImage( file ).then( ( url ) => {
-        const newUrl = url.message ? url.data.url : url.message;
+        const newUrl = url.success ? url.data.url : url.message;
         const reg_str = '/(!\\[\[^\\[\]*?\\]\(?=\\(\)\)\\(\\s*\(' + newPos + '\)\\s*\\)/g';
         // eslint-disable-next-line no-eval
         const reg = eval( reg_str );
