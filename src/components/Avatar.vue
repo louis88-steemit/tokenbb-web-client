@@ -2,13 +2,14 @@
   <b-tooltip
     :label="author | usernameDisplay(owner)"
     size="is-small"
-    type="is-black is-right"
+    type="is-black is-top"
   >
     <component
       :is="avatarLink(author)?'a':'span'"
       :href="avatarLink(author)"
       target="_blank"
       rel="noopener"
+      class="align-middle"
     >
       <figure
         class="image avatar"

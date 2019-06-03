@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="align-middle">
     <b-icon
       icon="clock"
       size="is-small"
@@ -8,6 +8,7 @@
     <template v-if="!this.time && this.numberOfReplies > 0">
       <span>by</span>
       <Avatar
+        class="align-middle"
         :author="this.lastReply.author"
         :owner="this.lastReply.owner"
         size="small"
@@ -19,7 +20,6 @@
 <script>
 
 import Icon from 'buefy/src/components/icon/Icon';
-import Tooltip from 'buefy/src/components/tooltip/Tooltip';
 
 import Avatar from '../components/Avatar.vue';
 

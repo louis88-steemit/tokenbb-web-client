@@ -444,8 +444,14 @@
     text-transform: uppercase;
   }
 
-  .post-stats .b-tooltip.is-black .avatar.is-16x16 {
-    top: 0.5rem;
+  .category-activity .b-tooltip .avatar.is-16x16 {
+    top: 4px;
+    left: -28px;
+  }
+
+  .topic-activity .b-tooltip .avatar.is-16x16 {
+    top: 10px;
+    left: 0px;
   }
 
   // Topic View Page {

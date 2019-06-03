@@ -96,7 +96,7 @@
                         /> {{ props.row.numberOfReplies }}
                       </span>
                     </span>
-                    <span class="level-item">
+                    <span class="level-item topic-activity">
                       <DateTimeTag
                         :last-reply="props.row.lastReply"
                         :number-of-replies="props.row.numberOfReplies"

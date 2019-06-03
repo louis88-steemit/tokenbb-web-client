@@ -50,11 +50,12 @@ export default {
       const newPos = `Uploading File ${pos}, please wait...`;
       this.$refs.md.$img2Url( pos, newPos );
       uploadImage( file ).then( ( url ) => {
+        const newUrl = url.message ? url.data.url : url.message;
         const reg_str = '/(!\\[\[^\\[\]*?\\]\(?=\\(\)\)\\(\\s*\(' + newPos + '\)\\s*\\)/g';
         // eslint-disable-next-line no-eval
         const reg = eval( reg_str );
-        this.$refs.md.d_value = this.$refs.md.d_value.replace( reg, '$1(' + url.data.url + ')' );
-        this.$refs.md.$refs.toolbar_left.$changeUrl( pos, url.data.url );
+        this.$refs.md.d_value = this.$refs.md.d_value.replace( reg, '$1(' + newUrl + ')' );
+        this.$refs.md.$refs.toolbar_left.$changeUrl( pos, newUrl );
         this.$refs.md.iRender();
       } );
     },
