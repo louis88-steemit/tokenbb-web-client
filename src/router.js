@@ -44,6 +44,14 @@ const router = new Router( {
       component: loadView( 'Topic' ),
     },
     {
+      path: '/@:author',
+      name: 'author',
+      beforeEnter( to, from, next ) {
+        window.open( `https://steempeak.com/@${ to.params.author }`, '_blank' );
+        next( false );
+      },
+    },
+    {
       path: '/404',
       name: 'not-found',
       component: loadView( 'NotFound' ),
