@@ -1,11 +1,25 @@
 <template>
-  <steem-editor
-    ref="md"
-    v-model="content"
-    language="en"
-    :toolbars="customToolbar"
-    @imgAdd="uploadEditorImage"
-  />
+  <div>
+    <steem-editor
+      ref="md"
+      v-model="content"
+      language="en"
+      :toolbars="customToolbar"
+      autofocus="false"
+      default-open="edit"
+      @imgAdd="uploadEditorImage"
+    />
+    <div class="container post">
+      <div class="box is-mobile">
+        <div class="media-content">
+          <article
+            class="content"
+            v-html="$renderMD(content)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -22,15 +36,43 @@ export default {
     return {
       content: this.initialContent,
       customToolbar: {
-        header: true,
+
+        // Disabled because confusing
+        subfield: false,
+        preview: false,
+        fullscreen: false,
+        trash: false,
+        save: false,
+        readmodel: false,
+        htmlcode: false,
+
+        // disabled because renderer does not support
+        mark: false,
+        superscript: false,
+        subscript: false,
+        alignleft: false,
+        aligncenter: false,
+        alignright: false,
+
+        // enabled because renderer supports
         bold: true,
         italic: true,
+        header: true,
         underline: true,
-        li: true,
+        strikethrough: true,
+
+        quote: true,
         ol: true,
-        fullscreen: true,
-        subfield: true,
-        preview: true,
+        ul: true,
+        link: true,
+        imagelink: true,
+        code: true,
+        table: true,
+        help: true,
+        undo: true,
+        redo: true,
+        navigation: true,
+
       },
     };
   },
