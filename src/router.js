@@ -48,7 +48,9 @@ const router = new Router( {
       name: 'author',
       beforeEnter( to, from, next ) {
         window.open( `https://steempeak.com/@${ to.params.author }`, '_blank' );
-        next( false );
+        if ( window.location.href !== document.referrer ) {
+          window.location.href = document.referrer;
+        }
       },
     },
     {

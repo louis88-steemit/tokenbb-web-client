@@ -29,7 +29,7 @@
     "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "request": "^2.88.0",
-    "steem-editor": "^1.1.6",
+    "steem-editor": "^1.1.7",
     "vue": "^2.6.10",
     "vue-analytics": "^5.17.0",
     "vue-draggable-nested-tree": "^2.2.17",

@@ -5,7 +5,7 @@
       v-model="content"
       language="en"
       :toolbars="customToolbar"
-      autofocus="false"
+      :autofocus="autofocus"
       default-open="edit"
       @imgAdd="uploadEditorImage"
     />
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       content: this.initialContent,
+      autofocus: false,
       customToolbar: {
 
         // Disabled because confusing
