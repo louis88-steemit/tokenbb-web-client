@@ -12,6 +12,7 @@
           v-model="title"
           grouped
           placeholder="Type title here"
+          :maxlength="64"
           expanded
         />
       </b-field>
