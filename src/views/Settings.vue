@@ -3,6 +3,15 @@
     <p>Settings</p>
 
     <h3 class="title">
+      Admins
+    </h3>
+    <!-- admins go here -->
+    <b-table
+      :data="admins"
+      :loading="fetching"
+    />
+
+    <h3 class="title">
       Categories
     </h3>
 
@@ -240,6 +249,7 @@ import Checkbox from 'buefy/src/components/checkbox/Checkbox';
 import Field from 'buefy/src/components/field/Field';
 import Icon from 'buefy/src/components/icon/Icon';
 import Input from 'buefy/src/components/input/Input';
+import Table from 'buefy/src/components/table/Table';
 import { DraggableTree } from 'vue-draggable-nested-tree';
 import Vue from 'vue';
 import { mapState } from 'vuex';
@@ -272,12 +282,14 @@ export default {
     BField: Field,
     BInput: Input,
     Tree: DraggableTree,
+    BTable: Table,
   },
   data() {
     return {
       orderEdit: false,
       editingCategory: {},
       editingGroup: {},
+      admins: [],
     };
   },
   computed: {
