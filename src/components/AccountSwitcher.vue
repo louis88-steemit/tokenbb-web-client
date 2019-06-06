@@ -86,7 +86,30 @@ export default {
         this.selected = value;
         this.$store.commit( 'auth/setCurrent', value.account );
       } else {
-        window.BTSSO.authorizePosting( value.account );
+        function hasCompatibleKeychain() {
+          return window.steem_keychain
+                 && window.steem_keychain.requestSignBuffer
+                 && window.steem_keychain.requestAddAccountAuthority
+                 && window.steem_keychain.requestRemoveAccountAuthority;
+        }
+        if ( hasCompatibleKeychain() ) {
+          window.steem_keychain.requestAddAccountAuthority(
+            value.account,
+            'buildteam',
+            'Posting',
+            1,
+            ( response ) => {
+              if ( !response.success ) {
+                console.error( response );
+                window.open( `https://beta.steemconnect.com/authorize/@${'buildteam'}`, '_blank' );
+              }
+            } );
+        } else {
+          window.open( `https://beta.steemconnect.com/authorize/@${'buildteam'}`, '_blank' );
+        }
+
+        // deactivate for now
+        // window.BTSSO.authorizePosting( value.account );
         this.$store.commit( 'auth/setCurrent', this.selected.account );
         this.selected = this.selected;
       }
