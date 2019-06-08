@@ -18,6 +18,12 @@ const router = new Router( {
       component: loadView( 'Home' ),
     },
     {
+      path: '/topic-list',
+      name: 'topic-list',
+      component: loadView( 'TopicList' ),
+    },
+
+    {
       path: '/settings',
       name: 'settings',
       component: loadView( 'Settings' ),
@@ -36,6 +42,16 @@ const router = new Router( {
       path: '/topics/:author/:permlink',
       name: 'topic',
       component: loadView( 'Topic' ),
+    },
+    {
+      path: '/@:author',
+      name: 'author',
+      beforeEnter( to, from, next ) {
+        window.open( `https://steempeak.com/@${ to.params.author }`, '_blank' );
+        if ( window.location.href !== document.referrer ) {
+          window.location.href = document.referrer;
+        }
+      },
     },
     {
       path: '/404',

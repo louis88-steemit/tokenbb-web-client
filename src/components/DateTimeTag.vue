@@ -1,9 +1,5 @@
 <template>
-  <b-tooltip
-    :label="timeAbsolute"
-    size="is-small"
-    type="is-black"
-  >
+  <div class="align-middle">
     <b-icon
       icon="clock"
       size="is-small"
@@ -12,18 +8,18 @@
     <template v-if="!this.time && this.numberOfReplies > 0">
       <span>by</span>
       <Avatar
+        class="align-middle"
         :author="this.lastReply.author"
         :owner="this.lastReply.owner"
         size="small"
       />
     </template>
-  </b-tooltip>
+  </div>
 </template>
 
 <script>
 
 import Icon from 'buefy/src/components/icon/Icon';
-import Tooltip from 'buefy/src/components/tooltip/Tooltip';
 
 import Avatar from '../components/Avatar.vue';
 
@@ -34,7 +30,6 @@ import { formatDateTimeAbsolute, formatDateTimeRelative } from '../utils/content
 export default {
   components: {
     BIcon: Icon,
-    BTooltip: Tooltip,
     Avatar,
   },
   props: {
@@ -85,7 +80,6 @@ export default {
       if ( self.$data.timeout > 1000 ) {
         self.$data.timeout -= parseInt( Math.random() * 0.1 * self.$data.timeout );
       }
-      console.log( `Updating time ${minutesDiff}, ${self.$data.timeout}}` );
       self.$data.ticker += 1;
       clearTimeout( self.$data.timeoutHandle );
       self.$data.timeoutHandle = setTimeout( updateTime, self.$data.timeout );

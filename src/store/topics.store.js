@@ -54,10 +54,10 @@ export default {
           return topic.data;
         } );
     },
-    fetchAll( { commit } ) {
+    fetchAll( { commit }, args ) {
       commit( 'setFetching', true );
 
-      listTopics( null )
+      listTopics( args ? args.category : null )
         .then( ( topics ) => {
           commit( 'updateTopicList', withPinnedToTop( topics ) );
           commit( 'setFetching', false );

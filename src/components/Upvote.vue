@@ -1,7 +1,20 @@
 <template class="upvote">
   <ShowIfLoggedIn :hidden="true">
     <span class="upvote-control">
-      <span class="upvote-value">${{ value }}</span>
+      <b-tooltip
+        :label="'Payout in Steem-Engine tokens of: ' + token_value + ' and in Steem Blockchain tokens of: ' + value"
+        size="is-small"
+        type="is-black is-center"
+      >
+        <span
+          v-if="this.token.enabled"
+          class="upvote-value"
+        >{{ token_value }}</span>
+        <span
+          v-else
+          class="upvote-value"
+        >{{ value }}</span>
+      </b-tooltip>
       <span class="upvote-lenght"><b-icon
         icon="arrow-up-drop-circle-outline"
         size="is-small"
@@ -44,7 +57,7 @@
                 orient="horizontal"
                 class="slider is-primary is-circle"
                 step="1"
-                min="0"
+                min="1"
                 max="100"
                 :value="percent"
                 type="range"
@@ -76,14 +89,16 @@
 
 <script>
 
+import Tooltip from 'buefy/src/components/tooltip/Tooltip';
 import Dropdown from 'buefy/src/components/dropdown/Dropdown';
 import DropdownItem from 'buefy/src/components/dropdown/DropdownItem';
 import Icon from 'buefy/src/components/icon/Icon';
 
 
 import { Client } from 'dsteem';
+import { mapState } from 'vuex';
 
-import { vote } from '../services/api.service.js';
+import { getScotTokenPayout, vote } from '../services/api.service.js';
 import ShowIfLoggedIn from './ShowIfLoggedIn.vue';
 
 import Timeout from 'await-timeout';
@@ -94,6 +109,7 @@ const client = new Client( 'https://api.steemit.com' );
 
 export default {
   components: {
+    BTooltip: Tooltip,
     BDropdown: Dropdown,
     BDropdownItem: DropdownItem,
     BIcon: Icon,
@@ -106,18 +122,36 @@ export default {
   },
   data() {
     return {
-      percent: 10,
+      percent: 100,
       fetching: false,
       paid: 0,
-      value: '0.000',
+      token_paid: 0,
+      value: '$ 0.000',
+      token_value: '0.000',
       votes: [],
+      token_votes: [],
     };
   },
   computed: {
+    ...mapState( 'forum', [
+      'token',
+    ] ),
     voted() {
-      return this.paid > 0
+      return this.fetching || this.paid > 0
         || this.$store.state.auth.current === 'anon'
         || this.votes.filter( ( _vote ) => _vote.voter === this.$store.state.auth.current ).length > 0;
+    },
+  },
+  watch: {
+    author( newVal, oldVal ) {
+      if ( newVal !== oldVal ) {
+        this.updateValue();
+      }
+    },
+    permlink( newVal, oldVal ) {
+      if ( newVal !== oldVal ) {
+        this.updateValue();
+      }
     },
   },
   mounted() {
@@ -128,10 +162,26 @@ export default {
       this.percent = this.$refs.slider.value;
     },
     async updateValue() {
+      if ( this.token.enabled ) {
+        const token_data = await getScotTokenPayout( this.author, this.permlink );
+        const tokenPayout = token_data[this.token.symbol] || {
+          pending_token: 0,
+          total_payout_value: 0,
+          precision: this.token.precision || 3,
+          active_votes: [],
+        };
+        const precision = tokenPayout.precision || this.token.precision || 3;
+        const precision_div = Math.pow( 10, precision );
+        const token_pending = tokenPayout.pending_token / precision_div;
+        this.token_paid = tokenPayout.total_payout_value / precision_div;
+        this.token_value = ( this.paid + token_pending ).toFixed( precision ) + ' ' + this.token.symbol;
+        this.token_votes = tokenPayout.active_votes;
+      }
+
       const data = await client.call( 'condenser_api', 'get_content', [ this.author, this.permlink ] );
       const pending = parseFloat( data.pending_payout_value.split( ' ' )[0] );
       this.paid = parseFloat( data.total_payout_value.split( ' ' )[0] );
-      this.value = ( this.paid + pending ).toFixed( 3 );
+      this.value = '$ ' + ( this.paid + pending ).toFixed( 3 );
       this.votes = data.active_votes;
     },
     async handleClick() {
@@ -149,8 +199,15 @@ export default {
           message: 'Upvoted!',
           type: 'is-primary',
         } );
+        await this.updateValue();
         await Timeout.set( 3000 );
         await this.updateValue();
+
+        // check ever 5 seconds to make sure to update SPT once available
+        for ( let i = 0; i < 12; i++ ) {
+          await Timeout.set( 5000 );
+          await this.updateValue();
+        }
       } catch ( err ) {
         console.error( 'oops!', err );
         Toast.open( {

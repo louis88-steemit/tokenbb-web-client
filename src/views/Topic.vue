@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container topic-view">
     <div
       v-if="fetching"
       class="spacer"
@@ -16,16 +16,16 @@
           <h1 class="title is-3">
             {{ topic.title }}
           </h1>
-          <span class="tag is-small">
-            <CategoryTag :category-id="topic.categoryId" />
-          </span>
-        &nbsp;
-          <a
-            class="topic-nav topic-nav-to-end"
-            @click="scrollTo('endOfTopic')"
-          >
-            Jump to end
-          </a>
+          <div class="level-left">
+            <Breadcrumb :crumbs="breadcrumb" />
+          </div>
+          <div class="nav-control">
+            <a
+              class="topic-nav topic-nav-to-end"
+              @click="scrollTo('endOfTopic')"
+            >Jump to end
+            </a>
+          </div>
         </header>
 
         <br>
@@ -89,10 +89,10 @@ import { mapState } from 'vuex';
 import Loading from 'buefy/src/components/loading/Loading';
 import Pagination from 'buefy/src/components/pagination/Pagination';
 
+import Breadcrumb from '../components/Breadcrumb.vue';
 import Post from '../components/Post.vue';
 import ReplyForm from '../components/ReplyForm.vue';
 import ShowIfLoggedIn from '../components/ShowIfLoggedIn.vue';
-import CategoryTag from '../components/CategoryTag.vue';
 import { getTopic } from '../services/post.service.js';
 import { errorAlertOptions } from '../utils/notifications.js';
 
@@ -103,10 +103,10 @@ export default {
   components: {
     BLoading: Loading,
     BPagination: Pagination,
+    Breadcrumb,
     Post,
     ReplyForm,
     ShowIfLoggedIn,
-    CategoryTag,
   },
   data() {
     return {
@@ -124,7 +124,8 @@ export default {
   },
   computed: {
     ...mapState( 'categories', [
-      'categoriesBySlug',
+      'categoriesById',
+      'categoriesByBreadcrumb',
     ] ),
     currentPage() {
       const replies = this.topic.replies || [];
@@ -144,6 +145,25 @@ export default {
     quoteAuthor() {
       const topic = this.topic;
       return topic.lastReply.author === '' ? topic.author.user : topic.lastReply.author;
+    },
+    breadcrumb() {
+      const breadcrumb = [];
+      const category = this.categoriesById[this.topic.categoryId];
+      if ( category ) {
+        let nav = '';
+        if ( category.nav ) {
+          category.nav.split( '/' ).forEach( ( crumb ) => {
+            nav = nav + ( nav !== '' ? '/' : '' ) + crumb;
+            const group = this.categoriesByBreadcrumb.categoryGroupsByNav[nav];
+            if ( group ) {
+              breadcrumb.push( { path: '/', query: { nav }, name: group.name } );
+            }
+          } );
+        }
+        breadcrumb.push( { path: '/topic-list', query: { category: category.slug }, name: category.title } );
+        breadcrumb.push( { path: this.$route.path, query: this.$route.query, name: this.topic.title } );
+      }
+      return breadcrumb;
     },
   },
   methods: {

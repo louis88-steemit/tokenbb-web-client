@@ -1,8 +1,71 @@
 import { Toast } from 'buefy/dist/components/toast';
 
-import { addCategory, listCategories, removeCategory } from '../services/api.service';
+import { addCategory, editCategory, listCategories, removeCategory } from '../services/api.service';
 import { errorAlertOptions } from '../utils/notifications.js';
+import { stringToSlug } from '../utils/slug.js';
 
+import map from 'lodash/map';
+
+function computeCategoryOrderingData( state, categoryOrdering ) {
+  const categoriesBySlug = {};
+  state.categoryList.forEach( ( category ) => {
+    state.categoriesById[category._id] = category;
+    categoriesBySlug[category.slug] = category;
+  } );
+
+  const categoryGroupsByNav = {};
+  function processCategoryOrdering( ordering, nav = '' ) {
+    const slug = stringToSlug( ordering.slug );
+    const currentNav = nav + ( nav !== '' ? '/' : '' ) + slug;
+    const categoryGroup = { name: ordering.name, nav: currentNav, slug: ordering.slug };
+    categoryGroupsByNav[currentNav] = categoryGroup;
+    categoryGroup.groups = map( ordering.groups, ( g ) => {
+      return processCategoryOrdering( g, currentNav );
+    } );
+    categoryGroup.categories = map( ordering.categories, ( c ) => {
+      const found = categoriesBySlug[c];
+      if ( found ) {
+        found.nav = currentNav;
+        categoriesBySlug[c] = null;
+      }
+      return found;
+    } ).filter( ( c ) => c );
+    return categoryGroup;
+  }
+
+  let homeCategory = {
+    name: 'Home',
+    nav: 'home',
+    slug: 'home',
+    groups: [],
+    categories: [],
+  };
+
+  // when getter not ready, categoryOrdering {__ob__: Observer... }
+  if ( categoryOrdering && typeof categoryOrdering === 'object' ) {
+    if ( Array.isArray( categoryOrdering ) ) {
+      homeCategory.groups = categoryOrdering;
+      homeCategory = processCategoryOrdering( homeCategory );
+    } else if ( categoryOrdering.name && categoryOrdering.slug ) {
+      homeCategory = processCategoryOrdering( categoryOrdering );
+    }
+  }
+
+  // Place other categories on root level.
+  homeCategory.categories = homeCategory.categories.concat(
+    Object.values( categoriesBySlug )
+      .filter( ( c ) => c )
+      .map( ( c ) => {
+        c.nav = homeCategory.nav;
+        return c;
+      } ) );
+  homeCategory.categoryGroupsByNav = categoryGroupsByNav;
+
+  state.categoriesByBreadcrumb = homeCategory;
+
+  // For Vue Reactivity.
+  state.categoriesById = { ...state.categoriesById };
+}
 
 export default {
   namespaced: true,
@@ -10,6 +73,7 @@ export default {
     fetching: true,
     categoryList: [],
     categoriesById: {},
+    categoriesByBreadcrumb: null,
   },
   mutations: {
     setFetching( state, fetching ) {
@@ -25,35 +89,42 @@ export default {
     },
     updateCategoryList( state, categories ) {
       state.categoryList = categories;
-      categories.forEach( ( category ) => {
-        state.categoriesById[category._id] = category;
-      } );
 
-      // For Vue Reactivity.
-      state.categoriesById = { ...state.categoriesById };
+      computeCategoryOrderingData( state, this.getters['forum/getCategoryOrdering'] );
+    },
+    updateCategoryOrderingData( state ) {
+      computeCategoryOrderingData( state, this.getters['forum/getCategoryOrdering'] );
     },
   },
   actions: {
-    add( { commit }, { name: categoryName, title, description } ) {
+    async add( { commit }, category ) {
+      commit( 'setFetching', true );
+      try {
+        await addCategory( category );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( `Error adding category ${category.name}`, err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
+    },
+    async edit( { commit }, category ) {
       commit( 'setFetching', true );
 
-      addCategory( categoryName, title, description )
-        .then( ( category ) => {
-          commit( 'add', category.data );
-          commit( 'setFetching', false );
-        } )
-        .catch( ( err ) => {
-          commit( 'setFetching', false );
-          Toast.open( errorAlertOptions( `Error adding category ${categoryName}`, err ) );
-          console.error( err );
-        } );
+      try {
+        await editCategory( category );
+      } catch ( err ) {
+        Toast.open( errorAlertOptions( `Error editing category ${category.name}`, err ) );
+        console.error( err );
+      } finally {
+        commit( 'setFetching', false );
+      }
     },
     remove( { commit }, category ) {
       commit( 'setFetching', true );
 
       removeCategory( category.name )
         .then( () => {
-          commit( 'remove', category );
           commit( 'setFetching', false );
         } )
         .catch( ( err ) => {

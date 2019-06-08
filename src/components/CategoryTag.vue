@@ -1,10 +1,6 @@
 <template>
-  <router-link :to="categoryRoute(categoryId)">
-    <b-icon
-      icon="tag"
-      size="is-small"
-    />
-    {{ this.category }}
+  <router-link :to="categoryRoute(category)">
+    {{ category.name }}
   </router-link>
 </template>
 
@@ -14,9 +10,6 @@ import { mapState } from 'vuex';
 import Icon from 'buefy/src/components/icon/Icon';
 
 export default {
-  components: {
-    BIcon: Icon,
-  },
   props: {
     categoryId: String,
   },
@@ -25,17 +18,17 @@ export default {
       category( state ) {
         const byId = state.categories.categoriesById || {};
         const category = byId[this.categoryId];
-        return category ? category.name : 'oops';
+        return category ? category : { name: 'oops' };
       },
     } ),
 
   },
   methods: {
-    categoryRoute( id ) {
+    categoryRoute( cat ) {
       return {
-        path: '/',
+        path: '/topic-list',
         query: {
-          category: id,
+          category: cat.slug,
         },
       };
     },

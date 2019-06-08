@@ -2,18 +2,26 @@
   <b-tooltip
     :label="author | usernameDisplay(owner)"
     size="is-small"
-    type="is-black"
+    type="is-black is-top"
   >
-    <figure
-      class="image avatar"
-      :class="classes"
+    <component
+      :is="avatarLink(author)?'a':'span'"
+      :href="avatarLink(author)"
+      target="_blank"
+      rel="noopener"
+      class="align-middle"
     >
-      <img
-        class="is-rounded"
-        :title="author | usernameDisplay(owner)"
-        :src="avatarURL(author, owner)"
+      <figure
+        class="image avatar"
+        :class="classes"
       >
-    </figure>
+        <img
+          class="is-rounded"
+          :title="author | usernameDisplay(owner)"
+          :src="avatarURL(author, owner)"
+        >
+      </figure>
+    </component>
   </b-tooltip>
 </template>
 
@@ -47,6 +55,12 @@ export default {
         return `https://img.busy.org/@${author}`;
       }
       return `https://robohash.org/${owner}.png?set=set4`;
+    },
+    avatarLink( author ) {
+      if ( author !== process.env.VUE_APP_ANON_USER ) {
+        return `https://steempeak.com/@${author}`;
+      }
+      return '';
     },
   },
 };

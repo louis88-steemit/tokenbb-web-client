@@ -1,20 +1,46 @@
 import steem from './steem.service';
 
-function requestAsync( opts ) {
-  if ( opts.body ) {
+function requestAsync( opts, raw ) {
+  if ( opts.body && !raw ) {
     opts.body = JSON.stringify( opts.body );
   }
   if ( !opts.headers ) {
     opts.headers = {};
   }
-  opts.headers.accept = 'application/json';
-  opts.headers['content-type'] = 'application/json';
+  if ( !raw ) {
+    opts.headers.accept = 'application/json';
+    opts.headers['content-type'] = 'application/json';
+  }
   return fetch( opts.url, opts )
     .then( ( response ) => response.json() );
 }
 
+export function getScotTokenPayout( author, permlink ) {
+  const opts = {
+    method: 'GET',
+    json: true,
+    headers: {},
+    url: `https://scot-api.steem-engine.com/@${author}/${permlink}`,
+  };
+
+  return requestAsync( opts );
+}
+
 export function apiURL() {
   return `${process.env.VUE_APP_API_HOST}/v1/forum/${global.forumname}`;
+}
+
+export function uploadImage( image ) {
+  const formdata = new FormData();
+  formdata.append( 'image', image );
+  const opts = {
+    method: 'POST',
+    body: formdata,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${process.env.VUE_APP_API_HOST}/v1/image-upload`,
+  };
+
+  return requestAsync( opts, true );
 }
 
 export function unpin( topic ) {
@@ -65,6 +91,19 @@ export function vote( author, permlink, voter, weight ) {
   return requestAsync( opts );
 }
 
+export function getDomainForum( domain ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${process.env.VUE_APP_API_HOST}/v1/domainforum/`,
+    body: {
+      domain,
+    },
+  };
+  return requestAsync( opts );
+}
+
 export function listRoles() {
   const opts = {
     method: 'GET',
@@ -97,7 +136,7 @@ export function listCategories() {
   } );
 }
 
-export function createForum( forumName ) {
+export function createForum( forumName, admin ) {
   const opts = {
     method: 'POST',
     json: true,
@@ -105,22 +144,35 @@ export function createForum( forumName ) {
     url: `${process.env.VUE_APP_API_HOST}/v1/forum/`,
     body: {
       name: forumName,
+      admin,
     },
   };
 
   return requestAsync( opts );
 }
 
-export function addCategory( categoryName, title, description ) {
+export function addCategory( category ) {
   const opts = {
     method: 'POST',
     json: true,
     headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
     url: apiURL() + '/categories/',
     body: {
-      name: categoryName,
-      title,
-      description,
+      ...category,
+    },
+  };
+
+  return requestAsync( opts );
+}
+
+export function editCategory( category ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${apiURL()}/${category.slug}/edit`,
+    body: {
+      ...category,
     },
   };
 
@@ -138,11 +190,25 @@ export function removeCategory( categoryName ) {
   return requestAsync( opts );
 }
 
+export function setCategoryOrdering( categoryOrdering ) {
+  const opts = {
+    method: 'POST',
+    json: true,
+    headers: steem.token ? { 'Authorization': 'Bearer ' + steem.token } : {},
+    url: `${apiURL()}/categoryOrdering`,
+    body: {
+      categoryOrdering: JSON.stringify( categoryOrdering ),
+    },
+  };
+
+  return requestAsync( opts );
+}
+
 export function listValidTopics( category ) {
   let url = apiURL() + '/topics';
 
   if ( category ) {
-    url = apiURL() + `${category}/topics`;
+    url = apiURL() + `/${category}/topics`;
   }
 
   const opts = {
