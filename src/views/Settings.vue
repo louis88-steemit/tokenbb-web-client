@@ -5,11 +5,95 @@
     <h3 class="title">
       Admins
     </h3>
-    <!-- admins go here -->
     <b-table
-      :data="admins"
+      :data="ownerData"
       :loading="fetching"
-    />
+      mobile-cards
+    >
+      <template slot-scope="oprops">
+        <div class="columns is-tablet box">
+          <div class="column">
+            {{ oprops.row.username }}
+          </div>
+          <div class="column">
+            <button
+              class="button is-small"
+              :class="{ 'is-loading': fetching }"
+              :disabled="fetching"
+              @click="removeAdmin(oprops.row.username)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </template>
+    </b-table>
+    <form
+      @submit.prevent="addAdmin"
+    >
+      <b-field
+        label="Add Admin"
+      >
+        <b-input
+          v-model="newAdmin"
+          placeholder="BT username"
+        />
+      </b-field>
+      <button
+        role="submit"
+        :class="{ 'is-loading': fetching }"
+        class="button is-small"
+      >
+        Add
+      </button>
+    </form>
+
+    <h3 class="title">
+      Mods
+    </h3>
+    <b-table
+      :data="modData"
+      :loading="fetching"
+      mobile-cards
+    >
+      <template slot-scope="mprops">
+        <div class="columns is-tablet box">
+          <div class="column">
+            {{ mprops.row.username }}
+          </div>
+          <div class="column">
+            <button
+              class="button is-small"
+              :class="{ 'is-loading': fetching }"
+              :disabled="fetching"
+              @click="removeMod(mprops.row.username)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </template>
+    </b-table>
+    <form
+      @submit.prevent="addMod"
+    >
+      <b-field
+        label="Add Mod"
+      >
+        <b-input
+          v-model="newMod"
+          placeholder="BT username"
+        />
+      </b-field>
+      <button
+        role="submit"
+        :class="{ 'is-loading': fetching }"
+        class="button is-small"
+      >
+        Add
+      </button>
+    </form>
+
 
     <h3 class="title">
       Categories
@@ -290,9 +374,12 @@ export default {
       editingCategory: {},
       editingGroup: {},
       admins: [],
+      newAdmin: '',
+      newMod: '',
     };
   },
   computed: {
+    ...mapState( 'forum', [ 'ownerData', 'modData' ] ),
     ...mapState( 'categories', [
       'categoryList',
       'fetching',
@@ -378,6 +465,9 @@ export default {
          || Object.values( this.editingGroup ).filter( ( e ) => e ).length > 0
          || this.orderEdit;
     },
+  },
+  mounted() {
+    this.$store.dispatch( 'forum/fetch', /* withModData= */ true );
   },
   methods: {
     enableOrderingEdit() {
@@ -487,6 +577,22 @@ export default {
           console.error( err );
           this.fetching = false;
         } );
+    },
+    async addAdmin() {
+      await this.$store.dispatch( 'forum/addForumAdmin', this.newAdmin );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async removeAdmin( username ) {
+      await this.$store.dispatch( 'forum/removeForumAdmin', username );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async addMod() {
+      await this.$store.dispatch( 'forum/addForumMod', this.newMod );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async removeMod( username ) {
+      await this.$store.dispatch( 'forum/removeForumMod', username );
+      await this.$store.dispatch( 'forum/fetch', true );
     },
   },
 };
