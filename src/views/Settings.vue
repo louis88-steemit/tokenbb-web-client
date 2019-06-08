@@ -3,6 +3,99 @@
     <p>Settings</p>
 
     <h3 class="title">
+      Admins
+    </h3>
+    <b-table
+      :data="ownerData"
+      :loading="fetching"
+      mobile-cards
+    >
+      <template slot-scope="oprops">
+        <div class="columns is-tablet box">
+          <div class="column">
+            {{ oprops.row.username }}
+          </div>
+          <div class="column">
+            <button
+              class="button is-small"
+              :class="{ 'is-loading': fetching }"
+              :disabled="fetching"
+              @click="removeAdmin(oprops.row.username)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </template>
+    </b-table>
+    <form
+      @submit.prevent="addAdmin"
+    >
+      <b-field
+        label="Add Admin"
+      >
+        <b-input
+          v-model="newAdmin"
+          placeholder="BT username"
+        />
+      </b-field>
+      <button
+        role="submit"
+        :class="{ 'is-loading': fetching }"
+        class="button is-small"
+      >
+        Add
+      </button>
+    </form>
+
+    <h3 class="title">
+      Mods
+    </h3>
+    <b-table
+      :data="modData"
+      :loading="fetching"
+      mobile-cards
+    >
+      <template slot-scope="mprops">
+        <div class="columns is-tablet box">
+          <div class="column">
+            {{ mprops.row.username }}
+          </div>
+          <div class="column">
+            <button
+              class="button is-small"
+              :class="{ 'is-loading': fetching }"
+              :disabled="fetching"
+              @click="removeMod(mprops.row.username)"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </template>
+    </b-table>
+    <form
+      @submit.prevent="addMod"
+    >
+      <b-field
+        label="Add Mod"
+      >
+        <b-input
+          v-model="newMod"
+          placeholder="BT username"
+        />
+      </b-field>
+      <button
+        role="submit"
+        :class="{ 'is-loading': fetching }"
+        class="button is-small"
+      >
+        Add
+      </button>
+    </form>
+
+
+    <h3 class="title">
       Categories
     </h3>
 
@@ -240,6 +333,7 @@ import Checkbox from 'buefy/src/components/checkbox/Checkbox';
 import Field from 'buefy/src/components/field/Field';
 import Icon from 'buefy/src/components/icon/Icon';
 import Input from 'buefy/src/components/input/Input';
+import Table from 'buefy/src/components/table/Table';
 import { DraggableTree } from 'vue-draggable-nested-tree';
 import Vue from 'vue';
 import { mapState } from 'vuex';
@@ -272,15 +366,20 @@ export default {
     BField: Field,
     BInput: Input,
     Tree: DraggableTree,
+    BTable: Table,
   },
   data() {
     return {
       orderEdit: false,
       editingCategory: {},
       editingGroup: {},
+      admins: [],
+      newAdmin: '',
+      newMod: '',
     };
   },
   computed: {
+    ...mapState( 'forum', [ 'ownerData', 'modData' ] ),
     ...mapState( 'categories', [
       'categoryList',
       'fetching',
@@ -366,6 +465,9 @@ export default {
          || Object.values( this.editingGroup ).filter( ( e ) => e ).length > 0
          || this.orderEdit;
     },
+  },
+  mounted() {
+    this.$store.dispatch( 'forum/fetch', /* withModData= */ true );
   },
   methods: {
     enableOrderingEdit() {
@@ -475,6 +577,22 @@ export default {
           console.error( err );
           this.fetching = false;
         } );
+    },
+    async addAdmin() {
+      await this.$store.dispatch( 'forum/addForumAdmin', this.newAdmin );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async removeAdmin( username ) {
+      await this.$store.dispatch( 'forum/removeForumAdmin', username );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async addMod() {
+      await this.$store.dispatch( 'forum/addForumMod', this.newMod );
+      await this.$store.dispatch( 'forum/fetch', true );
+    },
+    async removeMod( username ) {
+      await this.$store.dispatch( 'forum/removeForumMod', username );
+      await this.$store.dispatch( 'forum/fetch', true );
     },
   },
 };
