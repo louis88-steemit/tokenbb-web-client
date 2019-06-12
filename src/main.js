@@ -137,6 +137,10 @@ if ( urlForum !== 'app' && !process.env.VUE_APP_WRAPPER_IFRAME_ORIGIN ) {
         query[pair[0]] = pair[1];
       }
       router.replace( { path: e.data.pathname, query } );
+    } else if ( e.data.type === 'tokenbb_wrapper_keychain_methods' ) {
+      e.data.methods.forEach( ( m ) => {
+        window.steem_keychain[m] = m;
+      } );
     }
   } );
 }
