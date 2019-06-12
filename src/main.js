@@ -23,7 +23,7 @@ const contextMap = {
   default: { theme: 'theme-default', forum: 'monsters', icon: 'favicon.ico' },
   monsters: { theme: 'theme-monsters', forum: 'monsters', icon: 'themes/monsters/favicon_teeth.png' },
   drugwars: { theme: 'theme-drugwars', forum: 'drugwars', icon: 'themes/drugwars/small.png' },
-  nextcolony: { theme: 'theme-nextcolony', forum: 'nextcolony', icon: 'favicon.ico' },
+  nextcolony: { theme: 'theme-nextcolony', forum: 'nextcolony', icon: 'themes/nextcolony/favicon.png' },
   localhost: { theme: 'theme-drugwars', forum: 'monsters', icon: 'favicon.ico' },
 };
 
